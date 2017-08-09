@@ -6,10 +6,6 @@
 
 package userinterfaces;
 
-import java.awt.*;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-
 /**
  *
  * @author Jaye
@@ -22,14 +18,6 @@ public class Home extends javax.swing.JFrame {
 
     public Home() {
         initComponents();
-        //setIcon();
-        /*try {
-            Image img = ImageIO.read(getClass().getResource("resources/images/New_File_icon.png"));
-            btn_new.
-            btn_new.setIcon(new ImageIcon(img));
-        } catch (Exception ex) {
-            //System.out.println(ex);
-        }*/
         
     }
 

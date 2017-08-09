@@ -1,14 +1,16 @@
 package userinterfaces;
 
+import java.io.IOException;
+
 /**
  * Created by Ashi on 8/9/2017.
  */
 public class Starter {
 
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException{
 
-        Home home = new Home();
+        WelcomeWindow home = new WelcomeWindow();
         home.setVisible(true);
-        home.setSize(600,600);
+        home.setSize(450,450);
     }
 }

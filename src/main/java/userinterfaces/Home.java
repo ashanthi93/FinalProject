@@ -48,7 +48,7 @@ public class Home extends javax.swing.JFrame {
         btn_open = new java.awt.Button();
         btn_save = new java.awt.Button();
         btn_new = new java.awt.Button();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        javax.swing.JTabbedPane jTabbedPane1 = new javax.swing.JTabbedPane();
         tab_src = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tbl_source3 = new javax.swing.JTable();
@@ -488,7 +488,6 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel tab_asspciation;
     private javax.swing.JPanel tab_design;
     private javax.swing.JPanel tab_src;

@@ -54,7 +54,6 @@ public class WelcomeWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome to Conexus");
         setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
-        setMaximumSize(new java.awt.Dimension(450, 450));
         setMinimumSize(new java.awt.Dimension(450, 450));
         setResizable(false);
 
@@ -154,7 +153,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
             NewProjectWindow newProjectWindow = new NewProjectWindow();
             newProjectWindow.setVisible(true);
         } catch (IOException ex) {
-            Logger.getLogger(WelcomeWindow.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NewProjectWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_newProjectBtnActionPerformed
 

@@ -6,6 +6,10 @@
 
 package userinterfaces;
 
+import java.awt.*;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Jaye
@@ -15,8 +19,18 @@ public class Home extends javax.swing.JFrame {
     /**
      * Creates new form FirstWindow
      */
+
     public Home() {
         initComponents();
+        //setIcon();
+        /*try {
+            Image img = ImageIO.read(getClass().getResource("resources/images/New_File_icon.png"));
+            btn_new.
+            btn_new.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            //System.out.println(ex);
+        }*/
+        
     }
 
     /**
@@ -96,6 +110,7 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        btn_new.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btn_new.setLabel("New");
         btn_new.setName(""); // NOI18N
         btn_new.addActionListener(new java.awt.event.ActionListener() {

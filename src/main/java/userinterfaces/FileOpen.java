@@ -6,6 +6,8 @@
 
 package userinterfaces;
 
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  *
  * @author Jaye
@@ -14,9 +16,23 @@ public class FileOpen extends javax.swing.JFrame {
 
     /**
      * Creates new form FileOPen
+     * @param value
      */
-    public FileOpen() {
+    public FileOpen(int value) {
         initComponents();
+        
+        if(value == 1){
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("HTM Files", "htm");
+            jFileChooser1.setFileFilter(filter);
+        }else if(value == 2){
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
+            jFileChooser1.setFileFilter(filter);
+        }
+        
+    }
+
+    private FileOpen() {
+        
     }
 
     /**
@@ -31,7 +47,14 @@ public class FileOpen extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        jFileChooser1.setAcceptAllFileFilterUsed(false);
+        jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooser1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,6 +91,12 @@ public class FileOpen extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
+        if(jFileChooser1.CANCEL_OPTION == 1){
+            this.dispose();
+        }
+    }//GEN-LAST:event_jFileChooser1ActionPerformed
 
     /**
      * @param args the command line arguments

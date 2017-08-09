@@ -51,7 +51,7 @@ public class NewProjectWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create New Project");
 
         jPanel1.setBackground(java.awt.Color.white);
@@ -72,14 +72,29 @@ public class NewProjectWindow extends javax.swing.JFrame {
         threatReportRadioBtn.setBackground(java.awt.Color.white);
         threatReportRadioBtn.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         threatReportRadioBtn.setText("Threat Report");
+        threatReportRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                threatReportRadioBtnActionPerformed(evt);
+            }
+        });
 
         staticCodeReportRadioBtn.setBackground(java.awt.Color.white);
         staticCodeReportRadioBtn.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         staticCodeReportRadioBtn.setText("Static Code Reports");
+        staticCodeReportRadioBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                staticCodeReportRadioBtnActionPerformed(evt);
+            }
+        });
 
         jButton1.setBackground(java.awt.SystemColor.controlHighlight);
         jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         jButton1.setText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 10)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 0, 0));
@@ -145,8 +160,30 @@ public class NewProjectWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void threatReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threatReportBtnActionPerformed
-        // TODO add your handling code here:
+        if(threatReportRadioBtn.isSelected()){
+            FileOpen threatReportOpen = new FileOpen(1);
+            threatReportOpen.setVisible(true);
+        }else if(staticCodeReportRadioBtn.isSelected()){
+            FileOpen threatReportOpen = new FileOpen(2);
+            threatReportOpen.setVisible(true);
+        }
     }//GEN-LAST:event_threatReportBtnActionPerformed
+
+    private void threatReportRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threatReportRadioBtnActionPerformed
+        if(staticCodeReportRadioBtn.isSelected()){
+            staticCodeReportRadioBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_threatReportRadioBtnActionPerformed
+
+    private void staticCodeReportRadioBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_staticCodeReportRadioBtnActionPerformed
+        if(threatReportRadioBtn.isSelected()){
+            threatReportRadioBtn.setSelected(false);
+        }
+    }//GEN-LAST:event_staticCodeReportRadioBtnActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

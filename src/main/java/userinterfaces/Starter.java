@@ -7,7 +7,8 @@ public class Starter {
 
     public static void main(String args[]){
 
-
-
+        Home home = new Home();
+        home.setVisible(true);
+        home.setSize(600,600);
     }
 }

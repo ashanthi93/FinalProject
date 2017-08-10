@@ -6,7 +6,13 @@
 
 package userinterfaces;
 
+import java.awt.Font;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**
  *
@@ -19,6 +25,22 @@ public class FileOpen extends javax.swing.JFrame {
      * @param value
      */
     public FileOpen(int value) {
+        
+        try {
+            setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
+        } catch (Exception e) {
+            
+        }
+
+        //Changing look and feel
+        //for metal - javax.swing.plaf.metal.MetalLookAndFeel
+        //for windows - com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+            
+        }
+        
         initComponents();
         
         if(value == 1){
@@ -93,7 +115,9 @@ public class FileOpen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        if(jFileChooser1.CANCEL_OPTION == 1){
+        if(0 == jFileChooser1.APPROVE_OPTION){
+            
+        }else if(1 == jFileChooser1.CANCEL_OPTION){
             this.dispose();
         }
     }//GEN-LAST:event_jFileChooser1ActionPerformed

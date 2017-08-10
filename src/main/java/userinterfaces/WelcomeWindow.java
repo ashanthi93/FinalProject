@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.UIManager;
+import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**
  * @author Ashi
@@ -20,6 +22,22 @@ public class WelcomeWindow extends javax.swing.JFrame {
      * Creates new form WelcomeWindow
      */
     public WelcomeWindow() throws IOException {
+        
+        try {
+            setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
+        } catch (Exception e) {
+            
+        }
+
+        //Changing look and feel
+        //for metal - javax.swing.plaf.metal.MetalLookAndFeel
+        //for windows - com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+            
+        }
+        
         initComponents();
         setIcon();
         setLocation();

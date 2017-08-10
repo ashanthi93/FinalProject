@@ -8,6 +8,10 @@ package userinterfaces;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -19,9 +23,36 @@ public class NewProjectWindow extends javax.swing.JFrame {
      * Creates new form NewProjectWindow
      */
     public NewProjectWindow() throws IOException {
+        
+        try {
+            setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
+        } catch (Exception e) {
+            
+        }
+
+        //Changing look and feel
+        //for metal - javax.swing.plaf.metal.MetalLookAndFeel
+        //for windows - com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+            
+        }
+        
         initComponents();
         setIcon();
         setLocation();
+    }
+    
+    public static void setUIFont(javax.swing.plaf.FontUIResource f) {
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof javax.swing.plaf.FontUIResource) {
+                UIManager.put(key, f);
+            }
+        }
     }
 
     private void setIcon() throws IOException {

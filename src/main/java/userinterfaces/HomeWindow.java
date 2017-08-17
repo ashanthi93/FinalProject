@@ -339,6 +339,11 @@ public class HomeWindow extends javax.swing.JFrame {
         settingsMenu.setText("Settings");
 
         OWASP_Top_10.setText("OWASP Top 10");
+        OWASP_Top_10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OWASP_Top_10ActionPerformed(evt);
+            }
+        });
         settingsMenu.add(OWASP_Top_10);
 
         OWASP_proactives.setText("OWASP Proactives");
@@ -395,8 +400,14 @@ public class HomeWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_newProjectBtnActionPerformed
 
     private void OWASP_proactivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_proactivesActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_OWASP_proactivesActionPerformed
+
+    private void OWASP_Top_10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_Top_10ActionPerformed
+        Settings settings = new Settings();
+        settings.SettingsTabPane.setSelectedIndex(0);
+        settings.setVisible(true);
+    }//GEN-LAST:event_OWASP_Top_10ActionPerformed
 
     /**
      * @param args the command line arguments

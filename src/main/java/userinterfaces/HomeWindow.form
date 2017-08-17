@@ -48,6 +48,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="OWASP Top 10"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OWASP_Top_10ActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="OWASP_proactives">
               <Properties>

@@ -84,8 +84,12 @@ public class HomeWindow extends javax.swing.JFrame {
         newProjectBtn = new javax.swing.JButton();
         openBtn = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
-        jmenu = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        fileMenu = new javax.swing.JMenu();
+        settingsMenu = new javax.swing.JMenu();
+        OWASP_Top_10 = new javax.swing.JMenuItem();
+        OWASP_proactives = new javax.swing.JMenuItem();
+        securityControls = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -327,13 +331,31 @@ public class HomeWindow extends javax.swing.JFrame {
         menuBar.setBackground(java.awt.Color.white);
         menuBar.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.lightGray));
 
-        jmenu.setText("File");
-        jmenu.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
-        menuBar.add(jmenu);
+        fileMenu.setText("File");
+        fileMenu.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
+        menuBar.add(fileMenu);
 
-        jMenu2.setText("Help");
-        jMenu2.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
-        menuBar.add(jMenu2);
+        settingsMenu.setText("Settings");
+
+        OWASP_Top_10.setText("OWASP Top 10");
+        settingsMenu.add(OWASP_Top_10);
+
+        OWASP_proactives.setText("OWASP Proactives");
+        OWASP_proactives.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OWASP_proactivesActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(OWASP_proactives);
+
+        securityControls.setText("Security Controls");
+        settingsMenu.add(securityControls);
+
+        menuBar.add(settingsMenu);
+
+        helpMenu.setText("Help");
+        helpMenu.setFont(new java.awt.Font("Leelawadee UI Semilight", 0, 14)); // NOI18N
+        menuBar.add(helpMenu);
 
         setJMenuBar(menuBar);
 
@@ -367,6 +389,10 @@ public class HomeWindow extends javax.swing.JFrame {
             Logger.getLogger(HomeWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_newProjectBtnActionPerformed
+
+    private void OWASP_proactivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_proactivesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_OWASP_proactivesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -408,9 +434,12 @@ public class HomeWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem OWASP_Top_10;
+    private javax.swing.JMenuItem OWASP_proactives;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton cancelDBtn;
-    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -421,7 +450,6 @@ public class HomeWindow extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JMenu jmenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JButton newProjectBtn;
     private javax.swing.JButton nextBtn;
@@ -429,6 +457,8 @@ public class HomeWindow extends javax.swing.JFrame {
     private javax.swing.JButton openBtn;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveDBtn;
+    private javax.swing.JMenuItem securityControls;
+    private javax.swing.JMenu settingsMenu;
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables
 }

@@ -57,9 +57,14 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OWASP_proactivesActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="securityControls">
+            <MenuItem class="javax.swing.JMenuItem" name="attackersPerspective">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Security Controls"/>
+                <Property name="text" type="java.lang.String" value="Attacker&apos;s Perspective"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="defensivePerspective">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Defensive Perspective"/>
               </Properties>
             </MenuItem>
           </SubComponents>

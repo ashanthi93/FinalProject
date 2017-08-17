@@ -88,7 +88,8 @@ public class HomeWindow extends javax.swing.JFrame {
         settingsMenu = new javax.swing.JMenu();
         OWASP_Top_10 = new javax.swing.JMenuItem();
         OWASP_proactives = new javax.swing.JMenuItem();
-        securityControls = new javax.swing.JMenuItem();
+        attackersPerspective = new javax.swing.JMenuItem();
+        defensivePerspective = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -348,8 +349,11 @@ public class HomeWindow extends javax.swing.JFrame {
         });
         settingsMenu.add(OWASP_proactives);
 
-        securityControls.setText("Security Controls");
-        settingsMenu.add(securityControls);
+        attackersPerspective.setText("Attacker's Perspective");
+        settingsMenu.add(attackersPerspective);
+
+        defensivePerspective.setText("Defensive Perspective");
+        settingsMenu.add(defensivePerspective);
 
         menuBar.add(settingsMenu);
 
@@ -436,8 +440,10 @@ public class HomeWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem OWASP_Top_10;
     private javax.swing.JMenuItem OWASP_proactives;
+    private javax.swing.JMenuItem attackersPerspective;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton cancelDBtn;
+    private javax.swing.JMenuItem defensivePerspective;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel jPanel1;
@@ -457,7 +463,6 @@ public class HomeWindow extends javax.swing.JFrame {
     private javax.swing.JButton openBtn;
     private javax.swing.JButton saveBtn;
     private javax.swing.JButton saveDBtn;
-    private javax.swing.JMenuItem securityControls;
     private javax.swing.JMenu settingsMenu;
     private javax.swing.JToolBar toolBar;
     // End of variables declaration//GEN-END:variables

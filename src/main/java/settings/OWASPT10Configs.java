@@ -16,11 +16,12 @@ public class OWASPT10Configs {
     String nameTag = "name";
     String descriptionTag = "description";
 
-    public OWASPT10Configs(ArrayList<String[]> OWASPT10Types) {
-        this.OWASPT10Types = OWASPT10Types;
+    public OWASPT10Configs() {
     }
 
-    public void createConfigFile() {
+    public void createConfigFile(ArrayList<String[]> OWASPT10Types) {
+
+        this.OWASPT10Types = OWASPT10Types;
 
         ConfigXMLFileCreator configXMLFileCreator = new ConfigXMLFileCreator();
 

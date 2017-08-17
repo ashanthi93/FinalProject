@@ -16,12 +16,12 @@ public class OWASPProactiveConfigs {
     String nameTag = "name";
     String descriptionTag = "description";
 
-    public OWASPProactiveConfigs(ArrayList<String[]> OWASPProactives){
-
-        this.OWASPProactives = OWASPProactives;
+    public OWASPProactiveConfigs(){
     }
 
-    public void createConfigFile() {
+    public void createConfigFile(ArrayList<String[]> OWASPProactives) {
+
+        this.OWASPProactives = OWASPProactives;
 
         ConfigXMLFileCreator configXMLFileCreator = new ConfigXMLFileCreator();
 

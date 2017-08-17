@@ -3,18 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package userinterfaces.settings;
+
+package userinterfaces;
 
 /**
  *
- * @author Ashi
+ * @author CHAM PC
  */
-public class STRIDEAttackerSettings extends javax.swing.JFrame {
+public class Settings extends javax.swing.JFrame {
 
     /**
-     * Creates new form STRIDEAttackerSettings
+     * Creates new form Settings
      */
-    public STRIDEAttackerSettings() {
+    public Settings() {
         initComponents();
     }
 
@@ -60,20 +61,20 @@ public class STRIDEAttackerSettings extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(STRIDEAttackerSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Settings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(STRIDEAttackerSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Settings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(STRIDEAttackerSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Settings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(STRIDEAttackerSettings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Settings.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new STRIDEAttackerSettings().setVisible(true);
+                new Settings().setVisible(true);
             }
         });
     }

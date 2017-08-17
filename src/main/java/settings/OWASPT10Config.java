@@ -24,19 +24,19 @@ public class OWASPT10Config {
 
     String fileName = "OWASPT10.xml";
 
-    public OWASPT10Config() {
-    }
+    public OWASPT10Config() {}
 
     public void createConfigFile(ArrayList<String[]> OWASPT10Types) throws ParserConfigurationException, TransformerException {
 
         ConfigXMLFileCreator configXMLFileCreator = new ConfigXMLFileCreator();
-
         configXMLFileCreator.createFile();
 
         configXMLFileCreator.createParentElement(parentTag);
 
+        /* create type tags */
         for (String[] OWASPType : OWASPT10Types) {
 
+            /* create type tag */
             Element typeElement = configXMLFileCreator.createChildElement(typeTag);
 
             Element type_idElement = configXMLFileCreator.createChildElement(idTag, OWASPType[0]);
@@ -46,9 +46,12 @@ public class OWASPT10Config {
             typeElement.appendChild(type_idElement);
             typeElement.appendChild(type_nameElement);
             typeElement.appendChild(type_descriptionElement);
+            /* end of type tag */
 
             configXMLFileCreator.addToParent(typeElement);
         }
+        /* end of type tags */
+
         configXMLFileCreator.transformAndSaveFile(fileName);
     }
 

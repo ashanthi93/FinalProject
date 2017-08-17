@@ -16,40 +16,40 @@ public class OWASPMappingConfig {
 
     String fileName = "OWASP_Mapping.xml";
 
-    public OWASPMappingConfig(){}
+    public OWASPMappingConfig() {}
 
-    public void createConfigFile(Map<String,String[]> mappingHashMap){
+    public void createConfigFile(Map<String, String[]> mappingHashMap) throws ParserConfigurationException, TransformerException {
 
         ConfigXMLFileCreator configXMLFileCreator = new ConfigXMLFileCreator();
+        configXMLFileCreator.createFile();
 
-        try {
-            configXMLFileCreator.createFile();
+        configXMLFileCreator.createParentElement(parentTag);
 
-            configXMLFileCreator.createParentElement(parentTag);
+        /* create t10-type tags */
+        for (String key : mappingHashMap.keySet()) {
 
-            for (String key : mappingHashMap.keySet()){
+            /* create t10-type tag */
+            Element t10TypeElement = configXMLFileCreator.createChildElement(t10TypeTag);
 
-                Element t10TypeElement = configXMLFileCreator.createChildElement(t10TypeTag);
-                Element idElement = configXMLFileCreator.createChildElement(idTag, key);
-                Element proactivesElement = configXMLFileCreator.createChildElement(proactivesTag);
+            Element idElement = configXMLFileCreator.createChildElement(idTag, key);
+            t10TypeElement.appendChild(idElement);
 
-                for (String proactive: mappingHashMap.get(key)){
+            /* create proactives tag */
+            Element proactivesElement = configXMLFileCreator.createChildElement(proactivesTag);
 
-                    Element proactiveElement = configXMLFileCreator.createChildElement(proactiveTag, proactive);
-                    proactivesElement.appendChild(proactiveElement);
-                }
-
-                t10TypeElement.appendChild(idElement);
-                t10TypeElement.appendChild(proactivesElement);
-                configXMLFileCreator.addToParent(t10TypeElement);
+            for (String proactive : mappingHashMap.get(key)) {
+                Element proactiveElement = configXMLFileCreator.createChildElement(proactiveTag, proactive);
+                proactivesElement.appendChild(proactiveElement);
             }
+            /* end of proactives tag */
 
-            configXMLFileCreator.transformAndSaveFile(fileName);
+            t10TypeElement.appendChild(proactivesElement);
+            /* end-of t10-type tag */
 
-        } catch (ParserConfigurationException e) {
-            System.err.println(e);
-        } catch (TransformerException e) {
-            System.err.println(e);
+            configXMLFileCreator.addToParent(t10TypeElement);
         }
+        /* end of t10-type tags */
+
+        configXMLFileCreator.transformAndSaveFile(fileName);
     }
 }

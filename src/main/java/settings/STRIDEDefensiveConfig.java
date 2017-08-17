@@ -9,6 +9,6 @@ package settings;
  *
  * @author Ashi
  */
-public class STRIDEAttackerConfigs {
+public class STRIDEDefensiveConfig {
     
 }

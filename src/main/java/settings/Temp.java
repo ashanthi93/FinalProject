@@ -1,10 +1,11 @@
 package settings;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.ArrayList;
 
 public class Temp {
-    
-    public static void main(String args[]) {
+
+    public static void main(String args[]) throws ParserConfigurationException {
 
         String[] A1 = {"A1", "Injection", "Injection flaws, such as SQL, OS, and LDAP injection occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization."};
         String[] A2 = {"A2", "Broken Authentication and Session Management", "Application functions related to authentication and session management are often not implemented correctly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit other implementation flaws to assume other users’ identities."};
@@ -29,8 +30,8 @@ public class Temp {
         OWASPT10List.add(A9);
         OWASPT10List.add(A10);
 
-        //OWASPT10Configs owaspt10Configs = new OWASPT10Configs(OWASPT10List);
-        //owaspt10Configs.createConfigFile();
+        OWASPT10Config owaspt10Config = new OWASPT10Config();
+        //owaspt10Config.createConfigFile(OWASPT10List);
 
         String[] C2 = {"C2","Parameterize Queries","SQL Injection is one of the most dangerous web application risks. SQL Injection is easy to\n" +
                 "exploit with many open source automated attack tools available. SQL injection can also deliver\n" +
@@ -132,7 +133,7 @@ public class Temp {
         OWASPProactives.add(C9);
         OWASPProactives.add(C10);
 
-        OWASPProactiveConfigs owaspProactiveConfigs = new OWASPProactiveConfigs();
-        owaspProactiveConfigs.createConfigFile(OWASPProactives);
+        //OWASPProactiveConfig owaspProactiveConfig = new OWASPProactiveConfig();
+        //owaspProactiveConfig.createConfigFile(OWASPProactives);
     }
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userinterfaces;
 
 import java.awt.*;
@@ -13,15 +8,12 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 import javax.xml.parsers.ParserConfigurationException;
-import settings.OWASPT10Configs;
+
+import org.xml.sax.SAXException;
+import settings.OWASPT10Config;
 import static userinterfaces.NewProjectWindow.setUIFont;
 
-/**
- *
- * @author Ashi
- */
 public class HomeWindow extends javax.swing.JFrame {
 
     /**
@@ -415,7 +407,7 @@ public class HomeWindow extends javax.swing.JFrame {
         settings.SettingsTabPane.setSelectedIndex(0);
         
         ArrayList<String[]> OWASP_T10_list;
-        OWASPT10Configs readConfigs = new OWASPT10Configs();
+        OWASPT10Config readConfigs = new OWASPT10Config();
         
         try {
             OWASP_T10_list = readConfigs.loadConfigFile();
@@ -427,10 +419,14 @@ public class HomeWindow extends javax.swing.JFrame {
                 tModel.addRow(OWASPType);
             }
             
-        } catch (ParserConfigurationException ex) {
-            
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        
+
         settings.setVisible(true);
     }//GEN-LAST:event_OWASP_Top_10ActionPerformed
 

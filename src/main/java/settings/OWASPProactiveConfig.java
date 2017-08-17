@@ -6,17 +6,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.util.ArrayList;
 
-public class OWASPProactiveConfigs {
+public class OWASPProactiveConfig {
 
     ArrayList<String[]> OWASPProactives;
 
-    String parentTag = "OWASP-Proactives";
+    String parentTag = "owasp-proactives";
     String proactiveTag = "proactive";
     String idTag = "id";
     String nameTag = "name";
     String descriptionTag = "description";
 
-    public OWASPProactiveConfigs(){
+    public OWASPProactiveConfig(){
     }
 
     public void createConfigFile(ArrayList<String[]> OWASPProactives) {

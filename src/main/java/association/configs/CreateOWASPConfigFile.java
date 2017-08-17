@@ -52,11 +52,11 @@ public class CreateOWASPConfigFile {
             /* end of write */
 
         } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
+            System.err.println(e);
         } catch (TransformerException e) {
-            e.printStackTrace();
+            System.err.println(e);
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            System.err.println(e);
         }
     }
 

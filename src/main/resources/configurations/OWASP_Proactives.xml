@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<OWASP-Proactives>
+    <proactive>
+        <id>C2</id>
+        <name>Parameterize Queries</name>
+        <description>SQL Injection is one of the most dangerous web application risks. SQL Injection is easy to
+            exploit with many open source automated attack tools available. SQL injection can also deliver
+            an impact to your application that is devastating.
+            The simple insertion of malicious SQL code into your web application – and the entire database
+            could potentially be stolen, wiped, or modified. The web application can even be used to run
+            dangerous operating system commands against the operating system hosting your database.
+            The main concern with SQL injection is the fact, that the SQL query and its parameters are
+            contained in one query string.
+            In order to mitigate SQL injection, untrusted input should be prevented from being interpreted as
+            part of a SQL command. The best way to do this is with the programming technique known as
+            ‘Query Parameterization’. In this case, the SQL statements are sent to and parsed by the
+            database server separately from any parameters.
+            Many development frameworks (Rails, Django, Node.js, etc.) employ an objectrelational
+            model
+            (ORM) to abstract communication with a database. Many ORMs provide automatic query
+            parameterization when using programmatic methods to retrieve and modify data, but developers
+            should still be cautious when allowing user input into object queries (OQL/HQL) or other
+            advanced queries supported by the framework.
+            Proper defense in depth against SQL injection includes the use of technologies such as
+            automated static analysis and proper database management system configuration. If possible,
+            database engines should be configured to only support parameterized queries.
+        </description>
+    </proactive>
+    <proactive>
+        <id>C3</id>
+        <name>Encode Data</name>
+        <description>Encoding is a powerful mechanism to help protect against many types of attack, especially
+            injection attacks. Essentially, encoding involves translating special characters into some
+            equivalent form that is no longer dangerous in the target interpreter. Encoding is needed to stop
+            various forms of injection including command injection (Unix command encoding, Windows
+            command encoding), LDAP injection (LDAP encoding) and XML injection (XML encoding).
+            Another example of encoding is output encoding which is necessary to prevent cross site
+            scripting (HTML entity encoding, JavaScript hex encoding, etc).
+            Web developers often build web pages dynamically, consisting of a mix of static, developer built
+            HTML/JavaScript and data that was originally populated with user input or some other untrusted
+            source. This input should be considered to be untrusted data and dangerous, which requires
+            special handling when building a secure web application. CrossSite
+            Scripting (XSS) occurs
+            when an attacker tricks your users into executing malicious script that was not originally built
+            into your website. XSS attacks execute in the user's browser and can have a wide variety of
+            effects.
+            Persistent XSS (or Stored XSS) occurs when an XSS attack can be embedded in a website
+            database or filesystem. This flavor of XSS is more dangerous because users will typically
+            already be logged into the site when the attack is executed, and a single injection attack can
+            affect many different users.
+            Reflected XSS occurs when the attacker places an XSS payload as part of a URL and tricks a
+            victim into visiting that URL. When a victim visits this URL, the XSS attack is launched. This type
+            of XSS is less dangerous since it requires a degree of interaction between the attacker and the
+            victim.
+            DOM based XSS is an XSS attack that occurs in DOM, rather than in HTML code. That is, the
+            page itself does not change, but the client side code contained in the page executes differently
+            due to the malicious modifications that have occurred in the DOM environment. It can only be
+            observed on runtime or by investigating the DOM of the page.
+            Contextual output encoding is a crucial programming technique needed to stop XSS. This is
+            performed on output, when you’re building a user interface, at the last moment before untrusted
+            data is dynamically added to HTML. The type of encoding required will depend on the HTML
+            context of where the untrusted data is added, for example in an attribute value, or in the main
+            HTML body, or even in a JavaScript code block.
+            The encoding functions required to stop XSS include HTML Entity Encoding, JavaScript
+            Encoding and Percent Encoding (aka URL Encoding). OWASP's Java Encoder Project provides
+            encoders for these functions in Java. In .NET 4.5, the AntiXssEncoder Class provides CSS,
+            HTML, URL, JavaScriptString and XML encoders other
+            encoders for LDAP and VBScript are
+            included in the open source AntiXSS library. Every other web language has some kind of
+            encoding library or support.
+        </description>
+    </proactive>
+    <proactive>
+        <id>C4</id>
+        <name>Validate All Inputs</name>
+        <description>Any data which is directly entered by, or influenced by, users should be treated as untrusted.
+            An application should check that this data is both syntactically and semantically valid (in that
+            order) before using it in any way (including displaying it back to the user). Additionally, the most
+            secure applications treat all variables as untrusted and provide security controls regardless of
+            the source of that data.
+            Syntax validity means that the data is in the form that is expected. For example, an application
+            may allow a user to select a fourdigit
+            “account ID” to perform some kind of operation. The
+            application should assume the user is entering a SQL injection payload, and should check that
+            the data entered by the user is exactly four digits in length, and consists only of numbers (in
+            addition to utilizing proper query parameterization).
+            Semantic validity means that the data is meaningful: In the above example, the application
+            should assume that the user is maliciously entering an account ID the user is not permitted to
+            access. The application should then check that the user has permission to access said account
+            ID.
+            Input validation must be wholly serverside:
+            clientside
+            controls may be used for convenience.
+            For example, JavaScript validation may alert the user that a particular field must consist of
+            numbers, but the server must validate that the field actually does consist of numbers.
+        </description>
+    </proactive>
+    <proactive>
+        <id>C5</id>
+        <name>Implement Identity and Authentication Controls</name>
+        <description>-----------------</description>
+    </proactive>
+    <proactive>
+        <id>C6</id>
+        <name>Implement Appropriate Access Controls</name>
+        <description>------------------</description>
+    </proactive>
+    <proactive>
+        <id>C7</id>
+        <name>Protect Data</name>
+        <description>--------------------</description>
+    </proactive>
+    <proactive>
+        <id>C8</id>
+        <name>Implement Logging and Intrusion Detection</name>
+        <description>--------------</description>
+    </proactive>
+    <proactive>
+        <id>C9</id>
+        <name>Leverage Security Frameworks and Libraries</name>
+        <description>---------------</description>
+    </proactive>
+    <proactive>
+        <id>C10</id>
+        <name>Error and Exception Handling</name>
+        <description>------------------------------</description>
+    </proactive>
+</OWASP-Proactives>

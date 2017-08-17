@@ -5,12 +5,17 @@
  */
 package userinterfaces;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.xml.parsers.ParserConfigurationException;
+import settings.OWASPT10Configs;
 import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**
@@ -23,6 +28,8 @@ public class HomeWindow extends javax.swing.JFrame {
      * Creates new form HomeWindow
      * @throws java.io.IOException
      */
+    Settings settings;
+    
     public HomeWindow() throws IOException {
         
         try {
@@ -43,6 +50,7 @@ public class HomeWindow extends javax.swing.JFrame {
         initComponents();
         setIcon();
         setLocation();
+        settings = new Settings();
     }
 
     private void setIcon() throws IOException {
@@ -404,8 +412,25 @@ public class HomeWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_OWASP_proactivesActionPerformed
 
     private void OWASP_Top_10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_Top_10ActionPerformed
-        Settings settings = new Settings();
         settings.SettingsTabPane.setSelectedIndex(0);
+        
+        ArrayList<String[]> OWASP_T10_list;
+        OWASPT10Configs readConfigs = new OWASPT10Configs();
+        
+        try {
+            OWASP_T10_list = readConfigs.loadConfigFile();
+            
+            DefaultTableModel tModel = (DefaultTableModel) settings.OWASP_table.getModel();
+            tModel.setRowCount(0);
+            
+            for (String[] OWASPType : OWASP_T10_list){
+                tModel.addRow(OWASPType);
+            }
+            
+        } catch (ParserConfigurationException ex) {
+            
+        }
+        
         settings.setVisible(true);
     }//GEN-LAST:event_OWASP_Top_10ActionPerformed
 

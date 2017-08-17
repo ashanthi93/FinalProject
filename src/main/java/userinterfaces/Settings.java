@@ -506,7 +506,7 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JPanel OWASP_Proactives;
     private javax.swing.JPanel OWASP_mapping;
     private javax.swing.JTable OWASP_mapping_table;
-    private javax.swing.JTable OWASP_table;
+    public javax.swing.JTable OWASP_table;
     private javax.swing.JPanel OWASP_top_10;
     public javax.swing.JTabbedPane SettingsTabPane;
     private javax.swing.JButton addBtn1;

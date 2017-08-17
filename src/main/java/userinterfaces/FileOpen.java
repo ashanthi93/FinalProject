@@ -24,6 +24,9 @@ public class FileOpen extends javax.swing.JFrame {
      * Creates new form FileOPen
      * @param value
      */
+    
+    int returnVal;
+    
     public FileOpen(int value) {
         
         try {
@@ -46,15 +49,20 @@ public class FileOpen extends javax.swing.JFrame {
         if(value == 1){
             FileNameExtensionFilter filter = new FileNameExtensionFilter("HTM Files", "htm");
             jFileChooser1.setFileFilter(filter);
+            
         }else if(value == 2){
             FileNameExtensionFilter filter = new FileNameExtensionFilter("XML Files", "xml");
             jFileChooser1.setFileFilter(filter);
+            //returnVal = jFileChooser1.showOpenDialog(null);
         }
         
     }
 
-    private FileOpen() {
+    public FileOpen() {
+        initComponents();
         
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("All Files", "htm");
+        jFileChooser1.setFileFilter(filter);
     }
 
     /**
@@ -115,9 +123,16 @@ public class FileOpen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser1ActionPerformed
-        if(0 == jFileChooser1.APPROVE_OPTION){
+        if(0 == this.jFileChooser1.APPROVE_OPTION){
+            try {
+                HomeWindow home = new HomeWindow();
+                home.setVisible(true);
+                this.dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(FileOpen.class.getName()).log(Level.SEVERE, null, ex);
+            }
             
-        }else if(1 == jFileChooser1.CANCEL_OPTION){
+        }else if(1 == this.jFileChooser1.CANCEL_OPTION){
             this.dispose();
         }
     }//GEN-LAST:event_jFileChooser1ActionPerformed

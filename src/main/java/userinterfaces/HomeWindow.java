@@ -10,6 +10,8 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager;
+import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**
  *
@@ -19,8 +21,25 @@ public class HomeWindow extends javax.swing.JFrame {
 
     /**
      * Creates new form HomeWindow
+     * @throws java.io.IOException
      */
     public HomeWindow() throws IOException {
+        
+        try {
+            setUIFont(new javax.swing.plaf.FontUIResource("Segoe UI", Font.PLAIN, 14));
+        } catch (Exception e) {
+            
+        }
+
+        //Changing look and feel
+        //for metal - javax.swing.plaf.metal.MetalLookAndFeel
+        //for windows - com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception ex) {
+            
+        }
+        
         initComponents();
         setIcon();
         setLocation();
@@ -79,7 +98,7 @@ public class HomeWindow extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("New Project - Conexus");
 
         jPanel1.setBackground(java.awt.Color.white);

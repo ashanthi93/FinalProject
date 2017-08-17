@@ -93,7 +93,7 @@
                   <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="newProjectBtn" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="openProjectBtn" min="-2" pref="30" max="-2" attributes="0"/>
+                  <Component id="openProjectBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="106" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -126,7 +126,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/project_icon.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Create Project"/>
+            <Property name="text" type="java.lang.String" value="Start Analysis"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -157,7 +157,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/images/open_icon.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Open Project"/>
+            <Property name="text" type="java.lang.String" value="Open Analysis"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="null"/>
             </Property>
@@ -173,6 +173,9 @@
               <Dimension value="[160, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="openProjectBtnActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>

@@ -86,7 +86,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
         newProjectBtn.setBackground(java.awt.Color.white);
         newProjectBtn.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         newProjectBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/project_icon.png"))); // NOI18N
-        newProjectBtn.setText("Create Project");
+        newProjectBtn.setText("Start Analysis");
         newProjectBtn.setBorder(null);
         newProjectBtn.setBorderPainted(false);
         newProjectBtn.setIconTextGap(8);
@@ -102,13 +102,18 @@ public class WelcomeWindow extends javax.swing.JFrame {
         openProjectBtn.setBackground(java.awt.Color.white);
         openProjectBtn.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
         openProjectBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/open_icon.png"))); // NOI18N
-        openProjectBtn.setText("Open Project");
+        openProjectBtn.setText("Open Analysis");
         openProjectBtn.setBorder(null);
         openProjectBtn.setBorderPainted(false);
         openProjectBtn.setIconTextGap(8);
         openProjectBtn.setMaximumSize(new java.awt.Dimension(160, 30));
         openProjectBtn.setMinimumSize(new java.awt.Dimension(160, 30));
         openProjectBtn.setPreferredSize(new java.awt.Dimension(160, 30));
+        openProjectBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openProjectBtnActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
         jLabel2.setText("Version 1.0 | 2017");
@@ -148,7 +153,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(newProjectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(openProjectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(openProjectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(106, Short.MAX_VALUE))
         );
 
@@ -174,6 +179,11 @@ public class WelcomeWindow extends javax.swing.JFrame {
             Logger.getLogger(NewProjectWindow.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_newProjectBtnActionPerformed
+
+    private void openProjectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openProjectBtnActionPerformed
+        FileOpen analysisOpen = new FileOpen();
+        analysisOpen.setVisible(true);
+    }//GEN-LAST:event_openProjectBtnActionPerformed
 
     /**
      * @param args the command line arguments

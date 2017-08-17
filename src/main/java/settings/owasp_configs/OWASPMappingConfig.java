@@ -1,6 +1,7 @@
-package settings;
+package settings.owasp_configs;
 
 import org.w3c.dom.Element;
+import settings.ConfigXMLFileCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -44,7 +45,7 @@ public class OWASPMappingConfig {
             /* end of proactives tag */
 
             t10TypeElement.appendChild(proactivesElement);
-            /* end-of t10-type tag */
+            /* end of t10-type tag */
 
             configXMLFileCreator.addToParent(t10TypeElement);
         }

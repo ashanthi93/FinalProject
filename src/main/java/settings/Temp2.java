@@ -1,16 +1,16 @@
 package settings;
 
+import settings.stride_configs.STRIDEDefensiveMappingConfig;
+
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Temp2 {
 
     public static void main(String args[]) {
 
-        Map<String, String[]> mappingHashMap = new HashMap<String, String[]>();
+        /*Map<String, String[]> mappingHashMap = new HashMap<String, String[]>();
 
         String[] array = {"C2", "C3", "C4", "C8", "C9", "C10"};
         mappingHashMap.put("A1", array);
@@ -40,12 +40,12 @@ public class Temp2 {
         mappingHashMap.put("A9", array);
 
         array = new String[]{"C4", "C8", "C9", "C10"};
-        mappingHashMap.put("A10", array);
+        mappingHashMap.put("A10", array);*/
 
         //OWASPMappingConfig owaspMappingConfig = new OWASPMappingConfig();
         //owaspMappingConfig.createConfigFile(mappingHashMap);
 
-        ArrayList<String[]> strideThreats = new ArrayList<String[]>();
+        /*ArrayList<String[]> strideThreats = new ArrayList<String[]>();
 
         String[] threat = {"S", "Spoofing", "Authentication", "Authentication Stores, Strong Authentication mechanisms"};
         strideThreats.add(threat);
@@ -63,13 +63,13 @@ public class Temp2 {
         strideThreats.add(threat);
 
         threat = new String[]{"E", "Elevation of Privilege", "Authorization", "RBAC, DACL, MAC; Sudo, UAC, Privileged account protections"};
-        strideThreats.add(threat);
+        strideThreats.add(threat);*/
 
         //STRIDEAttackerConfig strideAttackerConfig = new STRIDEAttackerConfig();
 
-        strideThreats = new ArrayList<String[]>();
+        /*ArrayList<String[]> strideThreats = new ArrayList<String[]>();
 
-        threat = new String[]{"D1", "Authentication", "---------------"};
+        String[] threat = new String[]{"D1", "Authentication", "---------------"};
         strideThreats.add(threat);
 
         threat = new String[]{"D2", "Authorization", "============"};
@@ -93,9 +93,32 @@ public class Temp2 {
         threat = new String[]{"D8", "Auditing and Logging", "------Authorization"};
         strideThreats.add(threat);
 
-        STRIDEDefensiveConfig strideDefensiveConfig = new STRIDEDefensiveConfig();
+        STRIDEDefensiveConfig strideDefensiveConfig = new STRIDEDefensiveConfig();*/
+
+        HashMap<String,String[]> mappingHashMap = new HashMap<String, String[]>();
+
+        String[] array = new String[]{"D1"};
+        mappingHashMap.put("S", array);
+
+        array = new String[]{"D6"};
+        mappingHashMap.put("T", array);
+
+        array = new String[]{"D2"};
+        mappingHashMap.put("R", array);
+
+        array = new String[]{"D8"};
+        mappingHashMap.put("I", array);
+
+        array = new String[]{"D3","D7"};
+        mappingHashMap.put("D", array);
+
+        array = new String[]{"D3","D4","D5"};
+        mappingHashMap.put("E", array);
+
+        STRIDEDefensiveMappingConfig strideDefensiveMappingConfig = new STRIDEDefensiveMappingConfig();
+
         try {
-            strideDefensiveConfig.createFile(strideThreats);
+            strideDefensiveMappingConfig.createFile(mappingHashMap);
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
         } catch (TransformerException e) {

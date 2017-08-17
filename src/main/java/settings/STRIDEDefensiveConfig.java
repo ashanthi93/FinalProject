@@ -14,7 +14,7 @@ public class STRIDEDefensiveConfig {
     String nameTag = "name";
     String descriptionTag = "description";
 
-    String fileName = "Defensive_Model.xml";
+    String fileName = "STRIDE_Defensive_Model.xml";
 
     public STRIDEDefensiveConfig(){}
 

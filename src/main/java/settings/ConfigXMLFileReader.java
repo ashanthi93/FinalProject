@@ -14,19 +14,6 @@ public class ConfigXMLFileReader {
 
     Document document;
 
-    /*public Document createFile(String fileName) throws ParserConfigurationException, IOException, SAXException {
-
-        String pathName = "src/main/resources/configurations/" + fileName;
-        File xmlFIle = new File(pathName);
-
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-        Document document = documentBuilder.parse(xmlFIle);
-
-        return document;
-    }*/
-
     public void loadFile(String fileName) throws ParserConfigurationException, IOException, SAXException {
 
         String pathName = "src/main/resources/configurations/" + fileName;

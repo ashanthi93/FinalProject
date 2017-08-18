@@ -1,6 +1,7 @@
-package settings;
+package settings.stride_configs;
 
 import org.w3c.dom.Element;
+import settings.ConfigXMLFileCreator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;

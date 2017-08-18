@@ -1,5 +1,7 @@
 package settings;
 
+import settings.owasp_configs.OWASPT10Config;
+
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.ArrayList;
 

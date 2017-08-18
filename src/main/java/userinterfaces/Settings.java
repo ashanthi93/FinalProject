@@ -14,7 +14,7 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import settings.OWASPT10Config;
+import settings.owasp_configs.OWASPT10Config;
 import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**

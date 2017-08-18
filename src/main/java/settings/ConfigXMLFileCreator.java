@@ -32,9 +32,9 @@ public class ConfigXMLFileCreator {
         document = documentBuilder.newDocument();
     }
 
-    public void createParentElement(String parentName) {
+    public void createParentElement(String parentTagName) {
 
-        parentElement = document.createElement(parentName);
+        parentElement = document.createElement(parentTagName);
         document.appendChild(parentElement);
     }
 
@@ -43,15 +43,15 @@ public class ConfigXMLFileCreator {
         parentElement.appendChild(element);
     }
 
-    public Element createChildElement(String childName) {
+    public Element createChildElement(String childTagName) {
 
-        Element childElement = document.createElement(childName);
+        Element childElement = document.createElement(childTagName);
         return childElement;
     }
 
-    public Element createChildElement(String childName, String value) {
+    public Element createChildElement(String childTagName, String value) {
 
-        Element childElement = document.createElement(childName);
+        Element childElement = document.createElement(childTagName);
         childElement.appendChild(document.createTextNode(value));
 
         return childElement;

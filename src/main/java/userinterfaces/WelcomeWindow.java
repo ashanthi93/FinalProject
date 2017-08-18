@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
 import static userinterfaces.NewProjectWindow.setUIFont;
+import static userinterfaces.Starter.settings;
 
 /**
  * @author Ashi
@@ -68,7 +69,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
         newProjectBtn = new javax.swing.JButton();
         openProjectBtn = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        settingsBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Welcome to Conexus");
@@ -118,14 +119,19 @@ public class WelcomeWindow extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 12)); // NOI18N
         jLabel2.setText("Version 1.0 | 2017");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
-        jButton1.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings_icon.png"))); // NOI18N
-        jButton1.setText("Settings");
-        jButton1.setIconTextGap(8);
-        jButton1.setMaximumSize(new java.awt.Dimension(160, 30));
-        jButton1.setMinimumSize(new java.awt.Dimension(160, 30));
-        jButton1.setPreferredSize(new java.awt.Dimension(160, 30));
+        settingsBtn.setBackground(new java.awt.Color(255, 255, 255));
+        settingsBtn.setFont(new java.awt.Font("Microsoft Sans Serif", 0, 14)); // NOI18N
+        settingsBtn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/settings_icon.png"))); // NOI18N
+        settingsBtn.setText("Settings");
+        settingsBtn.setIconTextGap(8);
+        settingsBtn.setMaximumSize(new java.awt.Dimension(160, 30));
+        settingsBtn.setMinimumSize(new java.awt.Dimension(160, 30));
+        settingsBtn.setPreferredSize(new java.awt.Dimension(160, 30));
+        settingsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                settingsBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -137,7 +143,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
                 .addGap(126, 126, 126))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(settingsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGap(171, 171, 171)
@@ -166,7 +172,7 @@ public class WelcomeWindow extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(openProjectBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(settingsBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
@@ -197,6 +203,10 @@ public class WelcomeWindow extends javax.swing.JFrame {
         FileOpen analysisOpen = new FileOpen();
         analysisOpen.setVisible(true);
     }//GEN-LAST:event_openProjectBtnActionPerformed
+
+    private void settingsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_settingsBtnActionPerformed
+        settings.setVisible(true);
+    }//GEN-LAST:event_settingsBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,12 +248,12 @@ public class WelcomeWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JButton newProjectBtn;
     private javax.swing.JButton openProjectBtn;
+    private javax.swing.JButton settingsBtn;
     // End of variables declaration//GEN-END:variables
 }

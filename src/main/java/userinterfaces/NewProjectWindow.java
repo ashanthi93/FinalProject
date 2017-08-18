@@ -5,13 +5,16 @@
  */
 package userinterfaces;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import static userinterfaces.Starter.welcome;
 
 /**
  *
@@ -63,7 +66,38 @@ public class NewProjectWindow extends javax.swing.JFrame {
     private void setLocation() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        this.setResizable(false);
     }
+    
+    private void viewFileChooser(String displayName, String fileType, String dialogTitle){
+        JFileChooser chooser = new JFileChooser();
+        chooser.setAcceptAllFileFilterUsed(false);
+        chooser.setDialogTitle(dialogTitle);
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(displayName, fileType);
+        chooser.setFileFilter(filter);
+
+        int result = chooser.showOpenDialog(null);
+        switch (result) {
+            case JFileChooser.APPROVE_OPTION:
+                HomeWindow home;
+                try {
+                    home = new HomeWindow();
+                    this.dispose();
+                    welcome.dispose();
+                    home.setVisible(true);
+                } catch (IOException ex) {
+                    //Logger.getLogger(NewProjectWindow.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                break;
+
+            case JFileChooser.CANCEL_OPTION:
+                break;
+
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -183,7 +217,7 @@ public class NewProjectWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -192,11 +226,17 @@ public class NewProjectWindow extends javax.swing.JFrame {
 
     private void threatReportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_threatReportBtnActionPerformed
         if(threatReportRadioBtn.isSelected()){
-            FileOpen threatReportOpen = new FileOpen(1);
-            threatReportOpen.setVisible(true);
+            //FileOpen threatReportOpen = new FileOpen(1);
+            //threatReportOpen.setVisible(true);
+            
+            viewFileChooser("HTM Files", "htm", "Select Threat Reports");
+            
         }else if(staticCodeReportRadioBtn.isSelected()){
-            FileOpen threatReportOpen = new FileOpen(2);
-            threatReportOpen.setVisible(true);
+            //FileOpen threatReportOpen = new FileOpen(2);
+            //threatReportOpen.setVisible(true);
+            
+            viewFileChooser("XML Files", "xml", "Select Static Code Analysis Reports");
+            
         }
     }//GEN-LAST:event_threatReportBtnActionPerformed
 

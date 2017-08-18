@@ -78,6 +78,7 @@ public class FileOpen extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jFileChooser1.setAcceptAllFileFilterUsed(false);
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
@@ -126,10 +127,10 @@ public class FileOpen extends javax.swing.JFrame {
         if(0 == this.jFileChooser1.APPROVE_OPTION){
             try {
                 HomeWindow home = new HomeWindow();
-                home.setVisible(true);
                 this.dispose();
+                home.setVisible(true);
             } catch (IOException ex) {
-                Logger.getLogger(FileOpen.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(FileOpen.class.getName()).log(Level.SEVERE, null, ex);
             }
             
         }else if(1 == this.jFileChooser1.CANCEL_OPTION){

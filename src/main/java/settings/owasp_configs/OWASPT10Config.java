@@ -56,18 +56,11 @@ public class OWASPT10Config {
     public ArrayList<String[]> loadConfigFile() throws ParserConfigurationException, IOException, SAXException {
 
         ArrayList<String[]> OWASP_T10_list = new ArrayList<String[]>();
-        //Document document = null;
 
         ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
         configXMLFileReader.loadFile(fileName);
 
-        //NodeList list = document.getElementsByTagName(typeTag);
-
         NodeList nodeList = configXMLFileReader.loadNodesByTagName(typeTag);
-
-        /*String[] row;
-        Node node;
-        Element element;*/
 
         for (int i = 0; i < nodeList.getLength(); i++) {
 

@@ -81,8 +81,10 @@ public class HomeWindow extends javax.swing.JFrame {
         settingsMenu = new javax.swing.JMenu();
         OWASP_Top_10 = new javax.swing.JMenuItem();
         OWASP_proactives = new javax.swing.JMenuItem();
-        attackersPerspective = new javax.swing.JMenuItem();
+        OWASP_T10_Mapping = new javax.swing.JMenuItem();
+        STRIDE = new javax.swing.JMenuItem();
         defensivePerspective = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -347,11 +349,37 @@ public class HomeWindow extends javax.swing.JFrame {
         });
         settingsMenu.add(OWASP_proactives);
 
-        attackersPerspective.setText("Attacker's Perspective");
-        settingsMenu.add(attackersPerspective);
+        OWASP_T10_Mapping.setText("OWASP Top 10 Mapping");
+        OWASP_T10_Mapping.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OWASP_T10_MappingActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(OWASP_T10_Mapping);
 
-        defensivePerspective.setText("Defensive Perspective");
+        STRIDE.setText("STRIDE");
+        STRIDE.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                STRIDEActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(STRIDE);
+
+        defensivePerspective.setText("STRIDE - Defensive Perspective");
+        defensivePerspective.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                defensivePerspectiveActionPerformed(evt);
+            }
+        });
         settingsMenu.add(defensivePerspective);
+
+        jMenuItem1.setText("STRIDE - Defensive Mapping");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        settingsMenu.add(jMenuItem1);
 
         menuBar.add(settingsMenu);
 
@@ -393,13 +421,34 @@ public class HomeWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_newProjectBtnActionPerformed
 
     private void OWASP_proactivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_proactivesActionPerformed
-        
+        settings.SettingsTabPane.setSelectedIndex(1);
+        settings.setVisible(true);
     }//GEN-LAST:event_OWASP_proactivesActionPerformed
 
     private void OWASP_Top_10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_Top_10ActionPerformed
         settings.SettingsTabPane.setSelectedIndex(0);
         settings.setVisible(true);
     }//GEN-LAST:event_OWASP_Top_10ActionPerformed
+
+    private void OWASP_T10_MappingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OWASP_T10_MappingActionPerformed
+        settings.SettingsTabPane.setSelectedIndex(2);
+        settings.setVisible(true);
+    }//GEN-LAST:event_OWASP_T10_MappingActionPerformed
+
+    private void STRIDEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_STRIDEActionPerformed
+        settings.SettingsTabPane.setSelectedIndex(3);
+        settings.setVisible(true);
+    }//GEN-LAST:event_STRIDEActionPerformed
+
+    private void defensivePerspectiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_defensivePerspectiveActionPerformed
+        settings.SettingsTabPane.setSelectedIndex(4);
+        settings.setVisible(true);
+    }//GEN-LAST:event_defensivePerspectiveActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        settings.SettingsTabPane.setSelectedIndex(5);
+        settings.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -441,14 +490,16 @@ public class HomeWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem OWASP_T10_Mapping;
     private javax.swing.JMenuItem OWASP_Top_10;
     private javax.swing.JMenuItem OWASP_proactives;
-    private javax.swing.JMenuItem attackersPerspective;
+    private javax.swing.JMenuItem STRIDE;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton cancelDBtn;
     private javax.swing.JMenuItem defensivePerspective;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

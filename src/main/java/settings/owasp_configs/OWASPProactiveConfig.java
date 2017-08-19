@@ -1,10 +1,15 @@
 package settings.owasp_configs;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import settings.ConfigXMLFileCreator;
+import settings.ConfigXMLFileReader;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class OWASPProactiveConfig {
@@ -14,6 +19,8 @@ public class OWASPProactiveConfig {
     String idTag = "id";
     String nameTag = "name";
     String descriptionTag = "description";
+
+    String fileName = "OWASP_Proactives.xml";
 
     public OWASPProactiveConfig() {}
 
@@ -43,6 +50,34 @@ public class OWASPProactiveConfig {
         }
         /* end of proactive tags */
 
-        configXMLFileCreator.transformAndSaveFile("OWASP_Proactives.xml");
+        configXMLFileCreator.transformAndSaveFile(fileName);
+    }
+
+    public ArrayList<String[]> loadConfigFile() throws IOException, SAXException, ParserConfigurationException {
+
+        ArrayList<String[]> OWASP_proactives_list = new ArrayList<String[]>();
+
+        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
+        configXMLFileReader.loadFile(fileName);
+
+        NodeList nodeList = configXMLFileReader.loadNodesByTagName(proactiveTag);
+
+        for (int i = 0; i < nodeList.getLength(); i++) {
+
+            Node node = nodeList.item(i);
+
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+
+                Element element = (Element) node;
+                String[] row = new String[3];
+
+                row[0] = element.getElementsByTagName(idTag).item(0).getTextContent();
+                row[1] = element.getElementsByTagName(nameTag).item(0).getTextContent();
+                row[2] = element.getElementsByTagName(descriptionTag).item(0).getTextContent();
+
+                OWASP_proactives_list.add(row);
+            }
+        }
+        return OWASP_proactives_list;
     }
 }

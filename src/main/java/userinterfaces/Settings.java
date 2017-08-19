@@ -11,12 +11,21 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
+import settings.owasp_configs.OWASPMappingConfig;
+import settings.owasp_configs.OWASPProactiveConfig;
 import settings.owasp_configs.OWASPT10Config;
+import settings.stride_configs.STRIDEAttackerConfig;
+import settings.stride_configs.STRIDEDefensiveConfig;
+import settings.stride_configs.STRIDEDefensiveMappingConfig;
 import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**
@@ -48,9 +57,16 @@ public class Settings extends javax.swing.JFrame {
         setLocationAndSize();
      
         initComponents();
+        
         populate_OWASPT10_table();
+        pupulate_OWASP_procatives_table();
+        populate_OWASP_proactives_mapping_table();
+        pupulate_STRIDE_table();
+        pupulate_STRIDE_defensive_table();
+        pupulate_STRIDE_defensive_mapping_table();
     }
-
+    
+    //setting the location and the size of the settings window 
     private void setLocationAndSize() {
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         //this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
@@ -62,18 +78,19 @@ public class Settings extends javax.swing.JFrame {
         this.setResizable(false);
     }
     
+    //populate the OWASP top 10 table using the OWASPT10 xml file in configs
     private void populate_OWASPT10_table(){
         ArrayList<String[]> OWASP_T10_list;
-        OWASPT10Config readConfigs = new OWASPT10Config();
+        OWASPT10Config readConfig = new OWASPT10Config();
         
         try {
-            OWASP_T10_list = readConfigs.loadConfigFile();
+            OWASP_T10_list = readConfig.loadConfigFile();
             
             DefaultTableModel tModel = (DefaultTableModel) this.OWASP_table.getModel();
             tModel.setRowCount(0);
             
-            for (String[] OWASPType : OWASP_T10_list){
-                tModel.addRow(OWASPType);
+            for (String[] OWASP_Type : OWASP_T10_list){
+                tModel.addRow(OWASP_Type);
             }
             
         } catch (ParserConfigurationException e) {
@@ -85,6 +102,148 @@ public class Settings extends javax.swing.JFrame {
         }
     }
     
+    //populate the OWASP Proactives table using the OWASP_Proactives xml file in configs
+    private void pupulate_OWASP_procatives_table(){
+        
+        ArrayList<String[]> OWASP_proactives_list;
+        OWASPProactiveConfig readConfig = new OWASPProactiveConfig();
+
+        try {
+            OWASP_proactives_list = readConfig.loadConfigFile();
+            
+            DefaultTableModel tModel = (DefaultTableModel) this.proactive_table.getModel();
+            tModel.setRowCount(0);
+            
+            for (String[] proactive : OWASP_proactives_list){
+                tModel.addRow(proactive);
+            }
+            
+        } catch (IOException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //populate the OWASP proactives mapping table using the OWASP_Mapping xml file in configs
+    private void populate_OWASP_proactives_mapping_table(){
+        
+        Map<String, String[]> OWASP_proactives_mapping;
+        OWASPMappingConfig readConfig = new OWASPMappingConfig();
+        
+        try {
+            OWASP_proactives_mapping = new TreeMap<String, String[]>(readConfig.loadConfigFile());
+            
+            DefaultTableModel tModel = (DefaultTableModel) this.OWASP_mapping_table.getModel();
+            for (String key : OWASP_proactives_mapping.keySet()){
+                int matchedColumn = tModel.findColumn(key);
+                
+                for (String proactive : OWASP_proactives_mapping.get(key)){
+                    int rowNumber = Integer.parseInt(proactive.substring(1)) - 1;
+                    tModel.setValueAt(true, rowNumber, matchedColumn);
+                }
+            }
+            
+        } catch (IOException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    //populate the STRIDE table using the STRIDE xml file in configs
+    private void pupulate_STRIDE_table(){
+        
+        ArrayList<String[]> STRIDE_list;
+        STRIDEAttackerConfig readConfig = new STRIDEAttackerConfig();
+        
+        try {
+            STRIDE_list = readConfig.loadConfigFile();
+            
+            DefaultTableModel tModel = (DefaultTableModel) this.attackers_table.getModel();
+            tModel.setRowCount(0);
+            
+            for(String[] STRIDE_Type: STRIDE_list){
+                tModel.addRow(STRIDE_Type);
+            }
+            
+        } catch (IOException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void pupulate_STRIDE_defensive_table(){
+        
+        ArrayList<String[]> STRIDE_defensive_list;
+        STRIDEDefensiveConfig readFile = new STRIDEDefensiveConfig();
+        
+        try {
+            STRIDE_defensive_list = readFile.loadConfigFile();
+            
+            DefaultTableModel tModel = (DefaultTableModel) this.defensive_table.getModel();
+            tModel.setRowCount(0);
+            
+            for(String[] STRIDE_defensive: STRIDE_defensive_list){
+                tModel.addRow(STRIDE_defensive);
+            }
+            
+        } catch (IOException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void pupulate_STRIDE_defensive_mapping_table(){
+        
+        Map<String, String[]> STRIDE_defensive_mapping;
+        STRIDEDefensiveMappingConfig readConfig = new STRIDEDefensiveMappingConfig();
+        
+        try {
+            STRIDE_defensive_mapping = new TreeMap<String, String[]>(readConfig.loadConfigFile());
+            
+            DefaultTableModel tModel = (DefaultTableModel) this.defensive_mapping_table.getModel();
+            for (String key : STRIDE_defensive_mapping.keySet()){
+                int matchedColumn = 0;
+                
+                if("S".equals(key)){
+                    matchedColumn = 1;
+                }else if("T".equals(key)){
+                    matchedColumn = 2;
+                }else if("R".equals(key)){
+                    matchedColumn = 3;
+                }else if("I".equals(key)){
+                    matchedColumn = 4;
+                }else if("D".equals(key)){
+                    matchedColumn = 5;
+                }else if("E".equals(key)){
+                    matchedColumn = 6;
+                }
+                
+                for (String defensive : STRIDE_defensive_mapping.get(key)){
+                    int rowNumber = Integer.parseInt(defensive.substring(1)) - 1;
+                    tModel.setValueAt(true, rowNumber, matchedColumn);
+                }
+            }
+            
+        } catch (IOException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParserConfigurationException ex) {
+            //Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -121,7 +280,7 @@ public class Settings extends javax.swing.JFrame {
         nextBtn4 = new javax.swing.JButton();
         defensive_mapping = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        defensive_mapping_table = new javax.swing.JTable();
         saveBtn2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -218,9 +377,16 @@ public class Settings extends javax.swing.JFrame {
                 "ID", "Name", "Description"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, true, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -275,7 +441,6 @@ public class Settings extends javax.swing.JFrame {
                 {"C1", null, null, null, null, null, null, null, null, null, null},
                 {"C2", null, null, null, null, null, null, null, null, null, null},
                 {"C3", null, null, null, null, null, null, null, null, null, null},
-                {"C4", null, null, null, null, null, null, null, null, null, null},
                 {"C4", null, null, null, null, null, null, null, null, null, null},
                 {"C5", null, null, null, null, null, null, null, null, null, null},
                 {"C6", null, null, null, null, null, null, null, null, null, null},
@@ -333,22 +498,22 @@ public class Settings extends javax.swing.JFrame {
 
         attackers_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"S", "Spoofing", "Authentication", null},
-                {"T", "Tampering", "Integrity", null},
-                {"R", "Repudiation", "Non-Repudiation", null},
-                {"I", "Information Disclosure", "Confidentiality", null},
-                {"D", "Denial of Service", "Availability", null},
-                {"E", "Elevation of Privileges", "Authorization", null}
+                {"S", "Spoofing", null, null},
+                {"T", "Tampering", null, null},
+                {"R", "Repudiation", null, null},
+                {"I", "Information Disclosure", null, null},
+                {"D", "Denial of Service", null, null},
+                {"E", "Elevation of Privileges", null, null}
             },
             new String [] {
                 "ID", "Category", "Security Control", "Description"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -481,16 +646,16 @@ public class Settings extends javax.swing.JFrame {
 
         defensive_mapping.setBackground(java.awt.Color.white);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        defensive_mapping_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"Authentication", null, null, null, null, null, null},
-                {"Authorization", null, null, null, null, null, null},
-                {"Configuration Management", null, null, null, null, null, null},
-                {"Data Protection in Storage and Transit", null, null, null, null, null, null},
-                {"Data Validation / Parameter Validation", null, null, null, null, null, null},
-                {"Error Handling and Exception Management", null, null, null, null, null, null},
-                {"User and Session Management", null, null, null, null, null, null},
-                {"Auditing and Logging", null, null, null, null, null, null}
+                {"D1: Authentication", null, null, null, null, null, null},
+                {"D2: Authorization", null, null, null, null, null, null},
+                {"D3: Configuration Management", null, null, null, null, null, null},
+                {"D4: Data Protection in Storage and Transit", null, null, null, null, null, null},
+                {"D5: Data Validation / Parameter Validation", null, null, null, null, null, null},
+                {"D6: Error Handling and Exception Management", null, null, null, null, null, null},
+                {"D7: User and Session Management", null, null, null, null, null, null},
+                {"D8: Auditing and Logging", null, null, null, null, null, null}
             },
             new String [] {
                 "", "Spoofing", "Tampering", "Repudiation", "Information Disclosure", "Denial of Service", "Elevation of Privilege"
@@ -504,8 +669,8 @@ public class Settings extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
-        jScrollPane6.setViewportView(jTable1);
+        defensive_mapping_table.setRowHeight(20);
+        jScrollPane6.setViewportView(defensive_mapping_table);
 
         saveBtn2.setText("Save");
 
@@ -614,6 +779,7 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JPanel attackers_perspective;
     private javax.swing.JTable attackers_table;
     private javax.swing.JPanel defensive_mapping;
+    private javax.swing.JTable defensive_mapping_table;
     private javax.swing.JPanel defensive_perspective;
     private javax.swing.JTable defensive_table;
     private javax.swing.JButton deleteBtn1;
@@ -624,7 +790,6 @@ public class Settings extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton nextBtn1;
     private javax.swing.JButton nextBtn2;
     private javax.swing.JButton nextBtn3;

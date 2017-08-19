@@ -60,15 +60,37 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OWASP_proactivesActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="attackersPerspective">
+            <MenuItem class="javax.swing.JMenuItem" name="OWASP_T10_Mapping">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Attacker&apos;s Perspective"/>
+                <Property name="text" type="java.lang.String" value="OWASP Top 10 Mapping"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OWASP_T10_MappingActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="STRIDE">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="STRIDE"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="STRIDEActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="defensivePerspective">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Defensive Perspective"/>
+                <Property name="text" type="java.lang.String" value="STRIDE - Defensive Perspective"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="defensivePerspectiveActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="STRIDE - Defensive Mapping"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

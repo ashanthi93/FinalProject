@@ -196,9 +196,9 @@
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="3" rowCount="10">
-                        <Column editable="false" title="ID" type="java.lang.Object"/>
-                        <Column editable="true" title="Name" type="java.lang.Object"/>
-                        <Column editable="true" title="Description" type="java.lang.Object"/>
+                        <Column editable="false" title="ID" type="java.lang.String"/>
+                        <Column editable="true" title="Name" type="java.lang.String"/>
+                        <Column editable="true" title="Description" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="rowHeight" type="int" value="20"/>
@@ -285,12 +285,11 @@
                 <Component class="javax.swing.JTable" name="OWASP_mapping_table">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="11" rowCount="11">
+                      <Table columnCount="11" rowCount="10">
                         <Column editable="false" title="" type="java.lang.String">
                           <Data value="C1"/>
                           <Data value="C2"/>
                           <Data value="C3"/>
-                          <Data value="C4"/>
                           <Data value="C4"/>
                           <Data value="C5"/>
                           <Data value="C6"/>
@@ -387,15 +386,8 @@
                           <Data value="Denial of Service"/>
                           <Data value="Elevation of Privileges"/>
                         </Column>
-                        <Column editable="false" title="Security Control" type="java.lang.Object">
-                          <Data value="Authentication"/>
-                          <Data value="Integrity"/>
-                          <Data value="Non-Repudiation"/>
-                          <Data value="Confidentiality"/>
-                          <Data value="Availability"/>
-                          <Data value="Authorization"/>
-                        </Column>
-                        <Column editable="true" title="Description" type="java.lang.Object"/>
+                        <Column editable="true" title="Security Control" type="java.lang.String"/>
+                        <Column editable="true" title="Description" type="java.lang.String"/>
                       </Table>
                     </Property>
                     <Property name="rowHeight" type="int" value="20"/>
@@ -564,19 +556,19 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="defensive_mapping_table">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="7" rowCount="8">
                         <Column editable="true" title="" type="java.lang.String">
-                          <Data value="Authentication"/>
-                          <Data value="Authorization"/>
-                          <Data value="Configuration Management"/>
-                          <Data value="Data Protection in Storage and Transit"/>
-                          <Data value="Data Validation / Parameter Validation"/>
-                          <Data value="Error Handling and Exception Management"/>
-                          <Data value="User and Session Management"/>
-                          <Data value="Auditing and Logging"/>
+                          <Data value="D1: Authentication"/>
+                          <Data value="D2: Authorization"/>
+                          <Data value="D3: Configuration Management"/>
+                          <Data value="D4: Data Protection in Storage and Transit"/>
+                          <Data value="D5: Data Validation / Parameter Validation"/>
+                          <Data value="D6: Error Handling and Exception Management"/>
+                          <Data value="D7: User and Session Management"/>
+                          <Data value="D8: Auditing and Logging"/>
                         </Column>
                         <Column editable="true" title="Spoofing" type="java.lang.Boolean"/>
                         <Column editable="true" title="Tampering" type="java.lang.Boolean"/>

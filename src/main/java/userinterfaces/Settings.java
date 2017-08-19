@@ -6,16 +6,11 @@
 
 package userinterfaces;
 
-import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,10 +48,10 @@ public class Settings extends javax.swing.JFrame {
         } catch (Exception ex) {
             
         }
-        
-        setLocationAndSize();
      
         initComponents();
+        
+        setLocationAndSize();
         
         populate_OWASPT10_table();
         pupulate_OWASP_procatives_table();
@@ -68,14 +63,8 @@ public class Settings extends javax.swing.JFrame {
     
     //setting the location and the size of the settings window 
     private void setLocationAndSize() {
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        
-        int height = (int) (dim.height);
-        int width = (int) (dim.width);
-        this.setSize(width, height);
-        
-        this.setResizable(false);
+        this.setSize(900, 500);
+        //this.setResizable(false);
     }
     
     //populate the OWASP top 10 table using the OWASPT10 xml file in configs
@@ -327,7 +316,7 @@ public class Settings extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        OWASP_table.setRowHeight(20);
+        OWASP_table.setRowHeight(24);
         jScrollPane1.setViewportView(OWASP_table);
 
         nextBtn1.setText("Next");
@@ -341,7 +330,7 @@ public class Settings extends javax.swing.JFrame {
         OWASP_top_10.setLayout(OWASP_top_10Layout);
         OWASP_top_10Layout.setHorizontalGroup(
             OWASP_top_10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, OWASP_top_10Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(nextBtn1)
@@ -350,10 +339,10 @@ public class Settings extends javax.swing.JFrame {
         OWASP_top_10Layout.setVerticalGroup(
             OWASP_top_10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OWASP_top_10Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(nextBtn1)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("OWASP Top 10", OWASP_top_10);
@@ -362,7 +351,6 @@ public class Settings extends javax.swing.JFrame {
 
         proactive_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
                 {null, null, null},
                 {null, null, null},
                 {null, null, null},
@@ -392,7 +380,7 @@ public class Settings extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        proactive_table.setRowHeight(20);
+        proactive_table.setRowHeight(24);
         jScrollPane2.setViewportView(proactive_table);
 
         addBtn1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -410,7 +398,7 @@ public class Settings extends javax.swing.JFrame {
         OWASP_Proactives.setLayout(OWASP_ProactivesLayout);
         OWASP_ProactivesLayout.setHorizontalGroup(
             OWASP_ProactivesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(OWASP_ProactivesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,13 +411,13 @@ public class Settings extends javax.swing.JFrame {
         OWASP_ProactivesLayout.setVerticalGroup(
             OWASP_ProactivesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OWASP_ProactivesLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(OWASP_ProactivesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextBtn2)
                     .addComponent(deleteBtn1))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("OWASP Proactives", OWASP_Proactives);
@@ -468,7 +456,7 @@ public class Settings extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        OWASP_mapping_table.setRowHeight(20);
+        OWASP_mapping_table.setRowHeight(24);
         jScrollPane3.setViewportView(OWASP_mapping_table);
 
         saveBtn1.setText("Save");
@@ -477,7 +465,7 @@ public class Settings extends javax.swing.JFrame {
         OWASP_mapping.setLayout(OWASP_mappingLayout);
         OWASP_mappingLayout.setHorizontalGroup(
             OWASP_mappingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(OWASP_mappingLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(saveBtn1)
@@ -486,10 +474,10 @@ public class Settings extends javax.swing.JFrame {
         OWASP_mappingLayout.setVerticalGroup(
             OWASP_mappingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(OWASP_mappingLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(saveBtn1)
-                .addContainerGap())
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("OWASP Top 10 Mapping", OWASP_mapping);
@@ -524,7 +512,7 @@ public class Settings extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        attackers_table.setRowHeight(20);
+        attackers_table.setRowHeight(24);
         jScrollPane4.setViewportView(attackers_table);
 
         nextBtn3.setText("Next");
@@ -538,7 +526,7 @@ public class Settings extends javax.swing.JFrame {
         attackers_perspective.setLayout(attackers_perspectiveLayout);
         attackers_perspectiveLayout.setHorizontalGroup(
             attackers_perspectiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, attackers_perspectiveLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(nextBtn3)
@@ -547,10 +535,10 @@ public class Settings extends javax.swing.JFrame {
         attackers_perspectiveLayout.setVerticalGroup(
             attackers_perspectiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(attackers_perspectiveLayout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(nextBtn3)
-                .addGap(0, 111, Short.MAX_VALUE))
+                .addContainerGap(119, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("STRIDE", attackers_perspective);
@@ -587,7 +575,7 @@ public class Settings extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        defensive_table.setRowHeight(20);
+        defensive_table.setRowHeight(24);
         jScrollPane5.setViewportView(defensive_table);
 
         addBtn2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -620,7 +608,7 @@ public class Settings extends javax.swing.JFrame {
         defensive_perspective.setLayout(defensive_perspectiveLayout);
         defensive_perspectiveLayout.setHorizontalGroup(
             defensive_perspectiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(defensive_perspectiveLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(addBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -633,13 +621,13 @@ public class Settings extends javax.swing.JFrame {
         defensive_perspectiveLayout.setVerticalGroup(
             defensive_perspectiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(defensive_perspectiveLayout.createSequentialGroup()
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(defensive_perspectiveLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nextBtn4)
                     .addComponent(deleteBtn2))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("STRIDE - Defensive Perspective", defensive_perspective);
@@ -669,7 +657,7 @@ public class Settings extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        defensive_mapping_table.setRowHeight(20);
+        defensive_mapping_table.setRowHeight(24);
         jScrollPane6.setViewportView(defensive_mapping_table);
 
         saveBtn2.setText("Save");
@@ -678,7 +666,7 @@ public class Settings extends javax.swing.JFrame {
         defensive_mapping.setLayout(defensive_mappingLayout);
         defensive_mappingLayout.setHorizontalGroup(
             defensive_mappingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
+            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, defensive_mappingLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(saveBtn2)
@@ -687,10 +675,10 @@ public class Settings extends javax.swing.JFrame {
         defensive_mappingLayout.setVerticalGroup(
             defensive_mappingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(defensive_mappingLayout.createSequentialGroup()
-                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(saveBtn2)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
 
         SettingsTabPane.addTab("STRIDE - Defensive Mapping", defensive_mapping);
@@ -704,7 +692,7 @@ public class Settings extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(SettingsTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(SettingsTabPane, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 

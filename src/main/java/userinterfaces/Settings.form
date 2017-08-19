@@ -7,7 +7,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -66,8 +66,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="OWASP TOP 10">
-                <Property name="tabTitle" type="java.lang.String" value="OWASP TOP 10"/>
+              <JTabbedPaneConstraints tabName="OWASP Top 10">
+                <Property name="tabTitle" type="java.lang.String" value="OWASP Top 10"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -75,7 +75,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="nextBtn1" min="-2" max="-2" attributes="0"/>
@@ -86,10 +86,10 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="249" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" min="-2" pref="233" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="nextBtn1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="29" max="32767" attributes="0"/>
+                      <EmptySpace pref="45" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -157,7 +157,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane2" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="addBtn1" min="-2" pref="45" max="-2" attributes="0"/>
@@ -255,7 +255,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane3" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="saveBtn1" min="-2" max="-2" attributes="0"/>
@@ -331,8 +331,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="STRIDE - Attacker&apos;s Perspective">
-                <Property name="tabTitle" type="java.lang.String" value="STRIDE - Attacker&apos;s Perspective"/>
+              <JTabbedPaneConstraints tabName="STRIDE">
+                <Property name="tabTitle" type="java.lang.String" value="STRIDE"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -340,7 +340,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane4" alignment="0" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" alignment="0" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="nextBtn3" min="-2" max="-2" attributes="0"/>
@@ -430,7 +430,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane5" alignment="0" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane5" alignment="0" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="addBtn2" min="-2" pref="45" max="-2" attributes="0"/>
@@ -528,8 +528,8 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Defensive Mapping">
-                <Property name="tabTitle" type="java.lang.String" value="Defensive Mapping"/>
+              <JTabbedPaneConstraints tabName="STRIDE - Defensive Mapping">
+                <Property name="tabTitle" type="java.lang.String" value="STRIDE - Defensive Mapping"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -537,7 +537,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane6" alignment="0" pref="562" max="32767" attributes="0"/>
+                  <Component id="jScrollPane6" alignment="0" pref="558" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="saveBtn2" min="-2" max="-2" attributes="0"/>

@@ -92,4 +92,28 @@ public class STRIDEAttackerConfig {
         }
         return STRIDE_list;
     }
+
+    public ArrayList<String> loadThreatControls() throws IOException, SAXException, ParserConfigurationException {
+
+        ArrayList<String> threatControls = new ArrayList<String>();
+
+        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
+        configXMLFileReader.loadFile(fileName);
+
+        NodeList nodeList = configXMLFileReader.loadNodesByTagName(securityControlTag);
+
+        for (int i=0; i<nodeList.getLength(); i++){
+
+            Node node = nodeList.item(i);
+
+            if (node.getNodeType() == Node.ELEMENT_NODE){
+
+                Element element = (Element) node;
+
+                String controlTagValue = element.getElementsByTagName(controlNameTag).item(0).getTextContent();
+                threatControls.add(i,controlTagValue);
+            }
+        }
+        return threatControls;
+    }
 }

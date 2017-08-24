@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<OWASP-T10>
+<owasp-t10>
     <type>
         <id>A1</id>
         <name>Injection</name>
@@ -85,4 +85,4 @@
             to phishing or malware sites, or use forwards to access unauthorized pages.
         </description>
     </type>
-</OWASP-T10>
+</owasp-t10>

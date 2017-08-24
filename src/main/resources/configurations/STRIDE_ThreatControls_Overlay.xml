@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<threat-controls>
+    <threat-control>
+        <id>TC1</id>
+        <name>Authentication</name>
+        <from>AD</from>
+    </threat-control>
+    <threat-control>
+        <id>TC2</id>
+        <name>Integrity</name>
+        <from>A</from>
+    </threat-control>
+    <threat-control>
+        <id>TC3</id>
+        <name>Non-repudiation</name>
+        <from>A</from>
+    </threat-control>
+    <threat-control>
+        <id>TC4</id>
+        <name>Confidentiality</name>
+        <from>A</from>
+    </threat-control>
+    <threat-control>
+        <id>TC5</id>
+        <name>Availability</name>
+        <from>A</from>
+    </threat-control>
+    <threat-control>
+        <id>TC6</id>
+        <name>Authorization</name>
+        <from>AD</from>
+    </threat-control>
+    <threat-control>
+        <id>S7</id>
+        <name>Configuration Management</name>
+        <from>D</from>
+    </threat-control>
+    <threat-control>
+        <id>S8</id>
+        <name>Data Protection in Storage and Transit</name>
+        <from>D</from>
+    </threat-control>
+    <threat-control>
+        <id>S9</id>
+        <name>Data validation/ Parameter validation</name>
+        <from>D</from>
+    </threat-control>
+    <threat-control>
+        <id>S10</id>
+        <name>Error Handling and Exception Management</name>
+        <from>D</from>
+    </threat-control>
+    <threat-control>
+        <id>S11</id>
+        <name>User and Session Management</name>
+        <from>D</from>
+    </threat-control>
+    <threat-control>
+        <id>S12</id>
+        <name>Auditing and Logging</name>
+        <from>D</from>
+    </threat-control>
+</threat-controls>

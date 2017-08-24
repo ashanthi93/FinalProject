@@ -1,13 +1,17 @@
 package settings;
 
+import org.xml.sax.SAXException;
 import settings.owasp_configs.OWASPT10Config;
+import settings.stride_configs.STRIDEThreatControlConfig;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Temp {
 
-    public static void main(String args[]) throws ParserConfigurationException {
+    /*public static void main(String args[]) throws ParserConfigurationException {
 
         String[] A1 = {"A1", "Injection", "Injection flaws, such as SQL, OS, and LDAP injection occur when untrusted data is sent to an interpreter as part of a command or query. The attacker’s hostile data can trick the interpreter into executing unintended commands or accessing data without proper authorization."};
         String[] A2 = {"A2", "Broken Authentication and Session Management", "Application functions related to authentication and session management are often not implemented correctly, allowing attackers to compromise passwords, keys, or session tokens, or to exploit other implementation flaws to assume other users’ identities."};
@@ -137,5 +141,21 @@ public class Temp {
 
         //OWASPProactiveConfig owaspProactiveConfig = new OWASPProactiveConfig();
         //owaspProactiveConfig.createConfigFile(OWASPProactives);
-    }
+    }*/
+
+   /* public static void main(String args[]){
+
+        STRIDEThreatControlConfig strideThreatControlConfig = new STRIDEThreatControlConfig();
+        try {
+            strideThreatControlConfig.createFile(STRIDEThreatControlsOverlayCreator.getInstance().createThreatControlsOverlayList());
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        }
+    }*/
 }

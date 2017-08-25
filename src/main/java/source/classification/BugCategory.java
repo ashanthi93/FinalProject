@@ -2,17 +2,20 @@ package source.classification;
 
 import source.model.Bug;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public interface BugCategory {
+import java.util.ArrayList;
 
-    public int id = 0; //make public or static final?? (All the variables)
-    static final Bug[] bugInstanceList = null;
-    static final String countermeasures = "";
+public abstract class BugCategory {
 
-    public void getBugList();
+    //make public or static final?? (All the variables)
+    protected int id;
+    protected ArrayList<Bug> bugList;
+    protected ArrayList<String> countermeasures;
 
-    public void addBug(Bug bug);
+    public abstract ArrayList<Bug> getBugList();
 
+    public abstract void setBugList(ArrayList<Bug> bugList);
+
+    public abstract ArrayList<String> getCountermeasures();
+
+    public abstract void setCountermeasures(ArrayList<String> countermeasures);
 }

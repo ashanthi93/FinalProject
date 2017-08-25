@@ -3,17 +3,31 @@ package design.classification.model;
 import design.classification.ThreatCategory;
 import design.model.Threat;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class RepudiationThreatCategory implements ThreatCategory{
+import java.util.ArrayList;
 
-    public void getThreatList(){
+public class RepudiationThreatCategory extends ThreatCategory{
 
+    public ArrayList<Threat> getThreatList() {
+        return threatList;
     }
 
-    public void addThreat(Threat threat){
-
+    public void setThreatList(ArrayList<Threat> threatList) {
+        this.threatList = threatList;
     }
 
+    public String getSecurityControl() {
+        return securityControl;
+    }
+
+    public void setSecurityControl(String securityControl) {
+        this.securityControl = securityControl;
+    }
+
+    public ArrayList<String> getMitigationList() {
+        return mitigationList;
+    }
+
+    public void setMitigationList(ArrayList<String> mitigationList) {
+        this.mitigationList = mitigationList;
+    }
 }

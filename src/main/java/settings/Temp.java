@@ -1,8 +1,16 @@
 package settings;
 
+import association.model.Association;
+import association.report.AssociationReport;
+import association.report.builder.ReportBuilder;
+import association.report.builder.concrete.JSONReportBuilder;
+import association.report.builder.concrete.XMLReportBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import design.model.Threat;
 import org.xml.sax.SAXException;
 import settings.owasp_configs.OWASPT10Config;
 import settings.stride_configs.STRIDEThreatControlConfig;
+import source.model.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -145,7 +153,7 @@ public class Temp {
 
    public static void main(String args[]){
 
-        STRIDEThreatControlConfig strideThreatControlConfig = new STRIDEThreatControlConfig();
+        /*STRIDEThreatControlConfig strideThreatControlConfig = new STRIDEThreatControlConfig();
         try {
             strideThreatControlConfig.createFile(STRIDEThreatControlsOverlayCreator.getInstance().createThreatControlsOverlayList());
         } catch (ParserConfigurationException e) {
@@ -156,6 +164,57 @@ public class Temp {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
-        }
-    }
+        }*/
+
+       ReportBuilder reportBuilder = new JSONReportBuilder();
+
+       Association association = new Association();
+       association.setThreatCategoryName("Spoofing");
+
+       ArrayList<Threat> threatArrayList = new ArrayList<Threat>();
+       Threat threat = new Threat();
+       threat.setName("T1");
+       Threat threat1 = new Threat();
+       threat.setName("T2");
+
+       threatArrayList.add(threat);
+       threatArrayList.add(threat1);
+
+       association.setthreatArrayList(threatArrayList);
+
+       ArrayList<Bug> bugArrayList = new ArrayList<Bug>();
+       Bug bug = new Bug();
+       bug.setName("B1");
+       Bug bug1 = new Bug();
+       bug1.setName("B2");
+
+       bugArrayList.add(bug);
+       bugArrayList.add(bug1);
+
+       association.setbugArrayList(bugArrayList);
+
+       Association association1 = new Association();
+       association1.setThreatCategoryName("Tampering");
+
+       threat.setName("T5");
+       threat1.setName("T6");
+       threatArrayList.add(threat);
+       threatArrayList.add(threat1);
+       association1.setthreatArrayList(threatArrayList);
+       association1.setbugArrayList(bugArrayList);
+
+       AssociationReport associationReport = new AssociationReport();
+
+       ArrayList<Association> associationArrayList = new ArrayList<Association>();
+       associationArrayList.add(association);
+       associationArrayList.add(association1);
+
+       associationReport.setAssociationArrayList(associationArrayList);
+
+       try {
+           reportBuilder.convertReport(associationReport);
+       } catch (JsonProcessingException e) {
+           e.printStackTrace();
+       }
+   }
 }

@@ -43,7 +43,7 @@ public class AssociationReportCreator {
             }
         }
         //create associations for each threat category
-        associationReport.setAssociationList(this.createAssociations(bugsForThreatCategory));
+        associationReport.setAssociationArrayList(this.createAssociations(bugsForThreatCategory));
 
         return associationReport;
     }
@@ -86,8 +86,8 @@ public class AssociationReportCreator {
             Association association = new Association();
 
             association.setThreatCategoryName(threatCategoryID);
-            association.setThreatList(threatCategoryMap.get(threatCategoryID).getThreatList());
-            association.setBugList(bugsForThreatCategory.get(threatCategoryID));
+            association.setthreatArrayList(threatCategoryMap.get(threatCategoryID).getThreatList());
+            association.setbugArrayList(bugsForThreatCategory.get(threatCategoryID));
 
             associationArrayList.add(association);
         }

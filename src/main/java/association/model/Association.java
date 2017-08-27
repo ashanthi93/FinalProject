@@ -1,15 +1,30 @@
 package association.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import design.model.Threat;
 import source.model.Bug;
 
 import java.util.ArrayList;
 
-public class Association {
+@JacksonXmlRootElement(localName = "association")
+@JsonRootName("association")
+public class Association{
 
+    @JacksonXmlProperty(localName = "threat-category-name")
+    @JsonProperty("threatCategoryName")
     private String threatCategoryName;
-    private ArrayList<Threat> threatList;
-    private ArrayList<Bug> bugList;
+
+    @JacksonXmlProperty(localName = "threats")
+    @JsonProperty("threats")
+    private ArrayList<Threat> threatArrayList;
+
+    @JacksonXmlProperty(localName = "bugs")
+    @JsonProperty("bugs")
+    private ArrayList<Bug> bugArrayList;
 
     public Association() {}
 
@@ -22,28 +37,19 @@ public class Association {
         this.threatCategoryName = threatCategoryName;
     }
 
-    public ArrayList<Threat> getThreatList() {
-        return threatList;
+    public ArrayList<Threat> getthreatArrayList() {
+        return threatArrayList;
     }
 
-    public void setThreatList(ArrayList<Threat> threatList) {
-        this.threatList = threatList;
+    public void setthreatArrayList(ArrayList<Threat> threatArrayList) {
+        this.threatArrayList = threatArrayList;
     }
 
-    public ArrayList<Bug> getBugList() {
-        return bugList;
+    public ArrayList<Bug> getbugArrayList() {
+        return bugArrayList;
     }
 
-    public void setBugList(ArrayList<Bug> bugList) {
-        this.bugList = bugList;
-    }
-
-    @Override
-    public String toString() {
-        return "Association{" +
-                "threatCategoryName='" + threatCategoryName + '\'' +
-                ", threatList=" + threatList +
-                ", bugList=" + bugList +
-                '}';
+    public void setbugArrayList(ArrayList<Bug> bugArrayList) {
+        this.bugArrayList = bugArrayList;
     }
 }

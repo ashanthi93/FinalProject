@@ -1,39 +1,33 @@
 package association.report;
+
 import association.model.Association;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import java.util.ArrayList;
 
+@JacksonXmlRootElement(localName = "association-report")
+@JsonRootName("associationReport")
 public class AssociationReport {
 
-    private ArrayList<Association> associationList;
+    @JacksonXmlElementWrapper(localName = "associations")
+    @JacksonXmlProperty(localName = "association")
+    @JsonProperty("associations")
+    private ArrayList<Association> associationArrayList;
 
-    public AssociationReport() {}
+    public AssociationReport() {
+    }
 
     /* getters & setters */
-    public ArrayList<Association> getAssociationList() {
-        return associationList;
+    public ArrayList<Association> getAssociationArrayList() {
+        return associationArrayList;
     }
 
-    public void setAssociationList(ArrayList<Association> associationList) {
-        this.associationList = associationList;
-    }
-
-    @Override
-    public String toString() {
-
-        String output = "Association Report { ";
-
-        Association finalAssociation = associationList.get(associationList.size()-1);
-
-        for (Association association : associationList){
-            output += association.toString();
-
-            if (finalAssociation != association){
-                output += " , \n ";
-            }else {
-                output += " } ";
-            }
-        }
-        return (output);
+    public void setAssociationArrayList(ArrayList<Association> associations) {
+        this.associationArrayList = associations;
     }
 }

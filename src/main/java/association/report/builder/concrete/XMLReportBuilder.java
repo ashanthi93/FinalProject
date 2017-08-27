@@ -15,16 +15,16 @@ public class XMLReportBuilder extends ReportBuilder {
     /**
      *
      *
-     * @param associationReport
+     * @param object
      * @return
      * @throws JsonProcessingException
      */
-    public String convertReport(AssociationReport associationReport) throws JsonProcessingException {
+    public String convertReport(Object object) throws JsonProcessingException {
 
         ObjectMapper xmlMapper = new XmlMapper();
-        String xmlOutput = xmlMapper.writeValueAsString(associationReport);
+        String xmlOutput = xmlMapper.writeValueAsString(object);
 
-        xmlOutput = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(associationReport);
+        xmlOutput = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         System.out.println(xmlOutput);
 
         return xmlOutput;
@@ -33,13 +33,13 @@ public class XMLReportBuilder extends ReportBuilder {
     /**
      *
      *
-     * @param associationReport
+     * @param object
      * @param filePath
      * @throws IOException
      */
-    public void convertReportToFile(AssociationReport associationReport, String filePath) throws IOException {
+    public void convertReportToFile(Object object, String filePath) throws IOException {
 
         ObjectMapper xmlMapper = new XmlMapper();
-        xmlMapper.writeValue(new File(filePath), associationReport);
+        xmlMapper.writeValue(new File(filePath), object);
     }
 }

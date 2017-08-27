@@ -82,3 +82,133 @@ stride_defensive(
 	).
 
 
+owasp_top10(
+	a1,
+	name("Injection"),
+	proactives([c2, c3, c4, c8, c9, c10])
+	).
+
+owasp_top10(
+	a2,
+	name("Broken Authentication and Session Management"),
+	proactives(c5, c8, c9, c10)
+	).
+
+owasp_top10(
+	a3,
+	name("Cross-Site Scripting (XSS)"),
+	proactives(c3, c4, c8, c9, c10)
+	).
+
+owasp_top10(
+	a4,
+	name("Insecure Direct Object References"),
+	proactives(c6, c8, c9, c10)
+	).
+
+owasp_top10(
+	a5,
+	name("Security Misconfiguration"),
+	proactives(c8, c9, c10)
+	).
+
+owasp_top10(
+	a6,
+	name("Sensitive Data Exposure"),
+	proactives(c7, c8, c9, c10)
+	).
+
+owasp_top10(
+	a7,
+	name("Missing Function Level Access Control"),
+	proactives(c6, c8, c9, c10)
+	).
+
+owasp_top10(
+	a8,
+	name("Cross-Site Request Forgery (CSRF)"),
+	proactives(c8, c9, c10)
+	).
+
+owasp_top10(
+	a9,
+	name("Using Components with Known Vulnerabilities"),
+	proactives(c8, c9, c10)
+	).
+
+owasp_top10(
+	a10,
+	name("Unvalidated Redirects and Forwards"),
+	practives(c4, c8, c9, c10)
+	).
+
+owasp(X):-
+	owasp_top10(
+		X,
+		Y,
+		_
+	),
+	write(Y).
+
+
+owasp_top10_proactive(
+	c2,
+	name("Parameterize Queries"),
+	description("c2 description")
+	).
+
+owasp_top10_proactive(
+	c3,
+	name("Encode Data"),
+	description("c3 description")
+	).
+
+owasp_top10_proactive(
+	c4,
+	name("Validate All Inputs"),
+	description("c4 description")
+	).
+
+owasp_top10_proactive(
+	c5,
+	name("Implement Identity and Authentication Controls"),
+	description("c5 description")
+	).
+
+owasp_top10_proactive(
+	c6,
+	name("Implement Appropriate Access Controls"),
+	description("c6 description")
+	).
+
+owasp_top10_proactive(
+	c7,
+	name("Protect Data"),
+	description("c7 description")
+	).
+
+owasp_top10_proactive(
+	c8,
+	name("Implement Logging and Intrusion Detection"),
+	description("c8 description")
+	).
+
+owasp_top10_proactive(
+	c9,
+	name("Leverage Security Frameworks and Libraries"),
+	description("c9 description")
+	).
+
+owasp_top10_proactive(
+	c10,
+	name("Error and Exception Handling"),
+	description("c10 description")
+	).
+
+owasp_proactive(X):-
+	owasp_top10_proactive(
+		X,
+		_,
+		Z
+		),
+	write(Z).

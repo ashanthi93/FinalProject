@@ -2,43 +2,45 @@ stride(
 	spoofing,
 	security_control(authentication),
 	mitigation_techniques(a,b,c),
-	defence(d1)
+	[d1]
 	).
 
 stride(
 	tampering,
 	security_control(integrity),
 	mitigation_techniques(d,e,f),
-	defence(d6)
+	[d6]
 	).
 
 stride(
 	repudiation,
 	security_control(non_repudiation),
 	mitigation_techniques(g,h,i),
-	defence(d2)
+	[d2]
 	).
 
 stride(
 	information_disclosure,
 	security_control(confidentiality),
 	mitigation_techniques(j,k,l),
-	defence(d8)
+	[d8]
 	).
 
 stride(
 	denial_of_service,
 	security_control(availability),
 	mitigation_techniques(m,n,o),
-	defence(d3, d7)
+	[d3, d7]
 	).
 
 stride(
 	elevation_of_priviladge,
 	security_control(authorization),
 	mitigation_techniques(p,q,r),
-	defence(d3, d4, d5)
+	[d3, d4, d5]
 	).
+
+
 
 
 stride_defensive(
@@ -82,73 +84,78 @@ stride_defensive(
 	).
 
 
+
 owasp_top10(
 	a1,
 	name("Injection"),
-	proactives([c2, c3, c4, c8, c9, c10])
+	[c2, c3, c4, c8, c9, c10]
 	).
 
 owasp_top10(
 	a2,
 	name("Broken Authentication and Session Management"),
-	proactives(c5, c8, c9, c10)
+	[c5, c8, c9, c10]
 	).
 
 owasp_top10(
 	a3,
 	name("Cross-Site Scripting (XSS)"),
-	proactives(c3, c4, c8, c9, c10)
+	[c3, c4, c8, c9, c10]
 	).
 
 owasp_top10(
 	a4,
 	name("Insecure Direct Object References"),
-	proactives(c6, c8, c9, c10)
+	[c6, c8, c9, c10]
 	).
 
 owasp_top10(
 	a5,
 	name("Security Misconfiguration"),
-	proactives(c8, c9, c10)
+	[c8, c9, c10]
 	).
 
 owasp_top10(
 	a6,
 	name("Sensitive Data Exposure"),
-	proactives(c7, c8, c9, c10)
+	[c7, c8, c9, c10]
 	).
 
 owasp_top10(
 	a7,
 	name("Missing Function Level Access Control"),
-	proactives(c6, c8, c9, c10)
+	[c6, c8, c9, c10]
 	).
 
 owasp_top10(
 	a8,
 	name("Cross-Site Request Forgery (CSRF)"),
-	proactives(c8, c9, c10)
+	[c8, c9, c10]
 	).
 
 owasp_top10(
 	a9,
 	name("Using Components with Known Vulnerabilities"),
-	proactives(c8, c9, c10)
+	[c8, c9, c10]
 	).
 
 owasp_top10(
 	a10,
 	name("Unvalidated Redirects and Forwards"),
-	practives(c4, c8, c9, c10)
+	[c4, c8, c9, c10]
 	).
 
 owasp(X):-
 	owasp_top10(
 		X,
-		Y,
-		_
+		_,
+		Y
 	),
-	write(Y).
+	write(Y),
+	member(c2,[c7|Y]). /* check c2 is matched with Y's first element. */
+
+	
+
 
 
 owasp_top10_proactive(
@@ -204,11 +211,3 @@ owasp_top10_proactive(
 	name("Error and Exception Handling"),
 	description("c10 description")
 	).
-
-owasp_proactive(X):-
-	owasp_top10_proactive(
-		X,
-		_,
-		Z
-		),
-	write(Z).

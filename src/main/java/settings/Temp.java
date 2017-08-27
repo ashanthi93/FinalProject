@@ -143,7 +143,7 @@ public class Temp {
         //owaspProactiveConfig.createConfigFile(OWASPProactives);
     }*/
 
-   /* public static void main(String args[]){
+   public static void main(String args[]){
 
         STRIDEThreatControlConfig strideThreatControlConfig = new STRIDEThreatControlConfig();
         try {
@@ -157,5 +157,5 @@ public class Temp {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 }

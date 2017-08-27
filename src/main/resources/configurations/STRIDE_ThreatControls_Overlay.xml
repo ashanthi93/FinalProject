@@ -31,32 +31,32 @@
         <from>AD</from>
     </threat-control>
     <threat-control>
-        <id>S7</id>
+        <id>TC7</id>
         <name>Configuration Management</name>
         <from>D</from>
     </threat-control>
     <threat-control>
-        <id>S8</id>
+        <id>TC8</id>
         <name>Data Protection in Storage and Transit</name>
         <from>D</from>
     </threat-control>
     <threat-control>
-        <id>S9</id>
+        <id>TC9</id>
         <name>Data validation/ Parameter validation</name>
         <from>D</from>
     </threat-control>
     <threat-control>
-        <id>S10</id>
+        <id>TC10</id>
         <name>Error Handling and Exception Management</name>
         <from>D</from>
     </threat-control>
     <threat-control>
-        <id>S11</id>
+        <id>TC11</id>
         <name>User and Session Management</name>
         <from>D</from>
     </threat-control>
     <threat-control>
-        <id>S12</id>
+        <id>TC12</id>
         <name>Auditing and Logging</name>
         <from>D</from>
     </threat-control>

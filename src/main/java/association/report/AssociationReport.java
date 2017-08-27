@@ -1,11 +1,20 @@
 package association.report;
 import association.model.Association;
 
+import java.util.ArrayList;
+
 /**
- * Created by Ashi on 8/1/2017.
- */
+ * Not completed
+ * */
 public class AssociationReport {
 
-    private Association[] associations;
+    private ArrayList<Association> associationList;
 
+    public ArrayList<Association> getAssociationList() {
+        return associationList;
+    }
+
+    public void setAssociationList(ArrayList<Association> associationList) {
+        this.associationList = associationList;
+    }
 }

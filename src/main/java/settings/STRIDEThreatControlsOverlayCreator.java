@@ -66,7 +66,7 @@ public class STRIDEThreatControlsOverlayCreator {
 
             if (existingIndex == -1) {
 
-                String id = "S" + idNum;
+                String id = "TC" + idNum;
 
                 String[] threatControl = new String[3];
 

@@ -3,17 +3,23 @@ package source.classification.model;
 import source.classification.BugCategory;
 import source.model.Bug;
 
-/**
- * Created by Ashi on 8/3/2017.
- */
-public class A2BugCategory implements BugCategory {
+import java.util.ArrayList;
 
-    public void getBugList(){
+public class A2BugCategory extends BugCategory {
 
+    public ArrayList<Bug> getBugList() {
+        return  bugList;
     }
 
-    public void addBug(Bug bug){
-
+    public void setBugList(ArrayList<Bug> bugList) {
+        this.bugList = bugList;
     }
 
+    public ArrayList<String> getCountermeasures() {
+        return countermeasures;
+    }
+
+    public void setCountermeasures(ArrayList<String> countermeasures) {
+        this.countermeasures = countermeasures;
+    }
 }

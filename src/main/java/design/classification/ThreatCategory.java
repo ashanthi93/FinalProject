@@ -2,20 +2,25 @@ package design.classification;
 
 import design.model.Threat;
 
-/**
- * Created by Ashi on 8/1/2017.
- * ThreatCategory instead of STRIDECategory
- * SpoofingThreatCategory implements ThreatCategory
- */
-public interface ThreatCategory {
+import java.util.ArrayList;
 
-   public int id = 0; //make public or static final?? (All the variables)
-   static final Threat[] threatList = null;
-   static final String securityControl = "";
-   static final String Mitigation = "";
+public abstract class ThreatCategory {
 
-   public void getThreatList();
+   protected int id = 0;
+   protected ArrayList<Threat> threatList;
+   protected String securityControl;
+   protected ArrayList<String> mitigationList;
 
-   public void addThreat(Threat threat);
+   public abstract ArrayList<Threat> getThreatList();
+
+   public abstract void setThreatList(ArrayList<Threat> threatList);
+
+   public abstract String getSecurityControl();
+
+   public abstract void setSecurityControl(String securityControl);
+
+   public abstract ArrayList<String> getMitigationList();
+
+   public abstract void setMitigationList(ArrayList<String> mitigationList);
 
 }

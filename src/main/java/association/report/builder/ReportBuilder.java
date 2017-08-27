@@ -1,8 +1,8 @@
 package association.report.builder;
 
 /**
- * Created by Ashi on 8/1/2017.
- */
+ * Not completed
+ * */
 public abstract class ReportBuilder {
 
     public void createReport(){

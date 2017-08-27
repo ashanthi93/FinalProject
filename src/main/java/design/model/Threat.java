@@ -2,9 +2,6 @@ package design.model;
 
 import design.classification.ThreatCategory;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
 public class Threat {
 
     private String id;
@@ -14,4 +11,12 @@ public class Threat {
     private String element;
     private String priority;
     private String interactionId;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

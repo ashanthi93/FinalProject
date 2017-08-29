@@ -145,69 +145,82 @@ owasp_top10(
 	[c4, c8, c9, c10]
 	).
 
-owasp(X):-
-	owasp_top10(
-		X,
-		_,
-		Y
-	),
-	write(Y),
-	member(c2,[c7|Y]). /* check c2 is matched with Y's first element. */
-
-	
-
 
 
 owasp_top10_proactive(
 	c2,
 	name("Parameterize Queries"),
-	description("c2 description")
+	"c2 description"
 	).
 
 owasp_top10_proactive(
 	c3,
 	name("Encode Data"),
-	description("c3 description")
+	"c3 description"
 	).
 
 owasp_top10_proactive(
 	c4,
 	name("Validate All Inputs"),
-	description("c4 description")
+	"c4 description"
 	).
 
 owasp_top10_proactive(
 	c5,
 	name("Implement Identity and Authentication Controls"),
-	description("c5 description")
+	"c5 description"
 	).
 
 owasp_top10_proactive(
 	c6,
 	name("Implement Appropriate Access Controls"),
-	description("c6 description")
+	"c6 description"
 	).
 
 owasp_top10_proactive(
 	c7,
 	name("Protect Data"),
-	description("c7 description")
+	"c7 description"
 	).
 
 owasp_top10_proactive(
 	c8,
 	name("Implement Logging and Intrusion Detection"),
-	description("c8 description")
+	"c8 description"
 	).
 
 owasp_top10_proactive(
 	c9,
 	name("Leverage Security Frameworks and Libraries"),
-	description("c9 description")
+	"c9 description"
 	).
 
 owasp_top10_proactive(
 	c10,
 	name("Error and Exception Handling"),
-	description("c10 description")
+	"c10 description"
 	).
+
+owasp(Bug_type):-
+	owasp_top10(
+		Bug_type,
+		_,
+		Y
+	),
+	length(Y,A),
+	testloop(0,A,Y).
+
+testloop(N, Length, List):- 
+	N<Length, 
+	nth0(N,List,B),
+	get_proactive_description(B), nl, 
+	M is N+1, 
+	testloop(M,Length,List).
+
+get_proactive_description(Name):-
+	owasp_top10_proactive(
+		Name,
+		_,
+		Y
+		),
+	write(Y).

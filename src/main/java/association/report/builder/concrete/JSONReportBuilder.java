@@ -1,6 +1,5 @@
 package association.report.builder.concrete;
 
-import association.report.AssociationReport;
 import association.report.builder.ReportBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,17 +11,16 @@ public class JSONReportBuilder extends ReportBuilder{
 
     /**
      *
-     *
-     * @param associationReport
+     * @param object
      * @return
      * @throws JsonProcessingException
      */
-    public String convertReport(AssociationReport associationReport) throws JsonProcessingException {
+    public String convertReport(Object object) throws JsonProcessingException {
 
         ObjectMapper jsonMapper = new ObjectMapper();
-        String jsonOutput = jsonMapper.writeValueAsString(associationReport);
+        String jsonOutput = jsonMapper.writeValueAsString(object);
 
-        jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(associationReport);
+        jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         System.out.println(jsonOutput);
 
         return jsonOutput;
@@ -31,13 +29,13 @@ public class JSONReportBuilder extends ReportBuilder{
     /**
      *
      *
-     * @param associationReport
+     * @param object
      * @param filePath
      * @throws IOException
      */
-    public void convertReportToFile(AssociationReport associationReport, String filePath) throws IOException {
+    public void convertReportToFile(Object object, String filePath) throws IOException {
 
         ObjectMapper jsonMapper = new ObjectMapper();
-        jsonMapper.writeValue(new File(filePath), associationReport);
+        jsonMapper.writeValue(new File(filePath), object);
     }
 }

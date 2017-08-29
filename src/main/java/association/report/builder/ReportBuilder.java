@@ -1,6 +1,5 @@
 package association.report.builder;
 
-import association.report.AssociationReport;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import java.io.IOException;
@@ -10,18 +9,18 @@ public abstract class ReportBuilder {
     /**
      *
      *
-     * @param associationReport
+     * @param object
      * @return
      * @throws JsonProcessingException
      */
-    public abstract String convertReport(AssociationReport associationReport) throws JsonProcessingException;
+    public abstract String convertReport(Object object) throws JsonProcessingException;
 
     /**
      *
      *
-     * @param associationReport
+     * @param object
      * @param filePath
      * @throws IOException
      */
-    public abstract void convertReportToFile(AssociationReport associationReport, String filePath) throws IOException;
+    public abstract void convertReportToFile(Object object, String filePath) throws IOException;
 }

@@ -1,5 +1,7 @@
 package userinterfaces;
 
+import prolog.AssociationLoader;
+
 import java.io.IOException;
 
 /**
@@ -17,5 +19,6 @@ public class Starter {
         welcome.setSize(450,450);
         
         settings = new Settings();
+
     }
 }

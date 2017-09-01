@@ -5,6 +5,8 @@
  */
 package userinterfaces;
 
+import prolog.AssociationLoader;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -191,9 +193,11 @@ public class WelcomeWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void newProjectBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newProjectBtnActionPerformed
+
         try {
             NewProjectWindow newProjectWindow = new NewProjectWindow();
             newProjectWindow.setVisible(true);
+
         } catch (IOException ex) {
             Logger.getLogger(NewProjectWindow.class.getName()).log(Level.SEVERE, null, ex);
         }

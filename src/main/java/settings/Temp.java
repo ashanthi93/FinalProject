@@ -166,7 +166,7 @@ public class Temp {
             e.printStackTrace();
         }*/
 
-       ReportBuilder reportBuilder = new JSONReportBuilder();
+       ReportBuilder reportBuilder = new XMLReportBuilder();
 
        Association association = new Association();
        association.setThreatCategoryName("Spoofing");

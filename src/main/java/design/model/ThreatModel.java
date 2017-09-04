@@ -1,11 +1,35 @@
 package design.model;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
+import java.util.ArrayList;
+
 public class ThreatModel {
 
     private String id;
     private String diagramName;
-    private String[] interactionIDs;
+    private ArrayList<Interaction> interactions;
+
+    /* getters & setters */
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDiagramName() {
+        return diagramName;
+    }
+
+    public void setDiagramName(String diagramName) {
+        this.diagramName = diagramName;
+    }
+
+    public ArrayList<Interaction> getInteractions() {
+        return interactions;
+    }
+
+    public void setInteractions(ArrayList<Interaction> interactions) {
+        this.interactions = interactions;
+    }
 }

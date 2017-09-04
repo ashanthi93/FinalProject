@@ -2,6 +2,7 @@ package association.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -18,11 +19,13 @@ public class Association{
     @JsonProperty("threatCategoryName")
     private String threatCategoryName;
 
-    @JacksonXmlProperty(localName = "threats")
+    @JacksonXmlElementWrapper(localName = "threats")
+    @JacksonXmlProperty(localName = "threat")
     @JsonProperty("threats")
     private ArrayList<Threat> threatArrayList;
 
-    @JacksonXmlProperty(localName = "bugs")
+    @JacksonXmlElementWrapper(localName = "bugs")
+    @JacksonXmlProperty(localName = "bug")
     @JsonProperty("bugs")
     private ArrayList<Bug> bugArrayList;
 

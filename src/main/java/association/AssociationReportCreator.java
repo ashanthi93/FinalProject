@@ -38,7 +38,7 @@ public class AssociationReportCreator {
             for (String threatCategoryID : threatCategoryIDList) {
 
                 ArrayList<Bug> bugArrayList = bugsForThreatCategory.get(threatCategoryID);
-                bugArrayList.addAll(bugCategory.getBugList());
+                bugArrayList.addAll(bugCategory.getBugArrayList());
             }
         }
         //create associations for each threat category

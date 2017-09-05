@@ -1,14 +1,18 @@
 package source.report;
 
-import source.classification.model.A1BugCategory;
-import source.classification.model.A2BugCategory;
+import source.classification.BugCategory;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
+import java.util.ArrayList;
+
 public class BugReport {
 
-    private A1BugCategory A1;
-    private A2BugCategory A2;
+    ArrayList<BugCategory> bugCategories;
 
+    public ArrayList<BugCategory> getBugCategories() {
+        return bugCategories;
+    }
+
+    public void setBugCategories(ArrayList<BugCategory> bugCategories) {
+        this.bugCategories = bugCategories;
+    }
 }

@@ -8,25 +8,13 @@ import design.model.ThreatModel;
 import java.io.File;
 import java.util.ArrayList;
 
-/*
- * Object from this class can be created when select report by the ui to analyze
- */
-public class ThreatCollector {
+class ThreatCollector {
 
     private ThreatModel threatModel;
     private ArrayList<Interaction> interactionArrayList;
     private ArrayList<Threat> threatArrayList;
 
     public ThreatCollector() {
-    }
-
-    public void readFile(File xmlFile) {
-
-        ReportParser reportParser = new ReportParser();
-        /*
-        * This file should read xml and
-        * generate ThreatModel, Interaction and Threats
-        */
     }
 
     /* getters */
@@ -43,6 +31,20 @@ public class ThreatCollector {
     }
 
     /**
+     *
+     *
+     * @param xmlFile
+     */
+    public void readFile(File xmlFile) {
+
+        ReportParser reportParser = new ReportParser();
+        /*
+        * This file should read xml and
+        * generate ThreatModel, Interaction and Threats
+        */
+    }
+
+    /**
      * @param threatModelId
      * @param diagramName
      */
@@ -50,7 +52,6 @@ public class ThreatCollector {
 
         threatModel.setId(threatModelId);
         threatModel.setDiagramName(diagramName);
-        threatModel.setInteractions(interactionArrayList);
     }
 
     /**
@@ -96,4 +97,19 @@ public class ThreatCollector {
         return threat;
     }
 
+    /**
+     *
+     */
+    private void setInteractionArrayListToThreatModel(){
+        threatModel.setInteractions(interactionArrayList);
+    }
+
+    /**
+     *
+     * @param interaction
+     * @param threatArrayList
+     */
+    private void setThreatArrayListToInteraction(Interaction interaction, ArrayList<Threat> threatArrayList){
+        interaction.setThreats(threatArrayList);
+    }
 }

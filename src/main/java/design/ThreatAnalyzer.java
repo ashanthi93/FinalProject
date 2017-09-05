@@ -14,13 +14,15 @@ import java.util.HashMap;
 
 public class ThreatAnalyzer {
 
-    ThreatCollector threatCollector;
+    ThreatCollector threatCollector = new ThreatCollector();
     HashMap<String, ThreatCategory> threatCategoryHashMap;
 
-    public ThreatAnalyzer() {
-        threatCollector = new ThreatCollector();
-    }
+    public ThreatAnalyzer() {}
 
+    /**
+     *
+     * @param xmlFile
+     */
     public void collectThreats(File xmlFile) {
         threatCollector.readFile(xmlFile);
     }
@@ -30,10 +32,12 @@ public class ThreatAnalyzer {
      */
     public void classifyThreats() {
 
-        ThreatClassification threatClassification = new ThreatClassification( threatCollector.getThreatArrayList(), this.loadThreatCategoriesByModel());
-
         try {
+            ThreatClassification threatClassification = new ThreatClassification(
+                    threatCollector.getThreatArrayList(), this.loadThreatCategoriesByModel());
+
             threatClassification.classifyThreats();
+
             this.threatCategoryHashMap = threatClassification.getThreatCategoryHashMap();
 
         } catch (IOException e) {
@@ -45,6 +49,9 @@ public class ThreatAnalyzer {
         }
     }
 
+    /**
+     *
+     */
     public void generateThreatReport() {
 
     }
@@ -52,9 +59,9 @@ public class ThreatAnalyzer {
     /**
      * @return
      */
-    private HashMap<String, ThreatCategory> loadThreatCategoriesByModel() {
+    private HashMap<String, ThreatCategory> loadThreatCategoriesByModel() throws IOException, SAXException, ParserConfigurationException {
 
-        /* This has to be load somehow */
+        /* The specific classification model has to be load somehow */
         ThreatClassificationModel threatClassificationModel = new STRIDEThreatClassificationModel();
         threatClassificationModel.createThreatCategories();
 

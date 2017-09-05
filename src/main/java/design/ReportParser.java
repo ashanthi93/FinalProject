@@ -2,7 +2,7 @@ package design;
 
 import java.io.File;
 
-public class ReportParser {
+class ReportParser {
 
     public void readFile(File htmFile){ //method to read the Threat Report given to the framework
 

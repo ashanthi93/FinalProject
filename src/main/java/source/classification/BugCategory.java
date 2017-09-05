@@ -6,16 +6,14 @@ import java.util.ArrayList;
 
 public class BugCategory {
 
-    protected String id;
-    protected String name;
-    protected ArrayList<Bug> bugList;
-    protected ArrayList<String> countermeasures;
+    private String id;
+    private String name;
+    private ArrayList<Bug> bugArrayList;
+    private ArrayList<String> countermeasures;
 
-    public ArrayList<Bug> getBugList() {
-        return bugList;
-    }
+    /* getters & setters */
 
-    /*public String getId() {
+    public String getId() {
         return id;
     }
 
@@ -23,12 +21,20 @@ public class BugCategory {
         this.id = id;
     }
 
-    public ArrayList<Bug> getBugList() {
-        return bugList;
+    public String getName() {
+        return name;
     }
 
-    public void setBugList(ArrayList<Bug> bugList) {
-        this.bugList = bugList;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Bug> getBugArrayList() {
+        return bugArrayList;
+    }
+
+    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
+        this.bugArrayList = bugArrayList;
     }
 
     public ArrayList<String> getCountermeasures() {
@@ -38,6 +44,4 @@ public class BugCategory {
     public void setCountermeasures(ArrayList<String> countermeasures) {
         this.countermeasures = countermeasures;
     }
-
-    /* create rest of the abstract methods */
 }

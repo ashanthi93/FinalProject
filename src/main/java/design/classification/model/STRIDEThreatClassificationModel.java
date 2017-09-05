@@ -2,39 +2,35 @@ package design.classification.model;
 
 import design.classification.ThreatCategory;
 import design.classification.ThreatClassificationModel;
+import org.xml.sax.SAXException;
+import settings.stride_configs.STRIDEAttackerConfig;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class STRIDEThreatClassificationModel implements ThreatClassificationModel {
 
-    private ThreatCategory spoofing;
-    private ThreatCategory tampering;
-    private ThreatCategory repudiation;
-    private ThreatCategory informationDisclosure;
-    private ThreatCategory dos;
-    private ThreatCategory eop;
+    HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<String, ThreatCategory>();
 
-    public void createThreatCategories() {
+    public void createThreatCategories() throws ParserConfigurationException, SAXException, IOException {
 
-        spoofing = this.createThreatCategory("S", "spoofing");
-        tampering = this.createThreatCategory("T", "tampering");
-        repudiation = this.createThreatCategory("R", "repudiation");
-        informationDisclosure = this.createThreatCategory("I", "information disclosure");
-        dos = this.createThreatCategory("D", "Denial Of Service");
-        eop = this.createThreatCategory("E", "Elevation Of Privilege");
+        STRIDEAttackerConfig strideAttackerConfig = new STRIDEAttackerConfig();
+
+        HashMap<String,String> threatIdsAndNames = strideAttackerConfig.loadThreatCategoryIdsAndNames();
+
+        for (String threatID : threatIdsAndNames.keySet()){
+            ThreatCategory threatCategory = this.createThreatCategory(threatID, threatIdsAndNames.get(threatID));
+
+            threatCategoryHashMap.put(threatID, threatCategory);
+        }
     }
 
-    public HashMap<String, ThreatCategory> getThreatCategories() {
+    public HashMap<String, ThreatCategory> getThreatCategories() throws IOException, SAXException, ParserConfigurationException {
 
-        HashMap<String,ThreatCategory> threatCategoryHashMap = new HashMap<String, ThreatCategory>();
-
-        threatCategoryHashMap.put("S", spoofing);
-        threatCategoryHashMap.put("T", tampering);
-        threatCategoryHashMap.put("R", repudiation);
-        threatCategoryHashMap.put("I", informationDisclosure);
-        threatCategoryHashMap.put("D", dos);
-        threatCategoryHashMap.put("E", eop);
-
+        if (threatCategoryHashMap.isEmpty()){
+            this.createThreatCategories();
+        }
         return threatCategoryHashMap;
     }
 

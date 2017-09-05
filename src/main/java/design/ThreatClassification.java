@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ThreatClassification {
+class ThreatClassification {
 
     private ArrayList<Threat> threatArrayList;
     private HashMap<String, ThreatCategory> threatCategoryHashMap;
@@ -21,6 +21,7 @@ public class ThreatClassification {
         this.threatCategoryHashMap = threatCategoryHashMap;
     }
 
+    /* getters */
     public HashMap<String, ThreatCategory> getThreatCategoryHashMap() {
         return threatCategoryHashMap;
     }
@@ -35,22 +36,23 @@ public class ThreatClassification {
      */
     public void classifyThreats() throws IOException, SAXException, ParserConfigurationException {
 
-        HashMap<String,String> defaultThreatIdsAndNames = this.loadThreatIdsAndNamesByConfigFile();
+        HashMap<String,String> defaultThreatCategoryIdsAndNames = this.loadThreatCategoryIdsAndNamesByConfigFile();
 
         for (Threat threat : threatArrayList){
 
-            String threatId = this.getDefaultThreatIdForThreatCategoryName(defaultThreatIdsAndNames, threat.getThreatCategoryName());
+            String threatCategoryID = this.getDefaultThreatCategoryIdForThreatCategoryName(
+                    defaultThreatCategoryIdsAndNames, threat.getThreatCategoryName());
 
-            if (threatId != null){
+            if (threatCategoryID != null){
 
-                ThreatCategory threatCategory = threatCategoryHashMap.get(threatId);
+                ThreatCategory threatCategory = threatCategoryHashMap.get(threatCategoryID);
 
                 ArrayList<Threat> threatArrayList = threatCategory.getThreatList();
                 threatArrayList.add(threat);
 
                 threatCategory.setThreatList(threatArrayList);
 
-                threatCategoryHashMap.put(threatId, threatCategory);
+                threatCategoryHashMap.put(threatCategoryID, threatCategory);
             }else {
                 /*
                  should throw exception here
@@ -67,27 +69,27 @@ public class ThreatClassification {
      * @throws SAXException
      * @throws IOException
      */
-    private HashMap<String,String> loadThreatIdsAndNamesByConfigFile() throws ParserConfigurationException, SAXException, IOException {
+    private HashMap<String,String> loadThreatCategoryIdsAndNamesByConfigFile() throws ParserConfigurationException, SAXException, IOException {
 
         STRIDEAttackerConfig strideAttackerConfig = new STRIDEAttackerConfig();
-        return (strideAttackerConfig.loadThreatIdsAndNames());
+        return (strideAttackerConfig.loadThreatCategoryIdsAndNames());
     }
 
     /**
      *
      *
-     * @param defaultThreatIdsAndNames
+     * @param defaultThreatCategoryIdsAndNames
      * @param threatCategoryName
      * @return
      */
-    private String getDefaultThreatIdForThreatCategoryName(HashMap<String,String> defaultThreatIdsAndNames, String threatCategoryName){
+    private String getDefaultThreatCategoryIdForThreatCategoryName(HashMap<String,String> defaultThreatCategoryIdsAndNames, String threatCategoryName){
 
-        for (String defaultThreatId : defaultThreatIdsAndNames.keySet()){
+        for (String defaultThreatCategoryId : defaultThreatCategoryIdsAndNames.keySet()){
 
-            String defaultThreatName = defaultThreatIdsAndNames.get(defaultThreatId);
+            String defaultThreatCategoryName = defaultThreatCategoryIdsAndNames.get(defaultThreatCategoryId);
 
-            if (threatCategoryName.equals(defaultThreatName)){
-                return defaultThreatId;
+            if (threatCategoryName.equals(defaultThreatCategoryName)){
+                return defaultThreatCategoryId;
             }
         }
         return null;

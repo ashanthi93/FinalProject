@@ -118,7 +118,7 @@ public class STRIDEAttackerConfig {
         return threatControls;
     }
 
-    public HashMap<String,String> loadThreatIdsAndNames() throws IOException, SAXException, ParserConfigurationException {
+    public HashMap<String,String> loadThreatCategoryIdsAndNames() throws IOException, SAXException, ParserConfigurationException {
 
         HashMap<String,String> threatIdsAndNames = new HashMap<String, String>();
 

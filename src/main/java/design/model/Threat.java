@@ -1,7 +1,5 @@
 package design.model;
 
-import design.classification.ThreatCategory2;
-
 public class Threat {
 
     private String id;
@@ -11,6 +9,8 @@ public class Threat {
     private String element;
     private String priority;
     private String interactionId;
+
+    public Threat(){}
 
     /* getters & setters */
     public String getId() {

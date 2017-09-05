@@ -34,7 +34,7 @@ class ThreatClassification {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    public void classifyThreats() throws IOException, SAXException, ParserConfigurationException {
+    public void classifyThreats() throws Exception {
 
         HashMap<String,String> defaultThreatCategoryIdsAndNames = this.loadThreatCategoryIdsAndNamesByConfigFile();
 
@@ -54,9 +54,7 @@ class ThreatClassification {
 
                 threatCategoryHashMap.put(threatCategoryID, threatCategory);
             }else {
-                /*
-                 should throw exception here
-                  */
+                throw new Exception();
             }
         }
     }

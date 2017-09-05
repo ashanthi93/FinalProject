@@ -11,8 +11,19 @@ import java.util.HashMap;
 
 public class OWASPBugClassificationModel implements BugClassificationModel{
 
-    HashMap<String, BugCategory> bugCategoryHashMap = new HashMap<String, BugCategory>();
+    HashMap<String, BugCategory> bugCategoryHashMap;
 
+    public OWASPBugClassificationModel(){
+        bugCategoryHashMap = new HashMap<String, BugCategory>();
+    }
+
+    /**
+     *
+     *
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
     public void createBugCategories() throws ParserConfigurationException, SAXException, IOException {
 
         OWASPT10Config owaspt10Config = new OWASPT10Config();
@@ -27,6 +38,14 @@ public class OWASPBugClassificationModel implements BugClassificationModel{
         }
     }
 
+    /**
+     *
+     *
+     * @return
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     public HashMap<String, BugCategory> getBugCategories() throws IOException, SAXException, ParserConfigurationException {
 
         if (bugCategoryHashMap.isEmpty()){
@@ -35,6 +54,13 @@ public class OWASPBugClassificationModel implements BugClassificationModel{
         return bugCategoryHashMap;
     }
 
+    /**
+     *
+     *
+     * @param id
+     * @param name
+     * @return
+     */
     private BugCategory createBugCategory(String id, String name){
 
         BugCategory bugCategory = new BugCategory();

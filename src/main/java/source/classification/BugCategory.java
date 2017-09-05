@@ -11,8 +11,12 @@ public class BugCategory {
     private ArrayList<Bug> bugArrayList;
     private ArrayList<String> countermeasures;
 
-    /* getters & setters */
+    public BugCategory(){
+        bugArrayList = new ArrayList<Bug>();
+        countermeasures = new ArrayList<String>();
+    }
 
+    /* getters & setters */
     public String getId() {
         return id;
     }

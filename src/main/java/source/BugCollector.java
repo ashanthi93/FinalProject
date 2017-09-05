@@ -11,7 +11,10 @@ class BugCollector {
     BugCollection bugCollection;
     ArrayList<Bug> bugArrayList;
 
-    public BugCollector(){}
+    public BugCollector(){
+        bugCollection = new BugCollection();
+        bugArrayList = new ArrayList<Bug>();
+    }
 
     /* getters */
     public BugCollection getBugCollection() {

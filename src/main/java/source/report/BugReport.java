@@ -8,6 +8,11 @@ public class BugReport {
 
     ArrayList<BugCategory> bugCategories;
 
+    public BugReport(){
+        bugCategories = new ArrayList<BugCategory>();
+    }
+
+    /* getters & setters */
     public ArrayList<BugCategory> getBugCategories() {
         return bugCategories;
     }

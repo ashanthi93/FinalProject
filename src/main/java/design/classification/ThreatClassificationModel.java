@@ -10,13 +10,19 @@ public interface ThreatClassificationModel {
 
     /**
      *
+     *
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
      */
     public void createThreatCategories() throws ParserConfigurationException, SAXException, IOException;
 
     /**
      *
-     *
      * @return
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
      */
     public HashMap<String,ThreatCategory> getThreatCategories() throws IOException, SAXException, ParserConfigurationException;
 }

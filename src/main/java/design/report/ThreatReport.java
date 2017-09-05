@@ -8,6 +8,11 @@ public class ThreatReport {
 
     private ArrayList<ThreatCategory> threatCategories;
 
+    public ThreatReport(){
+        threatCategories = new ArrayList<ThreatCategory>();
+    }
+
+    /* getters & setters */
     public ArrayList<ThreatCategory> getThreatCategories() {
         return threatCategories;
     }
@@ -15,4 +20,5 @@ public class ThreatReport {
     public void setThreatCategories(ArrayList<ThreatCategory> threatCategories) {
         this.threatCategories = threatCategories;
     }
+
 }

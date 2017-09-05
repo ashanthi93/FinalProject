@@ -8,6 +8,10 @@ public class Interaction {
     //private String type;
     private ArrayList<Threat> threats;
 
+    public Interaction(){
+        threats = new ArrayList<Threat>();
+    }
+
     /* getters & setters */
     public String getName() {
         return name;

@@ -8,6 +8,10 @@ public class ThreatModel {
     private String diagramName;
     private ArrayList<Interaction> interactions;
 
+    public ThreatModel(){
+        interactions = new ArrayList<Interaction>();
+    }
+
     /* getters & setters */
     public String getId() {
         return id;

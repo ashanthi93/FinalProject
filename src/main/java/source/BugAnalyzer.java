@@ -12,10 +12,12 @@ import java.util.HashMap;
 
 public class BugAnalyzer {
 
-    BugCollector bugCollector = new BugCollector();
+    BugCollector bugCollector;
     HashMap<String, BugCategory> bugCategoryHashMap;
 
     public BugAnalyzer(){
+        bugCollector = new BugCollector();
+        bugCategoryHashMap = new HashMap<String, BugCategory>();
     }
 
     /**

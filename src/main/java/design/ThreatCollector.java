@@ -1,6 +1,5 @@
 package design;
 
-import com.sun.org.apache.regexp.internal.RE;
 import design.model.Interaction;
 import design.model.Threat;
 import design.model.ThreatModel;
@@ -45,12 +44,12 @@ class ThreatCollector {
     }
 
     /**
-     * @param threatModelId
+     * @param threatModelID
      * @param diagramName
      */
-    private void createThreatModel(String threatModelId, String diagramName) {
+    private void createThreatModel(String threatModelID, String diagramName) {
 
-        threatModel.setId(threatModelId);
+        threatModel.setId(threatModelID);
         threatModel.setDiagramName(diagramName);
     }
 
@@ -79,17 +78,17 @@ class ThreatCollector {
     /**
      * @param threatId
      * @param threatName
-     * @param threatCateogryName
+     * @param threatCategoryName
      * @param description
      * @return
      */
-    private Threat createThreat(String threatId, String threatName, String threatCateogryName, String description) {
+    private Threat createThreat(String threatId, String threatName, String threatCategoryName, String description) {
 
         Threat threat = new Threat();
 
         threat.setId(threatId);
         threat.setName(threatName);
-        threat.setThreatCategoryName(threatCateogryName);
+        threat.setThreatCategoryName(threatCategoryName);
         threat.setDescription(description);
 
         threatArrayList.add(threat);

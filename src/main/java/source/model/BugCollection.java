@@ -8,6 +8,10 @@ public class BugCollection {
     private String name;
     private ArrayList<Bug> bugArrayList;
 
+    public BugCollection(){
+        bugArrayList = new ArrayList<Bug>();
+    }
+
     /* getters & setters */
     public String getId() {
         return id;

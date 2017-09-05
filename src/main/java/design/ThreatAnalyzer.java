@@ -14,10 +14,13 @@ import java.util.HashMap;
 
 public class ThreatAnalyzer {
 
-    ThreatCollector threatCollector = new ThreatCollector();
+    ThreatCollector threatCollector;
     HashMap<String, ThreatCategory> threatCategoryHashMap;
 
-    public ThreatAnalyzer() {}
+    public ThreatAnalyzer() {
+        threatCollector = new ThreatCollector();
+        threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+    }
 
     /**
      *
@@ -45,6 +48,8 @@ public class ThreatAnalyzer {
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

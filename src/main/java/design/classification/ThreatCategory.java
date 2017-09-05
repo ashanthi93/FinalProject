@@ -9,8 +9,14 @@ public class ThreatCategory {
     private String id;
     private String name;
     private ArrayList<Threat> threatList;
-    private String[] securityControl;
+    private ArrayList<String> securityControl;
     private ArrayList<String> mitigationList;
+
+    public ThreatCategory() {
+        threatList = new ArrayList<Threat>();
+        securityControl = new ArrayList<String>();
+        mitigationList = new ArrayList<String>();
+    }
 
     /* getters & setters */
     public String getId() {
@@ -37,11 +43,11 @@ public class ThreatCategory {
         this.threatList = threatList;
     }
 
-    public String[] getSecurityControl() {
+    public ArrayList<String> getSecurityControl() {
         return securityControl;
     }
 
-    public void setSecurityControl(String[] securityControl) {
+    public void setSecurityControl(ArrayList<String> securityControl) {
         this.securityControl = securityControl;
     }
 

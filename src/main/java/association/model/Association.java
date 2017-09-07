@@ -29,7 +29,10 @@ public class Association{
     @JsonProperty("bugs")
     private ArrayList<Bug> bugArrayList;
 
-    public Association() {}
+    public Association() {
+        threatArrayList = new ArrayList<Threat>();
+        bugArrayList = new ArrayList<Bug>();
+    }
 
     /* getter and setters */
     public String getThreatCategoryName() {
@@ -40,19 +43,19 @@ public class Association{
         this.threatCategoryName = threatCategoryName;
     }
 
-    public ArrayList<Threat> getthreatArrayList() {
+    public ArrayList<Threat> getThreatArrayList() {
         return threatArrayList;
     }
 
-    public void setthreatArrayList(ArrayList<Threat> threatArrayList) {
+    public void setThreatArrayList(ArrayList<Threat> threatArrayList) {
         this.threatArrayList = threatArrayList;
     }
 
-    public ArrayList<Bug> getbugArrayList() {
+    public ArrayList<Bug> getBugArrayList() {
         return bugArrayList;
     }
 
-    public void setbugArrayList(ArrayList<Bug> bugArrayList) {
+    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
         this.bugArrayList = bugArrayList;
     }
 }

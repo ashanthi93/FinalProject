@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class ThreatClassificationModelTest {
 
-    ThreatClassificationModel threatClassificationModel  = new STRIDEThreatClassificationModel();
+    ThreatClassificationModel threatClassificationModel  = new ThreatClassificationModel();
     HashMap<String, ThreatCategory> manualThreatCategoryHashMap = new HashMap<String, ThreatCategory>();
 
     @BeforeTest

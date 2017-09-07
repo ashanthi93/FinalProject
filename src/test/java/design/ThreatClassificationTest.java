@@ -1,7 +1,7 @@
 package design;
 
 import design.classification.ThreatCategory;
-import design.classification.model.STRIDEThreatClassificationModel;
+import design.classification.ThreatClassificationModel;
 import design.model.Threat;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
@@ -23,7 +23,7 @@ public class ThreatClassificationTest {
     @BeforeTest
     private void createThreatArrayListAndHashMapManually() throws ParserConfigurationException, SAXException, IOException {
 
-        STRIDEThreatClassificationModel model = new STRIDEThreatClassificationModel();
+        ThreatClassificationModel model = new ThreatClassificationModel();
         manualThreatCategoryHashMap = model.getThreatCategories();
 
         ArrayList<Threat> S = new ArrayList<Threat>();
@@ -101,7 +101,7 @@ public class ThreatClassificationTest {
     @Test
     public void testClassifyThreats() throws Exception {
 
-        STRIDEThreatClassificationModel model = new STRIDEThreatClassificationModel();
+        ThreatClassificationModel model = new ThreatClassificationModel();
 
         ThreatClassification threatClassification = new ThreatClassification(threatArrayList, model.getThreatCategories());
         threatClassification.classifyThreats();

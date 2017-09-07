@@ -1,11 +1,10 @@
 package source;
 
-import design.model.Threat;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 import source.classification.BugCategory;
-import source.classification.model.OWASPBugClassificationModel;
+import source.classification.BugClassificationModel;
 import source.model.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,7 +25,7 @@ public class BugClassificationTest {
 
         try {
 
-            OWASPBugClassificationModel model = new OWASPBugClassificationModel();
+            BugClassificationModel model = new BugClassificationModel();
             manualBugCategoryHashMap = model.getBugCategories();
 
             ArrayList<Bug> A1 = new ArrayList<Bug>();
@@ -76,7 +75,7 @@ public class BugClassificationTest {
     @Test
     public void testClassifyBugs() throws Exception {
 
-        OWASPBugClassificationModel model = new OWASPBugClassificationModel();
+        BugClassificationModel model = new BugClassificationModel();
         BugClassification bugClassification = new BugClassification(bugArrayList, model.getBugCategories());
 
         bugClassification.classifyBugs();

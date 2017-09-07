@@ -15,7 +15,7 @@ import static org.testng.Assert.*;
 
 public class BugClassificationModelTest {
 
-    BugClassificationModel bugClassificationModel = new OWASPBugClassificationModel();
+    BugClassificationModel bugClassificationModel = new BugClassificationModel();
     HashMap<String, BugCategory> manualBugCategoryHashMap = new HashMap<String, BugCategory>();
 
     @BeforeTest

@@ -1,6 +1,5 @@
 package design;
 
-import design.classification.model.STRIDEThreatClassificationModel;
 import design.classification.ThreatClassificationModel;
 import design.classification.ThreatCategory;
 
@@ -67,7 +66,7 @@ public class ThreatAnalyzer {
     private HashMap<String, ThreatCategory> loadThreatCategoriesByModel() throws IOException, SAXException, ParserConfigurationException {
 
         /* The specific classification model has to be load somehow */
-        ThreatClassificationModel threatClassificationModel = new STRIDEThreatClassificationModel();
+        ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
         threatClassificationModel.createThreatCategories();
 
         return (threatClassificationModel.getThreatCategories());

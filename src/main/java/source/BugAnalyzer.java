@@ -3,7 +3,6 @@ package source;
 import org.xml.sax.SAXException;
 import source.classification.BugCategory;
 import source.classification.BugClassificationModel;
-import source.classification.model.OWASPBugClassificationModel;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
@@ -66,7 +65,7 @@ public class BugAnalyzer {
      */
     private HashMap<String, BugCategory> loadBugCategoriesByModel() throws IOException, SAXException, ParserConfigurationException {
 
-        BugClassificationModel bugClassificationModel = new OWASPBugClassificationModel();
+        BugClassificationModel bugClassificationModel = new BugClassificationModel();
 
         bugClassificationModel.createBugCategories();
         return (bugClassificationModel.getBugCategories());

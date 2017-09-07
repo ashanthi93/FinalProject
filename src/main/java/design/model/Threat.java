@@ -1,13 +1,37 @@
 package design.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
+@JacksonXmlRootElement(localName = "threat")
+@JsonRootName("threat")
 public class Threat {
 
+    @JsonIgnore
     private String id;
+
+    @JacksonXmlProperty(localName = "name")
+    @JsonProperty("name")
     private String name;
+
+    @JsonIgnore
     private String threatCategoryName;
+
+    @JacksonXmlProperty(localName = "description")
+    @JsonProperty("description")
     private String description;
+
+    @JsonIgnore
     private String element;
+
+    @JacksonXmlProperty(localName = "priority")
+    @JsonProperty("priority")
     private String priority;
+
+    @JsonIgnore
     private String interactionId;
 
     public Threat(){}

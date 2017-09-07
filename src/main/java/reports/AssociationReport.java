@@ -1,4 +1,4 @@
-package association.report;
+package reports;
 
 import association.model.Association;
 
@@ -14,16 +14,39 @@ import java.util.ArrayList;
 @JsonRootName("associationReport")
 public class AssociationReport {
 
+    @JacksonXmlProperty(localName = "report-name")
+    @JsonProperty("report-name")
+    private String name;
+
+    @JacksonXmlProperty(localName = "time-generated")
+    @JsonProperty("time-generated")
+    private String date;
+
     @JacksonXmlElementWrapper(localName = "associations")
     @JacksonXmlProperty(localName = "association")
     @JsonProperty("associations")
     private ArrayList<Association> associationArrayList;
 
     public AssociationReport() {
-        associationArrayList = new ArrayList<Association>();
     }
 
     /* getters & setters */
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public ArrayList<Association> getAssociationArrayList() {
         return associationArrayList;
     }

@@ -1,15 +1,38 @@
 package source.classification;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import source.model.Bug;
 
 import java.util.ArrayList;
 
+@JacksonXmlRootElement(localName = "bug-category")
+@JsonRootName("bug-category")
 public class BugCategory {
 
+    @JacksonXmlProperty(localName = "id")
+    @JsonProperty("id")
     private String id;
+
+    @JacksonXmlProperty(localName = "name")
+    @JsonProperty("name")
     private String name;
+
+    @JsonIgnore
     private String description;
+
+    @JacksonXmlElementWrapper(localName = "bugs")
+    @JacksonXmlProperty(localName = "bug")
+    @JsonProperty("bugs")
     private ArrayList<Bug> bugArrayList;
+
+    @JacksonXmlElementWrapper(localName = "countermeasures")
+    @JacksonXmlProperty(localName = "countermeasure")
+    @JsonProperty("countermeasures")
     private ArrayList<String> countermeasures;
 
     public BugCategory(){

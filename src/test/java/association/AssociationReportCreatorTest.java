@@ -1,9 +1,8 @@
 package association;
 
-import association.model.Association;
-import association.report.AssociationReport;
-import association.report.builder.ReportBuilder;
-import association.report.builder.concrete.XMLReportBuilder;
+import reports.AssociationReport;
+import reports.builder.ReportBuilder;
+import reports.builder.concrete.XMLReportBuilder;
 import design.classification.ThreatCategory;
 import design.classification.ThreatClassificationModel;
 import design.model.Threat;
@@ -19,8 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static org.testng.Assert.*;
-
 public class AssociationReportCreatorTest {
 
     @Test
@@ -31,7 +28,7 @@ public class AssociationReportCreatorTest {
 
         AssociationReportCreator associationReportCreator = new AssociationReportCreator(bugCategoryHashMap, threatCategoryHashMap);
 
-        AssociationReport associationReport = associationReportCreator.generateReport();
+        AssociationReport associationReport = associationReportCreator.generateReport("Test Report");
 
         ReportBuilder reportBuilder = new XMLReportBuilder();
 

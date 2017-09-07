@@ -1,16 +1,18 @@
 package association;
 
 import association.model.Association;
-import association.report.AssociationReport;
+import reports.AssociationReport;
 import design.classification.ThreatCategory;
-import design.classification.ThreatClassificationModel;
 import org.xml.sax.SAXException;
 import source.classification.BugCategory;
 import source.model.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class AssociationReportCreator {
@@ -30,9 +32,12 @@ public class AssociationReportCreator {
      *
      * @return the AssociationReport
      */
-    public AssociationReport generateReport() throws IOException, SAXException, ParserConfigurationException {
+    public AssociationReport generateReport(String reportName) throws IOException, SAXException, ParserConfigurationException {
 
         AssociationReport associationReport = new AssociationReport();
+
+        associationReport.setName(reportName);
+        associationReport.setDate(this.getDate());
 
         HashMap<String, Association> associationHashMap = this.createAssociationsForEachThreatCategoryObject();
 
@@ -126,5 +131,18 @@ public class AssociationReportCreator {
         }
 
         return currentBugArrayList;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    private String getDate(){
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        Date date = new Date();
+
+        return (dateFormat.format(date));
     }
 }

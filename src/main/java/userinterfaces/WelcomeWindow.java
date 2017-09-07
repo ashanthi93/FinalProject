@@ -5,6 +5,7 @@
  */
 package userinterfaces;
 
+import org.xml.sax.SAXException;
 import prolog.AssociationLoader;
 
 import java.awt.*;
@@ -13,6 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
+import javax.xml.parsers.ParserConfigurationException;
+
 import static userinterfaces.NewProjectWindow.setUIFont;
 import static userinterfaces.Starter.settings;
 
@@ -197,9 +200,14 @@ public class WelcomeWindow extends javax.swing.JFrame {
         try {
             NewProjectWindow newProjectWindow = new NewProjectWindow();
             newProjectWindow.setVisible(true);
+            new AssociationLoader().callProlog();
 
         } catch (IOException ex) {
             Logger.getLogger(NewProjectWindow.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_newProjectBtnActionPerformed
 

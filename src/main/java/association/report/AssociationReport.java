@@ -20,6 +20,7 @@ public class AssociationReport {
     private ArrayList<Association> associationArrayList;
 
     public AssociationReport() {
+        associationArrayList = new ArrayList<Association>();
     }
 
     /* getters & setters */

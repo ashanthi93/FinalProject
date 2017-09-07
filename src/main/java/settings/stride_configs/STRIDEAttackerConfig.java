@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class STRIDEAttackerConfig {
 
@@ -115,5 +116,27 @@ public class STRIDEAttackerConfig {
             }
         }
         return threatControls;
+    }
+
+    public HashMap<String,String> loadThreatCategoryIdsAndNames() throws IOException, SAXException, ParserConfigurationException {
+
+        HashMap<String,String> threatIdsAndNames = new HashMap<String, String>();
+
+        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
+        configXMLFileReader.loadFile(fileName);
+
+        NodeList nodeList = configXMLFileReader.loadNodesByTagName(threatTypeTag);
+
+        for (int i = 0; i<nodeList.getLength(); i++){
+
+            Node node = nodeList.item(i);
+            Element element = (Element) node;
+
+            String id = element.getElementsByTagName(idTag).item(0).getTextContent();
+            String name = element.getElementsByTagName(nameTag).item(0).getTextContent();
+
+            threatIdsAndNames.put(id,name);
+        }
+        return threatIdsAndNames;
     }
 }

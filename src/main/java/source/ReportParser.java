@@ -2,10 +2,7 @@ package source;
 
 import java.io.File;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class XMLReader {
+class ReportParser {
 
     public void readFile(File xmlFile){ //method to read the Bug Report given to the framework
 

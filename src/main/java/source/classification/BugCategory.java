@@ -4,18 +4,48 @@ import source.model.Bug;
 
 import java.util.ArrayList;
 
-public abstract class BugCategory {
+public class BugCategory {
 
-    //make public or static final?? (All the variables)
-    protected int id;
-    protected ArrayList<Bug> bugList;
-    protected ArrayList<String> countermeasures;
+    private String id;
+    private String name;
+    private ArrayList<Bug> bugArrayList;
+    private ArrayList<String> countermeasures;
 
-    public abstract ArrayList<Bug> getBugList();
+    public BugCategory(){
+        bugArrayList = new ArrayList<Bug>();
+        countermeasures = new ArrayList<String>();
+    }
 
-    public abstract void setBugList(ArrayList<Bug> bugList);
+    /* getters & setters */
+    public String getId() {
+        return id;
+    }
 
-    public abstract ArrayList<String> getCountermeasures();
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public abstract void setCountermeasures(ArrayList<String> countermeasures);
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Bug> getBugArrayList() {
+        return bugArrayList;
+    }
+
+    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
+        this.bugArrayList = bugArrayList;
+    }
+
+    public ArrayList<String> getCountermeasures() {
+        return countermeasures;
+    }
+
+    public void setCountermeasures(ArrayList<String> countermeasures) {
+        this.countermeasures = countermeasures;
+    }
 }

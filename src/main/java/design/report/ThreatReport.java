@@ -1,17 +1,24 @@
 package design.report;
 
-import design.classification.model.*;
+import design.classification.ThreatCategory;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
+import java.util.ArrayList;
+
 public class ThreatReport {
 
-    private SpoofingThreatCategory spoofing;
-    private TamperingThreatCategory tampering;
-    private RepudiationThreatCategory repudiation;
-    private InformationDisclosureThreatCategory infDisclosure;
-    private DosThreatCategory dos;
-    private EopThreatCategory eop;
+    private ArrayList<ThreatCategory> threatCategories;
+
+    public ThreatReport(){
+        threatCategories = new ArrayList<ThreatCategory>();
+    }
+
+    /* getters & setters */
+    public ArrayList<ThreatCategory> getThreatCategories() {
+        return threatCategories;
+    }
+
+    public void setThreatCategories(ArrayList<ThreatCategory> threatCategories) {
+        this.threatCategories = threatCategories;
+    }
 
 }

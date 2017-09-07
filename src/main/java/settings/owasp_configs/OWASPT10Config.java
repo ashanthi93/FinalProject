@@ -11,6 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OWASPT10Config {
 
@@ -79,5 +80,27 @@ public class OWASPT10Config {
             }
         }
         return OWASP_T10_list;
+    }
+
+    public HashMap<String,String> loadBugCategoryIdsAndNames() throws IOException, SAXException, ParserConfigurationException {
+
+        HashMap<String,String> bugIdsAndNames = new HashMap<String, String>();
+
+        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
+        configXMLFileReader.loadFile(fileName);
+
+        NodeList nodeList = configXMLFileReader.loadNodesByTagName(typeTag);
+
+        for (int i = 0; i<nodeList.getLength(); i++){
+
+            Node node = nodeList.item(i);
+            Element element = (Element) node;
+
+            String id = element.getElementsByTagName(idTag).item(0).getTextContent();
+            String name = element.getElementsByTagName(nameTag).item(0).getTextContent();
+
+            bugIdsAndNames.put(id,name);
+        }
+        return bugIdsAndNames;
     }
 }

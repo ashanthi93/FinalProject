@@ -4,23 +4,58 @@ import design.model.Threat;
 
 import java.util.ArrayList;
 
-public abstract class ThreatCategory {
+public class ThreatCategory {
 
-   protected int id = 0;
-   protected ArrayList<Threat> threatList;
-   protected String securityControl;
-   protected ArrayList<String> mitigationList;
+    private String id;
+    private String name;
+    private ArrayList<Threat> threatList;
+    private ArrayList<String> securityControl;
+    private ArrayList<String> mitigationList;
 
-   public abstract ArrayList<Threat> getThreatList();
+    public ThreatCategory() {
+        threatList = new ArrayList<Threat>();
+        securityControl = new ArrayList<String>();
+        mitigationList = new ArrayList<String>();
+    }
 
-   public abstract void setThreatList(ArrayList<Threat> threatList);
+    /* getters & setters */
+    public String getId() {
+        return id;
+    }
 
-   public abstract String getSecurityControl();
+    public void setId(String id) {
+        this.id = id;
+    }
 
-   public abstract void setSecurityControl(String securityControl);
+    public String getName() {
+        return name;
+    }
 
-   public abstract ArrayList<String> getMitigationList();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-   public abstract void setMitigationList(ArrayList<String> mitigationList);
+    public ArrayList<Threat> getThreatList() {
+        return threatList;
+    }
 
+    public void setThreatList(ArrayList<Threat> threatList) {
+        this.threatList = threatList;
+    }
+
+    public ArrayList<String> getSecurityControl() {
+        return securityControl;
+    }
+
+    public void setSecurityControl(ArrayList<String> securityControl) {
+        this.securityControl = securityControl;
+    }
+
+    public ArrayList<String> getMitigationList() {
+        return mitigationList;
+    }
+
+    public void setMitigationList(ArrayList<String> mitigationList) {
+        this.mitigationList = mitigationList;
+    }
 }

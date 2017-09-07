@@ -1,32 +1,72 @@
 package source;
 
 import source.model.Bug;
+import source.model.BugCollection;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class BugCollector { //Should we make this class static also??  then make class final
+import java.io.File;
+import java.util.ArrayList;
 
-    private Bug[] bugs; //if static class then static variables and methods
+class BugCollector {
 
-    public BugCollector(){ //if static class then private constructor
+    BugCollection bugCollection;
+    ArrayList<Bug> bugArrayList;
 
+    public BugCollector(){
+        bugCollection = new BugCollection();
+        bugArrayList = new ArrayList<Bug>();
     }
 
-    public void createOWASPCategories(){
-
+    /* getters */
+    public BugCollection getBugCollection() {
+        return bugCollection;
     }
 
-    public void getBugs(){
-
+    public ArrayList<Bug> getBugArrayList() {
+        return bugArrayList;
     }
 
-    public void categorizeBugs(){
+    /**
+     *
+     *
+     * @param xmlFile
+     */
+    public void readFile(File xmlFile) {
 
+        ReportParser reportParser = new ReportParser();
     }
 
-    public void loadCountermeasures(){
+    /**
+     *
+     * @param bugCollectionId
+     * @param bugCollectionName
+     */
+    private void createBugCollection(String bugCollectionId, String bugCollectionName){
 
+        bugCollection = new BugCollection();
+
+        bugCollection.setId(bugCollectionId);
+        bugCollection.setName(bugCollectionName);
     }
 
+    /**
+     *
+     * @param bugId
+     * @param bugName
+     */
+    private void createBug(String bugId, String bugName){
+
+        Bug bug = new Bug();
+        bug.setId(bugId);
+        bug.setName(bugName);
+
+        bugArrayList.add(bug);
+    }
+
+    /**
+     *
+     */
+    private void setBugArrayListToBugCollection(){
+
+        bugCollection.setBugArrayList(bugArrayList);
+    }
 }

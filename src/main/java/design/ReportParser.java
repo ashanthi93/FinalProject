@@ -2,10 +2,7 @@ package design;
 
 import java.io.File;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class HTMLReader {
+class ReportParser {
 
     public void readFile(File htmFile){ //method to read the Threat Report given to the framework
 

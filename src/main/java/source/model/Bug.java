@@ -7,17 +7,19 @@ public class Bug {
     private String id;
     private String name;
     private String description;
-    private BugCategory category;
+    private String categoryName;
 
-    public Bug() {}
+    public Bug() {
+    }
 
-/*    public String getId() {
+    /* getters & setters */
+    public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }*/
+    }
 
     public String getName() {
         return name;
@@ -27,7 +29,7 @@ public class Bug {
         this.name = name;
     }
 
-    /*public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -35,11 +37,11 @@ public class Bug {
         this.description = description;
     }
 
-    public BugCategory getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(BugCategory category) {
-        this.category = category;
-    }*/
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

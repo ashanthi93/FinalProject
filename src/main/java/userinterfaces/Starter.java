@@ -4,9 +4,6 @@ import prolog.AssociationLoader;
 
 import java.io.IOException;
 
-/**
- * Created by Ashi on 8/9/2017.
- */
 public class Starter {
     
     public static WelcomeWindow welcome;

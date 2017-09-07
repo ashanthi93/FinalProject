@@ -3,20 +3,26 @@ package association;
 import association.model.Association;
 import association.report.AssociationReport;
 import design.classification.ThreatCategory;
+import design.classification.ThreatClassificationModel;
+import org.xml.sax.SAXException;
 import source.classification.BugCategory;
 import source.model.Bug;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class AssociationReportCreator {
+class AssociationReportCreator {
 
-    private HashMap<BugCategory, String[]> OWASP_STRIDE_mapping;
-    private HashMap<String, ThreatCategory> threatCategoryMap;
+    private HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping;
+    private HashMap<String, ThreatCategory> threatCategoryHashMap;
 
-    public AssociationReportCreator(HashMap<BugCategory, String[]> OWASP_STRIDE_mapping, HashMap<String, ThreatCategory> threatCategoryMap) {
-        this.OWASP_STRIDE_mapping = OWASP_STRIDE_mapping;
-        this.threatCategoryMap = threatCategoryMap;
+    public AssociationReportCreator(HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping,
+                                    HashMap<String, ThreatCategory> threatCategoryHashMap) {
+
+        this.bugCategoryToThreatCategoryMapping = bugCategoryToThreatCategoryMapping;
+        this.threatCategoryHashMap = threatCategoryHashMap;
     }
 
     /**
@@ -24,26 +30,25 @@ public class AssociationReportCreator {
      *
      * @return the AssociationReport
      */
-    public AssociationReport generateReport() {
+    public AssociationReport generateReport() throws IOException, SAXException, ParserConfigurationException {
 
         AssociationReport associationReport = new AssociationReport();
 
-        //create HashMap for threatCategories
-        HashMap<String,ArrayList<Bug>> bugsForThreatCategory = this.createBugsForThreatCategoryMap();
+        HashMap<String, ArrayList<Bug>> bugArrayListForEachThreatCategory = this.createBugArrayListForEachThreatCategory();
 
         /* separate each bugList to relevant threat category  */
-        for (BugCategory bugCategory : OWASP_STRIDE_mapping.keySet()) {
+        for (BugCategory bugCategory : bugCategoryToThreatCategoryMapping.keySet()) {
 
-            String  threatCategoryIDList[] = OWASP_STRIDE_mapping.get(bugCategory);
+            String threatCategoryIDList[] = bugCategoryToThreatCategoryMapping.get(bugCategory);
 
             for (String threatCategoryID : threatCategoryIDList) {
 
-                ArrayList<Bug> bugArrayList = bugsForThreatCategory.get(threatCategoryID);
-                bugArrayList.addAll(bugCategory.getBugList());
+                ArrayList<Bug> bugArrayList = bugArrayListForEachThreatCategory.get(threatCategoryID);
+                bugArrayList.addAll(bugCategory.getBugArrayList());
             }
         }
         //create associations for each threat category
-        associationReport.setAssociationArrayList(this.createAssociations(bugsForThreatCategory));
+        associationReport.setAssociationArrayList(this.createAssociations(bugArrayListForEachThreatCategory));
 
         return associationReport;
     }
@@ -55,43 +60,42 @@ public class AssociationReportCreator {
      *
      * @return HashMap<String, ArrayList<Bug>>
      */
-    private HashMap<String,ArrayList<Bug>> createBugsForThreatCategoryMap(){
+    private HashMap<String, ArrayList<Bug>> createBugArrayListForEachThreatCategory() throws ParserConfigurationException, SAXException, IOException {
 
-        HashMap<String,ArrayList<Bug>> bugsForThreatCategory = new HashMap<String, ArrayList<Bug>>();
+        HashMap<String, ArrayList<Bug>> bugArrayListForEachThreatCategory = new HashMap<String, ArrayList<Bug>>();
 
-        ArrayList<Bug> bugArrayList = new ArrayList<Bug>();
+        ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
+        HashMap<String, ThreatCategory> threatCategoryHashMap = threatClassificationModel.getThreatCategories();
 
-        bugsForThreatCategory.put("S",bugArrayList);
-        bugsForThreatCategory.put("T",bugArrayList);
-        bugsForThreatCategory.put("R",bugArrayList);
-        bugsForThreatCategory.put("I",bugArrayList);
-        bugsForThreatCategory.put("D",bugArrayList);
-        bugsForThreatCategory.put("E",bugArrayList);
+        for (String threatCategoryID : threatCategoryHashMap.keySet()){
 
-        return bugsForThreatCategory;
+            ArrayList<Bug> bugArrayList = new ArrayList<Bug>();
+            bugArrayListForEachThreatCategory.put(threatCategoryID, bugArrayList);
+        }
+
+        return bugArrayListForEachThreatCategory;
     }
 
     /**
      * Return ArrayList containing Association objects
      *
      * @param bugsForThreatCategory hashMap containing bugs for each threat category
-     * @return                      ArrayList<Association>
+     * @return ArrayList<Association>
      */
-    private ArrayList<Association> createAssociations(HashMap<String,ArrayList<Bug>> bugsForThreatCategory){
+    private ArrayList<Association> createAssociations(HashMap<String, ArrayList<Bug>> bugsForThreatCategory) {
 
         ArrayList<Association> associationArrayList = new ArrayList<Association>();
 
-        for (String threatCategoryID : threatCategoryMap.keySet()){
+        for (String threatCategoryID : threatCategoryHashMap.keySet()) {
 
             Association association = new Association();
 
             association.setThreatCategoryName(threatCategoryID);
-            association.setthreatArrayList(threatCategoryMap.get(threatCategoryID).getThreatList());
-            association.setbugArrayList(bugsForThreatCategory.get(threatCategoryID));
+            association.setThreatArrayList(threatCategoryHashMap.get(threatCategoryID).getThreatList());
+            association.setBugArrayList(bugsForThreatCategory.get(threatCategoryID));
 
             associationArrayList.add(association);
         }
-
         return associationArrayList;
     }
 }

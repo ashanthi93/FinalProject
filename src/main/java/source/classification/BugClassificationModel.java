@@ -11,11 +11,11 @@ import java.util.HashMap;
 public class BugClassificationModel {
 
     HashMap<String, BugCategory> bugCategoryHashMap;
-    HashMap<String, BugCategory> bugCategoryWithDescriptionHashMap;
+    HashMap<Integer, BugCategory> bugCategoryWithDescriptionHashMap;
 
     public BugClassificationModel(){
         bugCategoryHashMap = new HashMap<String, BugCategory>();
-        bugCategoryWithDescriptionHashMap = new HashMap<String, BugCategory>();
+        bugCategoryWithDescriptionHashMap = new HashMap<Integer, BugCategory>();
     }
 
     /**
@@ -49,7 +49,9 @@ public class BugClassificationModel {
 
             BugCategory bugCategoryWithDescription = this.createBugCategoryWithDescription(owaspT10[0], owaspT10[1], owaspT10[2]);
 
-            bugCategoryWithDescriptionHashMap.put(owaspT10[0], bugCategoryWithDescription);
+            int key = Integer.parseInt(owaspT10[0].substring(1));
+
+            bugCategoryWithDescriptionHashMap.put(key, bugCategoryWithDescription);
         }
     }
 
@@ -69,7 +71,7 @@ public class BugClassificationModel {
         return bugCategoryHashMap;
     }
 
-    public HashMap<String, BugCategory> getBugCategoriesWithDescription() throws IOException, SAXException, ParserConfigurationException {
+    public HashMap<Integer, BugCategory> getBugCategoriesWithDescription() throws IOException, SAXException, ParserConfigurationException {
 
         if (bugCategoryWithDescriptionHashMap.isEmpty()){
             this.createBugCategoriesWithDescription();

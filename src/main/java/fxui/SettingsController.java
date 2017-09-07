@@ -8,7 +8,9 @@ package fxui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import source.classification.BugCategory;
 import source.classification.BugClassificationModel;
+import source.classification.BugControl;
+import source.classification.BugControlClassificationModel;
 
 /**
  * FXML Controller class
@@ -34,23 +38,41 @@ public class SettingsController implements Initializable {
     private TableView<BugCategory> OWASPT10_Table;
     
     @FXML
-    private TableColumn<BugCategory, String> id;
+    private TableColumn<BugCategory, String> t10_id;
     @FXML
-    private TableColumn<BugCategory, String> name;
+    private TableColumn<BugCategory, String> t10_name;
     @FXML
-    private TableColumn<BugCategory, String> description;
+    private TableColumn<BugCategory, String> t10_description;
     
-    HashMap<String, BugCategory> OWASP_T10_list;
+    HashMap<Integer, BugCategory> OWASP_T10_list;
     ObservableList<BugCategory> owasp_data;
     BugClassificationModel model = new BugClassificationModel();
     
     //For OWASP Proactives table
+    @FXML
+    private TableView<BugControl> proactive_table;
     
+    @FXML
+    private TableColumn<BugControl, String> proact_id;
+    @FXML
+    private TableColumn<BugControl, String> proact_name;
+    @FXML
+    private TableColumn<BugControl, String> proact_description;
+    
+    HashMap<Integer, BugControl> proactives_list;
+    ObservableList<BugControl> proactive_data;
+    BugControlClassificationModel bugControlModel = new BugControlClassificationModel();
 
     public SettingsController() throws ParserConfigurationException, IOException, SAXException {
         //For OWASP Top 10 table
         OWASP_T10_list = model.getBugCategoriesWithDescription();
-        owasp_data = FXCollections.observableArrayList(OWASP_T10_list.values());
+        TreeMap<Integer, BugCategory> owaspMap = new TreeMap<Integer, BugCategory>(OWASP_T10_list);
+        owasp_data = FXCollections.observableArrayList(owaspMap.values());
+        
+        //for OWASP proactives table
+        proactives_list = bugControlModel.getBugControlsWithDescription();
+        TreeMap<Integer, BugControl> proactivesMap = new TreeMap<Integer, BugControl>(proactives_list);
+        proactive_data = FXCollections.observableArrayList(proactivesMap.values());
         
     }
 
@@ -61,18 +83,32 @@ public class SettingsController implements Initializable {
      */
     public void initialize(URL url, ResourceBundle rb) {
         //OWASP Top 10 Table settings
-        id.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("id"));
-        id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
+        t10_id.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("id"));
+        t10_id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
         
-        name.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("name"));
-        name.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
-        name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
+        t10_name.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("name"));
+        t10_name.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
+        t10_name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
         
-        description.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("description"));
-        description.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
-        description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
+        t10_description.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("description"));
+        t10_description.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
+        t10_description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
                 
         OWASPT10_Table.setItems(owasp_data);
+        
+        //OWASP Proactives Table settings
+        proact_id.setCellValueFactory(new PropertyValueFactory<BugControl, String>("id"));
+        proact_id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
+        
+        proact_name.setCellValueFactory(new PropertyValueFactory<BugControl, String>("name"));
+        proact_name.setCellFactory(TextFieldTableCell.<BugControl>forTableColumn());
+        proact_name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
+        
+        proact_description.setCellValueFactory(new PropertyValueFactory<BugControl, String>("description"));
+        proact_description.setCellFactory(TextFieldTableCell.<BugControl>forTableColumn());
+        proact_description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
+                
+        proactive_table.setItems(proactive_data);
         
     }    
     

@@ -1,7 +1,7 @@
 package source.classification;
 
 import org.xml.sax.SAXException;
-import settings.owasp_configs.OWASPT10Config;
+import settings.bugmodel_configs.OWASPT10Config;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

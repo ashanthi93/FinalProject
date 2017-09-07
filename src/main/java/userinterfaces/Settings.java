@@ -15,12 +15,12 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import settings.owasp_configs.OWASPMappingConfig;
-import settings.owasp_configs.OWASPProactiveConfig;
-import settings.owasp_configs.OWASPT10Config;
-import settings.stride_configs.STRIDEAttackerConfig;
-import settings.stride_configs.STRIDEDefensiveConfig;
-import settings.stride_configs.STRIDEDefensiveMappingConfig;
+import settings.bugmodel_configs.OWASPMappingConfig;
+import settings.bugmodel_configs.OWASPProactiveConfig;
+import settings.bugmodel_configs.OWASPT10Config;
+import settings.threatmodel_configs.STRIDEAttackerConfig;
+import settings.threatmodel_configs.STRIDEDefensiveConfig;
+import settings.threatmodel_configs.STRIDEDefensiveMappingConfig;
 import static userinterfaces.NewProjectWindow.setUIFont;
 
 /**

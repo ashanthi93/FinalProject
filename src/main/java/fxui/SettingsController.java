@@ -53,14 +53,12 @@ public class SettingsController implements Initializable {
         owasp_data = FXCollections.observableArrayList(OWASP_T10_list.values());
         
     }
-    
-    
+
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         //OWASP Top 10 Table settings
         id.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("id"));

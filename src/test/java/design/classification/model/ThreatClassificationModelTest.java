@@ -43,8 +43,6 @@ public class ThreatClassificationModelTest {
     private void testCreateThreatCategories(){
 
         try {
-            threatClassificationModel.createThreatCategories();
-
             HashMap<String, ThreatCategory> threatCategoryHashMap = threatClassificationModel.getThreatCategories();
 
             for (String key : threatCategoryHashMap.keySet()){

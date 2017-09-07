@@ -3,7 +3,7 @@ package design;
 import design.classification.ThreatCategory;
 import design.model.Threat;
 import org.xml.sax.SAXException;
-import settings.stride_configs.STRIDEAttackerConfig;
+import settings.threatmodel_configs.STRIDEAttackerConfig;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

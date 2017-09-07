@@ -67,7 +67,6 @@ public class ThreatAnalyzer {
 
         /* The specific classification model has to be load somehow */
         ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
-        threatClassificationModel.createThreatCategories();
 
         return (threatClassificationModel.getThreatCategories());
     }

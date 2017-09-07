@@ -1,7 +1,7 @@
 package source;
 
 import org.xml.sax.SAXException;
-import settings.owasp_configs.OWASPT10Config;
+import settings.bugmodel_configs.OWASPT10Config;
 import source.classification.BugCategory;
 import source.model.Bug;
 

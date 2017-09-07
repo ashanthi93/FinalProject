@@ -1,7 +1,7 @@
 package design.classification;
 
 import org.xml.sax.SAXException;
-import settings.stride_configs.STRIDEAttackerConfig;
+import settings.threatmodel_configs.STRIDEAttackerConfig;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -17,12 +17,26 @@ public class ThreatClassificationModel {
 
     /**
      *
+     * @return
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    public HashMap<String, ThreatCategory> getThreatCategories() throws IOException, SAXException, ParserConfigurationException {
+
+        this.createThreatCategories();
+
+        return threatCategoryHashMap;
+    }
+
+    /**
+     *
      *
      * @throws ParserConfigurationException
      * @throws SAXException
      * @throws IOException
      */
-    public void createThreatCategories() throws ParserConfigurationException, SAXException, IOException {
+    private void createThreatCategories() throws ParserConfigurationException, SAXException, IOException {
 
         STRIDEAttackerConfig strideAttackerConfig = new STRIDEAttackerConfig();
 
@@ -33,21 +47,6 @@ public class ThreatClassificationModel {
             ThreatCategory threatCategory = this.createThreatCategory(threatID, threatIdsAndNames.get(threatID));
             threatCategoryHashMap.put(threatID, threatCategory);
         }
-    }
-
-    /**
-     *
-     * @return
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
-     */
-    public HashMap<String, ThreatCategory> getThreatCategories() throws IOException, SAXException, ParserConfigurationException {
-
-        if (threatCategoryHashMap == null){
-            this.createThreatCategories();
-        }
-        return threatCategoryHashMap;
     }
 
     /**

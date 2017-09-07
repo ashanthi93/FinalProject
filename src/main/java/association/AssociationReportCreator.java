@@ -13,16 +13,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-class AssociationReportCreator {
+public class AssociationReportCreator {
 
     private HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping;
     private HashMap<String, ThreatCategory> threatCategoryHashMap;
 
     public AssociationReportCreator(HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping,
-                                    HashMap<String, ThreatCategory> threatCategoryHashMap) {
+                                    HashMap<String, ThreatCategory> threatCategoryObjectHashMap) {
 
         this.bugCategoryToThreatCategoryMapping = bugCategoryToThreatCategoryMapping;
-        this.threatCategoryHashMap = threatCategoryHashMap;
+        this.threatCategoryHashMap = threatCategoryObjectHashMap;
     }
 
     /**
@@ -34,23 +34,60 @@ class AssociationReportCreator {
 
         AssociationReport associationReport = new AssociationReport();
 
-        HashMap<String, ArrayList<Bug>> bugArrayListForEachThreatCategory = this.createBugArrayListForEachThreatCategory();
+        HashMap<String, Association> associationHashMap = this.createAssociationsForEachThreatCategoryObject();
 
-        /* separate each bugList to relevant threat category  */
-        for (BugCategory bugCategory : bugCategoryToThreatCategoryMapping.keySet()) {
+        HashMap<String, ArrayList<Bug>> bugArrayListHashMap = this.createBugArrayListForEachThreatCategory();
 
-            String threatCategoryIDList[] = bugCategoryToThreatCategoryMapping.get(bugCategory);
+        for (BugCategory bugCategory : bugCategoryToThreatCategoryMapping.keySet()){
 
-            for (String threatCategoryID : threatCategoryIDList) {
+            String[] threatCategoryIDs = bugCategoryToThreatCategoryMapping.get(bugCategory);
 
-                ArrayList<Bug> bugArrayList = bugArrayListForEachThreatCategory.get(threatCategoryID);
-                bugArrayList.addAll(bugCategory.getBugArrayList());
+            for (String threatCategoryID : threatCategoryIDs){
+
+                ArrayList<Bug> updatedBugArrayList = this.setBugArrayListForThreatCategory(
+                        bugArrayListHashMap.get(threatCategoryID), bugCategory);
+
+                bugArrayListHashMap.put(threatCategoryID, updatedBugArrayList);
             }
         }
-        //create associations for each threat category
-        associationReport.setAssociationArrayList(this.createAssociations(bugArrayListForEachThreatCategory));
+
+        ArrayList<Association> associationArrayList = new ArrayList<Association>();
+
+        for (String threatCategoryID : associationHashMap.keySet()){
+
+            Association association = associationHashMap.get(threatCategoryID);
+            association.setBugArrayList(bugArrayListHashMap.get(threatCategoryID));
+
+            associationArrayList.add(association);
+        }
+
+        associationReport.setAssociationArrayList(associationArrayList);
 
         return associationReport;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    private HashMap<String, Association> createAssociationsForEachThreatCategoryObject(){
+
+        HashMap<String, Association> associationHashMap = new HashMap<String, Association>();
+
+        for (String threatCategoryID : threatCategoryHashMap.keySet()){
+
+            Association association = new Association();
+
+            ThreatCategory threatCategory = threatCategoryHashMap.get(threatCategoryID);
+
+            association.setThreatCategoryName(threatCategory.getName());
+            association.setThreatArrayList(threatCategory.getThreatList());
+
+            associationHashMap.put(threatCategoryID, association);
+        }
+
+        return associationHashMap;
     }
 
     /**
@@ -64,9 +101,6 @@ class AssociationReportCreator {
 
         HashMap<String, ArrayList<Bug>> bugArrayListForEachThreatCategory = new HashMap<String, ArrayList<Bug>>();
 
-        ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
-        HashMap<String, ThreatCategory> threatCategoryHashMap = threatClassificationModel.getThreatCategories();
-
         for (String threatCategoryID : threatCategoryHashMap.keySet()){
 
             ArrayList<Bug> bugArrayList = new ArrayList<Bug>();
@@ -77,25 +111,20 @@ class AssociationReportCreator {
     }
 
     /**
-     * Return ArrayList containing Association objects
      *
-     * @param bugsForThreatCategory hashMap containing bugs for each threat category
-     * @return ArrayList<Association>
+     * @param currentBugArrayList
+     * @param bugCategory
+     * @return
      */
-    private ArrayList<Association> createAssociations(HashMap<String, ArrayList<Bug>> bugsForThreatCategory) {
+    private ArrayList<Bug> setBugArrayListForThreatCategory(ArrayList<Bug> currentBugArrayList, BugCategory bugCategory){
 
-        ArrayList<Association> associationArrayList = new ArrayList<Association>();
+        for (Bug bug : bugCategory.getBugArrayList()){
 
-        for (String threatCategoryID : threatCategoryHashMap.keySet()) {
-
-            Association association = new Association();
-
-            association.setThreatCategoryName(threatCategoryID);
-            association.setThreatArrayList(threatCategoryHashMap.get(threatCategoryID).getThreatList());
-            association.setBugArrayList(bugsForThreatCategory.get(threatCategoryID));
-
-            associationArrayList.add(association);
+            if (!currentBugArrayList.contains(bug)){
+                currentBugArrayList.add(bug);
+            }
         }
-        return associationArrayList;
+
+        return currentBugArrayList;
     }
 }

@@ -1,4 +1,4 @@
-package settings.owasp_configs;
+package settings.bugmodel_configs;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

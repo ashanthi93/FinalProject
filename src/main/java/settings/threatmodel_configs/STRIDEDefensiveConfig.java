@@ -1,4 +1,4 @@
-package settings.stride_configs;
+package settings.threatmodel_configs;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;

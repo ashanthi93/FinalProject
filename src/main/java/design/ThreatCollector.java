@@ -1,32 +1,114 @@
 package design;
 
+import design.model.Interaction;
 import design.model.Threat;
+import design.model.ThreatModel;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class ThreatCollector { //Should we make this class static also??  then make class final
+import java.io.File;
+import java.util.ArrayList;
 
-    private Threat[] threats; //if static class then static variables and methods
+class ThreatCollector {
 
-    public ThreatCollector(){ //if static class then private constructor
+    private ThreatModel threatModel;
+    private ArrayList<Interaction> interactionArrayList;
+    private ArrayList<Threat> threatArrayList;
 
+    public ThreatCollector() {
     }
 
-    public void createSTRIDECategories(){
-
+    /* getters */
+    public ThreatModel getThreatModel() {
+        return threatModel;
     }
 
-    public void getThreats(){
-
+    public ArrayList<Interaction> getInteractionArrayList() {
+        return interactionArrayList;
     }
 
-    public void categorizeThreats(){
-
+    public ArrayList<Threat> getThreatArrayList() {
+        return threatArrayList;
     }
 
-    public void loadMitigations(){
+    /**
+     *
+     *
+     * @param xmlFile
+     */
+    public void readFile(File xmlFile) {
 
+        ReportParser reportParser = new ReportParser();
+        /*
+        * This file should read xml and
+        * generate ThreatModel, Interaction and Threats
+        */
     }
 
+    /**
+     * @param threatModelID
+     * @param diagramName
+     */
+    private void createThreatModel(String threatModelID, String diagramName) {
+
+        threatModel.setId(threatModelID);
+        threatModel.setDiagramName(diagramName);
+    }
+
+    /**
+     * Create interaction object, then add into global interaction arrayList of ThreatModel
+     * and then return the interaction object.
+     *
+     * @param interactionName
+     * @param threatArrayList arrayList containing threats of the interaction
+     * @return interaction object
+     */
+    private Interaction createInteraction(String interactionName, ArrayList<Threat> threatArrayList) {
+
+        /* create interaction object */
+        Interaction interaction = new Interaction();
+
+        interaction.setName(interactionName);
+        interaction.setThreats(threatArrayList);
+
+        //add interaction object to interactionArrayList
+        interactionArrayList.add(interaction);
+
+        return interaction;
+    }
+
+    /**
+     * @param threatId
+     * @param threatName
+     * @param threatCategoryName
+     * @param description
+     * @return
+     */
+    private Threat createThreat(String threatId, String threatName, String threatCategoryName, String description) {
+
+        Threat threat = new Threat();
+
+        threat.setId(threatId);
+        threat.setName(threatName);
+        threat.setThreatCategoryName(threatCategoryName);
+        threat.setDescription(description);
+
+        threatArrayList.add(threat);
+
+        return threat;
+    }
+
+    /**
+     *
+     */
+    private void setInteractionArrayListToThreatModel(){
+        threatModel.setInteractions(interactionArrayList);
+    }
+
+    /**
+     *
+     * @param interaction
+     * @param threatArrayList
+     */
+    private void setThreatArrayListToInteraction(Interaction interaction, ArrayList<Threat> threatArrayList){
+        interaction.setThreats(threatArrayList);
+    }
 }

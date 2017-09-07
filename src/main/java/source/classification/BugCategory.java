@@ -1,21 +1,83 @@
 package source.classification;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import source.model.Bug;
 
 import java.util.ArrayList;
 
-public abstract class BugCategory {
+@JacksonXmlRootElement(localName = "bug-category")
+@JsonRootName("bug-category")
+public class BugCategory {
 
-    //make public or static final?? (All the variables)
-    protected int id;
-    protected ArrayList<Bug> bugList;
-    protected ArrayList<String> countermeasures;
+    @JacksonXmlProperty(localName = "id")
+    @JsonProperty("id")
+    private String id;
 
-    public abstract ArrayList<Bug> getBugList();
+    @JacksonXmlProperty(localName = "name")
+    @JsonProperty("name")
+    private String name;
 
-    public abstract void setBugList(ArrayList<Bug> bugList);
+    @JsonIgnore
+    private String description;
 
-    public abstract ArrayList<String> getCountermeasures();
+    @JacksonXmlElementWrapper(localName = "bugs")
+    @JacksonXmlProperty(localName = "bug")
+    @JsonProperty("bugs")
+    private ArrayList<Bug> bugArrayList;
 
-    public abstract void setCountermeasures(ArrayList<String> countermeasures);
+    @JacksonXmlElementWrapper(localName = "countermeasures")
+    @JacksonXmlProperty(localName = "countermeasure")
+    @JsonProperty("countermeasures")
+    private ArrayList<String> countermeasures;
+
+    public BugCategory(){
+        bugArrayList = new ArrayList<Bug>();
+        countermeasures = new ArrayList<String>();
+    }
+
+    /* getters & setters */
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Bug> getBugArrayList() {
+        return bugArrayList;
+    }
+
+    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
+        this.bugArrayList = bugArrayList;
+    }
+
+    public ArrayList<String> getCountermeasures() {
+        return countermeasures;
+    }
+
+    public void setCountermeasures(ArrayList<String> countermeasures) {
+        this.countermeasures = countermeasures;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

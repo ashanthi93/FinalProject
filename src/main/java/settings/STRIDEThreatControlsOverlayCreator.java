@@ -1,8 +1,8 @@
 package settings;
 
 import org.xml.sax.SAXException;
-import settings.stride_configs.STRIDEAttackerConfig;
-import settings.stride_configs.STRIDEDefensiveConfig;
+import settings.threatmodel_configs.STRIDEAttackerConfig;
+import settings.threatmodel_configs.STRIDEDefensiveConfig;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

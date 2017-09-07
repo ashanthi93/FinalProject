@@ -1,23 +1,40 @@
 package source.model;
 
-import source.classification.BugCategory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
+@JacksonXmlRootElement(localName = "bug")
+@JsonRootName("bug")
 public class Bug {
 
+    @JsonIgnore
     private String id;
+
+    @JacksonXmlProperty(localName = "name")
+    @JsonProperty("name")
     private String name;
+
+    @JacksonXmlProperty(localName = "description")
+    @JsonProperty("description")
     private String description;
-    private BugCategory category;
 
-    public Bug() {}
+    @JsonIgnore
+    private String categoryName;
 
-/*    public String getId() {
+    public Bug() {
+    }
+
+    /* getters & setters */
+    public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
-    }*/
+    }
 
     public String getName() {
         return name;
@@ -27,7 +44,7 @@ public class Bug {
         this.name = name;
     }
 
-    /*public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -35,11 +52,11 @@ public class Bug {
         this.description = description;
     }
 
-    public BugCategory getCategory() {
-        return category;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setCategory(BugCategory category) {
-        this.category = category;
-    }*/
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }

@@ -1,32 +1,73 @@
 package source;
 
-import source.classification.model.A1BugCategory;
-import source.classification.model.A2BugCategory;
+import org.xml.sax.SAXException;
+import source.classification.BugCategory;
+import source.classification.BugClassificationModel;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class BugAnalyzer { //If we want to make this class static then make class final
+public class BugAnalyzer {
 
-    private A1BugCategory A1; //if static class then static variables and methods
-    private A2BugCategory A2;
+    BugCollector bugCollector;
+    HashMap<String, BugCategory> bugCategoryHashMap;
 
-    public BugAnalyzer(){ //if static class then private constructor
+    public BugAnalyzer(){
+        bugCollector = new BugCollector();
+        bugCategoryHashMap = new HashMap<String, BugCategory>();
+    }
+
+    /**
+     *
+     * @param xmlFile
+     */
+    public void collectBugs(File xmlFile){
+        bugCollector.readFile(xmlFile);
+    }
+
+    /**
+     *
+     */
+    public void classifyBugs(){
+
+        try {
+            BugClassification bugClassification = new BugClassification(
+                    bugCollector.getBugArrayList(), this.loadBugCategoriesByModel());
+
+            bugClassification.classifyBugs();
+
+            this.bugCategoryHashMap = bugClassification.getBugCategoryHashMap();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    public void generateBugReport() {
 
     }
 
-    public void readFile(File xmlFile){ // !!! same as in HTMLReader. Is this method necessary in this class
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
+    private HashMap<String, BugCategory> loadBugCategoriesByModel() throws IOException, SAXException, ParserConfigurationException {
 
+        BugClassificationModel bugClassificationModel = new BugClassificationModel();
+
+        bugClassificationModel.createBugCategories();
+        return (bugClassificationModel.getBugCategories());
     }
-
-    public void collectBugs(){
-
-    }
-
-    public void generateBugReport(){ // !!! Isn't this method calling createBugReport() method in BugReportBuilder Class??
-
-    }
-
 }

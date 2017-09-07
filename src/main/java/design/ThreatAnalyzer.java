@@ -1,34 +1,73 @@
 package design;
 
-import design.classification.model.*;
+import design.classification.ThreatClassificationModel;
+import design.classification.ThreatCategory;
+
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 
-/**
- * Created by Ashi on 8/1/2017.
- */
-public class ThreatAnalyzer { //If we want to make this class static then make class final
+public class ThreatAnalyzer {
 
-    private SpoofingThreatCategory spoofing; //if static class then static variables and methods
-    private TamperingThreatCategory tampering;
-    private RepudiationThreatCategory repudiation;
-    private InformationDisclosureThreatCategory infDisclosure;
-    private DosThreatCategory dos;
-    private EopThreatCategory eop;
+    ThreatCollector threatCollector;
+    HashMap<String, ThreatCategory> threatCategoryHashMap;
 
-    public ThreatAnalyzer(){ //if static class then private constructor
+    public ThreatAnalyzer() {
+        threatCollector = new ThreatCollector();
+        threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+    }
+
+    /**
+     *
+     * @param xmlFile
+     */
+    public void collectThreats(File xmlFile) {
+        threatCollector.readFile(xmlFile);
+    }
+
+    /**
+     *
+     */
+    public void classifyThreats() {
+
+        try {
+            ThreatClassification threatClassification = new ThreatClassification(
+                    threatCollector.getThreatArrayList(), this.loadThreatCategoriesByModel());
+
+            threatClassification.classifyThreats();
+
+            this.threatCategoryHashMap = threatClassification.getThreatCategoryHashMap();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     */
+    public void generateThreatReport() {
 
     }
 
-    public void readFile(File htmFile){ // !!! same as in HTMLReader. Is this method necessary in this class
+    /**
+     * @return
+     */
+    private HashMap<String, ThreatCategory> loadThreatCategoriesByModel() throws IOException, SAXException, ParserConfigurationException {
 
+        /* The specific classification model has to be load somehow */
+        ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
+
+        return (threatClassificationModel.getThreatCategories());
     }
-
-    public void collectThreats(){
-
-    }
-
-    public void generateThreatReport(){ // !!! Isn't this method calling createThreatReport() method in ThreatReportBuilder Class??
-
-    }
-
 }

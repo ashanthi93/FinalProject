@@ -2,6 +2,7 @@ package association.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
@@ -18,15 +19,20 @@ public class Association{
     @JsonProperty("threatCategoryName")
     private String threatCategoryName;
 
-    @JacksonXmlProperty(localName = "threats")
+    @JacksonXmlElementWrapper(localName = "threats")
+    @JacksonXmlProperty(localName = "threat")
     @JsonProperty("threats")
     private ArrayList<Threat> threatArrayList;
 
-    @JacksonXmlProperty(localName = "bugs")
+    @JacksonXmlElementWrapper(localName = "bugs")
+    @JacksonXmlProperty(localName = "bug")
     @JsonProperty("bugs")
     private ArrayList<Bug> bugArrayList;
 
-    public Association() {}
+    public Association() {
+        threatArrayList = new ArrayList<Threat>();
+        bugArrayList = new ArrayList<Bug>();
+    }
 
     /* getter and setters */
     public String getThreatCategoryName() {
@@ -37,19 +43,19 @@ public class Association{
         this.threatCategoryName = threatCategoryName;
     }
 
-    public ArrayList<Threat> getthreatArrayList() {
+    public ArrayList<Threat> getThreatArrayList() {
         return threatArrayList;
     }
 
-    public void setthreatArrayList(ArrayList<Threat> threatArrayList) {
+    public void setThreatArrayList(ArrayList<Threat> threatArrayList) {
         this.threatArrayList = threatArrayList;
     }
 
-    public ArrayList<Bug> getbugArrayList() {
+    public ArrayList<Bug> getBugArrayList() {
         return bugArrayList;
     }
 
-    public void setbugArrayList(ArrayList<Bug> bugArrayList) {
+    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
         this.bugArrayList = bugArrayList;
     }
 }

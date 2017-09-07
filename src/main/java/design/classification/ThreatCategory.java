@@ -1,15 +1,38 @@
 package design.classification;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import design.model.Threat;
 
 import java.util.ArrayList;
 
+@JacksonXmlRootElement(localName = "threat-category")
+@JsonRootName("threat-category")
 public class ThreatCategory {
 
+    @JacksonXmlProperty(localName = "id")
+    @JsonProperty("id")
     private String id;
+
+    @JacksonXmlProperty(localName = "name")
+    @JsonProperty("name")
     private String name;
+
+    @JacksonXmlElementWrapper(localName = "threats")
+    @JacksonXmlProperty(localName = "threat")
+    @JsonProperty("threats")
     private ArrayList<Threat> threatList;
+
+    @JsonIgnore
     private ArrayList<String> securityControl;
+
+    @JacksonXmlElementWrapper(localName = "mitigations")
+    @JacksonXmlProperty(localName = "mitigation")
+    @JsonProperty("mitigations")
     private ArrayList<String> mitigationList;
 
     public ThreatCategory() {

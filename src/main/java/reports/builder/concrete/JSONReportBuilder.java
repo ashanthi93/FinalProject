@@ -1,6 +1,6 @@
-package association.report.builder.concrete;
+package reports.builder.concrete;
 
-import association.report.builder.ReportBuilder;
+import reports.builder.ReportBuilder;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

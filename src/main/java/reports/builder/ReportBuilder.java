@@ -1,4 +1,4 @@
-package association.report.builder;
+package reports.builder;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 

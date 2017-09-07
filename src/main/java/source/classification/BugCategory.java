@@ -8,6 +8,7 @@ public class BugCategory {
 
     private String id;
     private String name;
+    private String description;
     private ArrayList<Bug> bugArrayList;
     private ArrayList<String> countermeasures;
 
@@ -47,5 +48,13 @@ public class BugCategory {
 
     public void setCountermeasures(ArrayList<String> countermeasures) {
         this.countermeasures = countermeasures;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -103,4 +103,5 @@ public class OWASPT10Config {
         }
         return bugIdsAndNames;
     }
+
 }

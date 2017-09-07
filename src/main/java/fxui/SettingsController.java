@@ -7,24 +7,20 @@ package fxui;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Background;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import settings.owasp_configs.OWASPT10Config;
+import source.classification.BugCategory;
+import source.classification.BugClassificationModel;
 
 /**
  * FXML Controller class
@@ -33,24 +29,28 @@ import settings.owasp_configs.OWASPT10Config;
  */
 public class SettingsController implements Initializable {
 
+    //For OWASP Top 10 table
     @FXML
-    private TableView<String[]> OWASPT10_Table;
+    private TableView<BugCategory> OWASPT10_Table;
     
     @FXML
-    private TableColumn<String[], String> id;
+    private TableColumn<BugCategory, String> id;
     @FXML
-    private TableColumn<String[], String> name;
+    private TableColumn<BugCategory, String> name;
     @FXML
-    private TableColumn<String[], String> description;
+    private TableColumn<BugCategory, String> description;
     
-    ArrayList<String[]> OWASP_T10_list;
-    ObservableList<String[]> owasp_data;
-    OWASPT10Config readConfig = new OWASPT10Config();
+    HashMap<String, BugCategory> OWASP_T10_list;
+    ObservableList<BugCategory> owasp_data;
+    BugClassificationModel model = new BugClassificationModel();
+    
+    //For OWASP Proactives table
+    
 
     public SettingsController() throws ParserConfigurationException, IOException, SAXException {
-        OWASP_T10_list = readConfig.loadConfigFile();
-        Collection<String[]> collection = new ArrayList<String[]>(OWASP_T10_list);
-        owasp_data = FXCollections.observableArrayList(collection);
+        //For OWASP Top 10 table
+        OWASP_T10_list = model.getBugCategoriesWithDescription();
+        owasp_data = FXCollections.observableArrayList(OWASP_T10_list.values());
         
     }
     
@@ -62,16 +62,19 @@ public class SettingsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        id.setCellValueFactory(new PropertyValueFactory<String[], String>("id"));
-        name.setCellValueFactory(new PropertyValueFactory<String[], String>("name"));
-        description.setCellValueFactory(new PropertyValueFactory<String[], String>("description"));
+        //OWASP Top 10 Table settings
+        id.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("id"));
+        id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
         
+        name.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("name"));
+        name.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
+        name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
+        
+        description.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("description"));
+        description.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
+        description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
+                
         OWASPT10_Table.setItems(owasp_data);
-        
-        for (String[] owasp_data1 : owasp_data) {
-            System.out.println(owasp_data1[0] + ", " + OWASPT10_Table.getId());
-            //OWASPT10_Table.getId();
-        }
         
     }    
     

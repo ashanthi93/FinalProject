@@ -17,6 +17,7 @@ public class MainApp extends Application {
         scene.getStylesheets().add("/styles/Styles.css");
         
         stage.setTitle("Welcome To Conexus");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

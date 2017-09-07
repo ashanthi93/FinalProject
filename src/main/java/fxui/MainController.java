@@ -23,7 +23,7 @@ public class MainController implements Initializable {
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("Welcome To Conexus");
+        stage.setTitle("Settings");
         stage.setScene(scene);
         stage.show();
     }

@@ -24,7 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Background;
 import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
-import settings.owasp_configs.OWASPT10Config;
+import settings.bugmodel_configs.OWASPT10Config;
 
 /**
  * FXML Controller class
@@ -53,14 +53,12 @@ public class SettingsController implements Initializable {
         owasp_data = FXCollections.observableArrayList(collection);
         
     }
-    
-    
+
     /**
      * Initializes the controller class.
      * @param url
      * @param rb
      */
-    @Override
     public void initialize(URL url, ResourceBundle rb) {
         id.setCellValueFactory(new PropertyValueFactory<String[], String>("id"));
         name.setCellValueFactory(new PropertyValueFactory<String[], String>("name"));

@@ -23,7 +23,7 @@
             <Font size="14.0" />
          </font>
       </JFXButton>
-      <JFXButton fx:id="startAnlzBtn" buttonType="RAISED" layoutX="160.0" layoutY="249.0" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #48d1cc;" text="      Start Analysis" textAlignment="CENTER" textFill="#3d4956" AnchorPane.leftAnchor="160.0">
+      <JFXButton fx:id="startAnlzBtn" buttonType="RAISED" layoutX="160.0" layoutY="249.0" onAction="#startAnlzButtonAction" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #48d1cc;" text="      Start Analysis" textAlignment="CENTER" textFill="#3d4956" AnchorPane.leftAnchor="160.0">
          <font>
             <Font size="14.0" />
          </font>

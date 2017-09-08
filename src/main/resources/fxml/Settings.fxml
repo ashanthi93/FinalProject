@@ -51,16 +51,16 @@
                         <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="14.0" prefHeight="328.0" prefWidth="756.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="proact" prefWidth="56.0" />
-                            <TableColumn fx:id="owaspProMap_c1" prefWidth="61.0" text="C1" />
-                              <TableColumn fx:id="owaspProMap_c2" prefWidth="53.0" text="C2" />
-                              <TableColumn fx:id="owaspProMap_c3" prefWidth="62.0" text="C3" />
-                              <TableColumn fx:id="owaspProMap_c4" prefWidth="75.0" text="C4" />
-                              <TableColumn fx:id="owaspProMap_c5" prefWidth="58.0" text="C5" />
-                              <TableColumn fx:id="owaspProMap_c6" prefWidth="65.0" text="C6" />
-                              <TableColumn fx:id="owaspProMap_c7" prefWidth="56.0" text="C7" />
-                              <TableColumn fx:id="owaspProMap_c8" prefWidth="58.0" text="C8" />
-                              <TableColumn fx:id="owaspProMap_c9" minWidth="0.0" prefWidth="85.0" text="C9" />
-                              <TableColumn fx:id="owaspProMap_c10" prefWidth="196.0" text="C10" />
+                            <TableColumn fx:id="owaspProMap_a1" prefWidth="61.0" text="A1" />
+                              <TableColumn fx:id="owaspProMap_a2" prefWidth="53.0" text="A2" />
+                              <TableColumn fx:id="owaspProMap_a3" prefWidth="62.0" text="A3" />
+                              <TableColumn fx:id="owaspProMap_a4" prefWidth="75.0" text="A4" />
+                              <TableColumn fx:id="owaspProMap_a5" prefWidth="58.0" text="A5" />
+                              <TableColumn fx:id="owaspProMap_a6" prefWidth="65.0" text="A6" />
+                              <TableColumn fx:id="owaspProMap_a7" prefWidth="56.0" text="A7" />
+                              <TableColumn fx:id="owaspProMap_a8" prefWidth="58.0" text="A8" />
+                              <TableColumn fx:id="owaspProMap_a9" minWidth="0.0" prefWidth="85.0" text="A9" />
+                              <TableColumn fx:id="owaspProMap_a10" prefWidth="196.0" text="A10" />
                           </columns>
                         </TableView>
                         <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #a9a9a9;" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />

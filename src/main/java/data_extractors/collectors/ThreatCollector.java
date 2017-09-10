@@ -1,9 +1,9 @@
 package data_extractors.collectors;
 
+import data_extractors.collectors.report_parsers.ThreatReportParser;
 import data_models.design.Interaction;
 import data_models.design.Threat;
 import data_models.design.ThreatModel;
-import data_extractors.collectors.report_parsers.ThreatReportParser;
 
 import java.io.File;
 import java.util.ArrayList;

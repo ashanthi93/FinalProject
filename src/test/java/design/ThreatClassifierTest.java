@@ -1,6 +1,6 @@
 package design;
 
-import data_extractors.threat.ThreatClassifier;
+import data_extractors.classifiers.ThreatClassifier;
 import data_models.design.ThreatCategory;
 import classifier_builders.design.ThreatClassificationBuilder;
 import data_models.design.Threat;

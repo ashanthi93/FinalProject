@@ -10,7 +10,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
-
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -32,7 +31,7 @@ import classifier_builders.source_code.BugClassificationBuilder;
 import data_models.source_code.BugControl;
 import classifier_builders.source_code.BugControlClassificationBuilder;
 import classifier_builders.source_code.OWASPToProactiveClassificationModel;
-import classifier_builders.source_code.BugToBugControlMapper;
+import classifier_builders.source_code.OWASPToProactiveMapping;
 
 /**
  * FXML Controller class
@@ -73,33 +72,33 @@ public class SettingsController implements Initializable {
     
     //For OWASP_proactives mapping table
     @FXML
-    private TableView<BugToBugControlMapper> proactMap_table;
+    private TableView<OWASPToProactiveMapping> proactMap_table;
     
     @FXML
-    private TableColumn<BugToBugControlMapper, String> proact;
+    private TableColumn<OWASPToProactiveMapping, String> proact;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c1;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a1;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c2;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a2;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c3;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a3;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c4;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a4;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c5;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a5;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c6;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a6;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c7;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a7;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c8;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a8;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c9;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a9;
     @FXML
-    private TableColumn<BugToBugControlMapper, CheckBox> owaspProMap_c10;
+    private TableColumn<OWASPToProactiveMapping, CheckBox> owaspProMap_a10;
     
-    HashMap<Integer, BugToBugControlMapper> OWASP_proactives_mapping;
-    ObservableList<BugToBugControlMapper> OWASP_proactive_MappingData;
+    HashMap<Integer, OWASPToProactiveMapping> OWASP_proactives_mapping;
+    ObservableList<OWASPToProactiveMapping> OWASP_proactive_MappingData;
     OWASPToProactiveClassificationModel owaspMappingModel = new OWASPToProactiveClassificationModel();
 
     public SettingsController() throws ParserConfigurationException, IOException, SAXException {
@@ -115,7 +114,7 @@ public class SettingsController implements Initializable {
         
         //for OWASP_proactives mapping table 
         OWASP_proactives_mapping = owaspMappingModel.getMapping();
-        TreeMap<Integer, BugToBugControlMapper> proactiveMappingTreeMap = new TreeMap<Integer, BugToBugControlMapper>(OWASP_proactives_mapping);
+        TreeMap<Integer, OWASPToProactiveMapping> proactiveMappingTreeMap = new TreeMap<Integer, OWASPToProactiveMapping>(OWASP_proactives_mapping);
         OWASP_proactive_MappingData = FXCollections.observableArrayList(proactiveMappingTreeMap.values());
         
     }
@@ -168,160 +167,159 @@ public class SettingsController implements Initializable {
     }
     
     private void setOWASP_ProactivesMappingTableProperties(){
-        proact.setCellValueFactory(new PropertyValueFactory<BugToBugControlMapper, String>("bugType"));
+
+        proact.setCellValueFactory(new PropertyValueFactory<OWASPToProactiveMapping, String>("control"));
         proact.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
         
-        //owaspProMap_c1.setCellValueFactory(new PropertyValueFactory<OWASPToProactiveMapping, CheckBox>("c1"));
-        //owaspProMap_c1.setCellFactory(CheckBoxTableCell.forTableColumn(new CheckBox()));
-        owaspProMap_c1.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a1.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+            public ObservableValue<CheckBox> call(CellDataFeatures< OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC1()){
+                if(obj.getA1()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c1.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c2.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a1.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a2.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures<OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC2()){
+                if(obj.getA2()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c2.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c3.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a2.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a3.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures< OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC3()){
+                if(obj.getA3()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c3.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c4.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a3.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a4.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures<OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC4()){
+                if(obj.getA4()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c4.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c5.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a4.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a5.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures< OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC5()){
+                if(obj.getA5()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c5.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c6.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a5.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a6.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures<OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC6()){
+                if(obj.getA6()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c6.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c7.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a6.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a7.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures< OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC7()){
+                if(obj.getA7()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c7.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c8.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a7.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a8.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures<OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC8()){
+                if(obj.getA8()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c8.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c9.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a8.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a9.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures< OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC9()){
+                if(obj.getA9()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c9.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
-        owaspProMap_c10.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapper, CheckBox>, ObservableValue<CheckBox>>() {
+        owaspProMap_a9.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapper, CheckBox> p) {
-                BugToBugControlMapper obj = p.getValue();
+        owaspProMap_a10.setCellValueFactory( new Callback<CellDataFeatures<OWASPToProactiveMapping, CheckBox>, ObservableValue<CheckBox>>() {
+
+            public ObservableValue<CheckBox> call(CellDataFeatures<OWASPToProactiveMapping, CheckBox> p) {
+                OWASPToProactiveMapping obj = p.getValue();
                 CheckBox box = new CheckBox();
                 box.setAlignment(Pos.CENTER);
                 
-                if(obj.getC10()){
+                if(obj.getA10()){
                     box.selectedProperty().setValue(Boolean.TRUE);
                 }
                 return new SimpleObjectProperty<CheckBox>(box);
             }
         });
-        owaspProMap_c10.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a10.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
         
         proactMap_table.setItems(OWASP_proactive_MappingData);
     }

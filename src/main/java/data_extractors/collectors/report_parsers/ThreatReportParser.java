@@ -2,7 +2,7 @@ package data_extractors.collectors.report_parsers;
 
 import java.io.File;
 
-class ThreatReportParser {
+public class ThreatReportParser {
 
     public ThreatReportParser(){}
 

@@ -16,6 +16,19 @@ public class MainController implements Initializable {
     private void settingsButtonAction(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml");
     }
+    
+    @FXML
+    private void startAnlzButtonAction(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewProjectWindow.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        stage.setTitle("Start New Project");
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void start(String path) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));

@@ -1,18 +1,18 @@
 package association;
 
-import output_generators.report.creator.AssociationReportCreator;
-import output_generators.report.model.AssociationReport;
-import output_generators.report.builder.ReportBuilder;
-import output_generators.report.builder.concrete.XMLReportBuilder;
-import data_models.design.ThreatCategory;
-import classifier_builders.design.ThreatClassificationBuilder;
-import data_models.design.Threat;
+import org.ucsc.sse.outputgenerators.report.creator.AssociationReportCreator;
+import org.ucsc.sse.outputgenerators.report.model.AssociationReport;
+import org.ucsc.sse.outputgenerators.report.builder.ReportBuilder;
+import org.ucsc.sse.outputgenerators.report.builder.concrete.XMLReportBuilder;
+import org.ucsc.sse.datamodels.design.ThreatCategory;
+import org.ucsc.sse.classifierbuilders.design.ThreatClassificationBuilder;
+import org.ucsc.sse.datamodels.design.Threat;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import data_models.source_code.BugCategory;
-import classifier_builders.source_code.BugClassificationBuilder;
-import data_models.source_code.Bug;
+import org.ucsc.sse.datamodels.source_code.BugCategory;
+import org.ucsc.sse.classifierbuilders.source_code.BugClassificationBuilder;
+import org.ucsc.sse.datamodels.source_code.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

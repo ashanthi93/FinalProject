@@ -1,9 +1,9 @@
 package design;
 
-import data_extractors.classifiers.ThreatClassifier;
-import data_models.design.ThreatCategory;
-import classifier_builders.design.ThreatClassificationBuilder;
-import data_models.design.Threat;
+import org.ucsc.sse.dataextractors.classifiers.ThreatClassifier;
+import org.ucsc.sse.datamodels.design.ThreatCategory;
+import org.ucsc.sse.classifierbuilders.design.ThreatClassificationBuilder;
+import org.ucsc.sse.datamodels.design.Threat;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;

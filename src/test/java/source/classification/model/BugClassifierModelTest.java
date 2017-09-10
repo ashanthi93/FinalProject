@@ -4,8 +4,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import data_models.source_code.BugCategory;
-import classifier_builders.source_code.BugClassificationBuilder;
+import org.ucsc.sse.datamodels.source_code.BugCategory;
+import org.ucsc.sse.classifierbuilders.source_code.BugClassificationBuilder;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;

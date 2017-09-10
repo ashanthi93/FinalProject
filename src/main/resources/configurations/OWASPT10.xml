@@ -36,7 +36,7 @@
         <id>A5</id>
         <name>Security Misconfiguration</name>
         <description>Good security requires having a secure configuration defined and deployed for the application,
-            frameworks, application server, web server, database server, and platform. Secure settings should be
+            frameworks, application server, web server, database server, and platform. Secure knowedge_model.settings should be
             defined, implemented, and maintained, as defaults are often insecure. Additionally, software should be kept
             up to date.
         </description>

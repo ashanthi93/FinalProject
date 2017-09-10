@@ -1,17 +1,18 @@
 package association;
 
-import reports.AssociationReport;
-import reports.builder.ReportBuilder;
-import reports.builder.concrete.XMLReportBuilder;
-import design.classification.ThreatCategory;
-import design.classification.ThreatClassificationModel;
-import design.model.Threat;
+import output_generators.report.creator.AssociationReportCreator;
+import output_generators.report.model.AssociationReport;
+import output_generators.report.builder.ReportBuilder;
+import output_generators.report.builder.concrete.XMLReportBuilder;
+import data_models.design.ThreatCategory;
+import classifier_builders.design.ThreatClassificationBuilder;
+import data_models.design.Threat;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
-import source.classification.BugCategory;
-import source.classification.BugClassificationModel;
-import source.model.Bug;
+import data_models.source_code.BugCategory;
+import classifier_builders.source_code.BugClassificationBuilder;
+import data_models.source_code.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -39,8 +40,8 @@ public class AssociationReportCreatorTest {
     @BeforeTest
     private HashMap<BugCategory, String[]> createBugCategoryObjects() throws ParserConfigurationException, SAXException, IOException {
 
-        BugClassificationModel bugClassificationModel = new BugClassificationModel();
-        HashMap<String, BugCategory> bugCategoryHashMap = bugClassificationModel.getBugCategories();
+        BugClassificationBuilder bugClassificationBuilder = new BugClassificationBuilder();
+        HashMap<String, BugCategory> bugCategoryHashMap = bugClassificationBuilder.getBugCategories();
 
         ArrayList<Bug> bugArrayList = new ArrayList<Bug>();
 
@@ -102,8 +103,8 @@ public class AssociationReportCreatorTest {
     @BeforeTest
     private HashMap<String, ThreatCategory> createThreat() throws ParserConfigurationException, SAXException, IOException {
 
-        ThreatClassificationModel threatClassificationModel = new ThreatClassificationModel();
-        HashMap<String, ThreatCategory> threatCategoryHashMap = threatClassificationModel.getThreatCategories();
+        ThreatClassificationBuilder threatClassificationBuilder = new ThreatClassificationBuilder();
+        HashMap<String, ThreatCategory> threatCategoryHashMap = threatClassificationBuilder.getThreatCategories();
 
         //Spoo
 

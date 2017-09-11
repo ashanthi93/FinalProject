@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><bug-controls><model-name>OWASP Proactive Controls</model-name><version>2016</version><control><id>C1</id><name>Verify for Security Early and Often</name><description>Include security while writing testing stories and tasks. Include the Proactive Controls in stubs and drivers
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><bug-controls><model-name>OWASP-Top10</model-name><version>2013</version><control><id>C1</id><name>Verify for Security Early and Often</name><description>Include security while writing testing stories and tasks. Include the Proactive Controls in stubs and drivers
 Security testing stories should be defined such that the lowest child story can be implemented and accepted in a single iterationÍ¾ testing a Proactive Control must be lightweight
 Consider OWASP ASVS as a guide to define security requirements and testing
 Convert scanning output into reusable Proactive Controls to avoid entire classes of problems

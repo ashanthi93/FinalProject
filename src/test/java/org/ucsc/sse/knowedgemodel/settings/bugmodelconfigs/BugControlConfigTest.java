@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import static org.testng.Assert.*;
 
+/**
+ * Created by Ashi on 9/11/2017.
+ */
 public class BugControlConfigTest {
 
     @BeforeTest
@@ -92,9 +95,8 @@ public class BugControlConfigTest {
     public void testCreateConfigFile() throws Exception {
 
         ArrayList<String[]> bugControls = this.createBugControls();
-
         BugControlConfig bugControlConfig = new BugControlConfig();
-        bugControlConfig.createConfigFile(bugControls, "OWASP Proactive Controls", "2016");
+        bugControlConfig.createConfigFile(bugControls, "OWASP-Top10", "2013");
 
     }
 

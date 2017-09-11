@@ -22,7 +22,7 @@ public class ThreatControlOverlayCreator {
         try{
             instance = new ThreatControlOverlayCreator();
         }catch (Exception ex){
-            throw new RuntimeException("Exception occured in creating a singleton instance");
+            throw new RuntimeException("Exception occurred in creating a singleton instance");
         }
     }
 
@@ -30,6 +30,12 @@ public class ThreatControlOverlayCreator {
         return instance;
     }
 
+    /**
+     *
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
     private void loadThreatControlLists() throws ParserConfigurationException, SAXException, IOException {
 
         AttackerPerspectiveConfig attackerPerspectiveConfig = new AttackerPerspectiveConfig();
@@ -39,6 +45,13 @@ public class ThreatControlOverlayCreator {
         defensiveThreatControlList = defensivePerspectiveConfig.loadThreatControls();
     }
 
+    /**
+     *
+     * @return
+     * @throws IOException
+     * @throws SAXException
+     * @throws ParserConfigurationException
+     */
     public ArrayList<String[]> createThreatControlsOverlayList() throws IOException, SAXException, ParserConfigurationException {
 
         loadThreatControlLists();
@@ -89,6 +102,11 @@ public class ThreatControlOverlayCreator {
         return threatControlList;
     }
 
+    /**
+     *
+     * @param threatControlName
+     * @return
+     */
     private int checkThreatControlExists(String threatControlName) {
 
         int i = 0;

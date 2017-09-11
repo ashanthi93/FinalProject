@@ -1,4 +1,4 @@
-package org.ucsc.sse.fxui;
+package org.ucsc.sse.userinterfaces.javafx_ui;
 
 import com.jfoenix.controls.JFXRadioButton;
 import java.net.URL;

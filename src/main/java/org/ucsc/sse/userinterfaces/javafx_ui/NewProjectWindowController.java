@@ -44,7 +44,7 @@ public class NewProjectWindowController implements Initializable {
     private void fileOpen(String title){
         FileChooser fileChooser = new FileChooser();
         Stage stage = new Stage();
-        fileChooser.setTitle("Open Resource File");
+        fileChooser.setTitle(title);
         fileChooser.showOpenDialog(stage);
     }
 

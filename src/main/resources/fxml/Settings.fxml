@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fxui.SettingsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ucsc.sse.userinterfaces.javafx_ui.SettingsController">
    <children>
       <TabPane layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -15,8 +15,8 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="756.0">
                      <children>
-                        <JFXButton fx:id="owaspNextBtn" buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #a9a9a9;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <TableView fx:id="OWASPT10_Table" editable="true" layoutX="6.0" prefHeight="328.0" prefWidth="756.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="owaspNextBtn" buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #808080;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <TableView fx:id="OWASPT10_Table" editable="true" layoutX="6.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="t10_id" editable="false" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="t10_name" prefWidth="250.0" text="Name" />
@@ -31,16 +31,16 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="539.0">
                      <children>
-                        <TableView fx:id="proactive_table" editable="true" layoutX="60.0" prefHeight="328.0" prefWidth="756.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="proactive_table" editable="true" layoutX="60.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="proact_id" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="proact_name" prefWidth="75.0" text="Name" />
                               <TableColumn fx:id="proact_description" prefWidth="75.0" text="Description" />
                           </columns>
                         </TableView>
-                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #a9a9a9;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #a9a9a9;" text="+" AnchorPane.bottomAnchor="14.0" />
-                        <JFXButton buttonType="RAISED" layoutX="64.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #a9a9a9;" text="-" AnchorPane.bottomAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #808080;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #808080;" text="+" AnchorPane.bottomAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="64.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #808080;" text="-" AnchorPane.bottomAnchor="14.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -48,22 +48,22 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="780.0">
                      <children>
-                        <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="14.0" prefHeight="328.0" prefWidth="756.0" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="14.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="proact" prefWidth="56.0" />
-                            <TableColumn fx:id="owaspProMap_c1" prefWidth="61.0" text="C1" />
-                              <TableColumn fx:id="owaspProMap_c2" prefWidth="53.0" text="C2" />
-                              <TableColumn fx:id="owaspProMap_c3" prefWidth="62.0" text="C3" />
-                              <TableColumn fx:id="owaspProMap_c4" prefWidth="75.0" text="C4" />
-                              <TableColumn fx:id="owaspProMap_c5" prefWidth="58.0" text="C5" />
-                              <TableColumn fx:id="owaspProMap_c6" prefWidth="65.0" text="C6" />
-                              <TableColumn fx:id="owaspProMap_c7" prefWidth="56.0" text="C7" />
-                              <TableColumn fx:id="owaspProMap_c8" prefWidth="58.0" text="C8" />
-                              <TableColumn fx:id="owaspProMap_c9" minWidth="0.0" prefWidth="85.0" text="C9" />
-                              <TableColumn fx:id="owaspProMap_c10" prefWidth="196.0" text="C10" />
+                            <TableColumn fx:id="owaspProMap_a1" prefWidth="61.0" text="A1" />
+                              <TableColumn fx:id="owaspProMap_a2" prefWidth="53.0" text="A2" />
+                              <TableColumn fx:id="owaspProMap_a3" prefWidth="62.0" text="A3" />
+                              <TableColumn fx:id="owaspProMap_a4" prefWidth="75.0" text="A4" />
+                              <TableColumn fx:id="owaspProMap_a5" prefWidth="58.0" text="A5" />
+                              <TableColumn fx:id="owaspProMap_a6" prefWidth="65.0" text="A6" />
+                              <TableColumn fx:id="owaspProMap_a7" prefWidth="56.0" text="A7" />
+                              <TableColumn fx:id="owaspProMap_a8" prefWidth="58.0" text="A8" />
+                              <TableColumn fx:id="owaspProMap_a9" minWidth="0.0" prefWidth="85.0" text="A9" />
+                              <TableColumn fx:id="owaspProMap_a10" prefWidth="196.0" text="A10" />
                           </columns>
                         </TableView>
-                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #a9a9a9;" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #808080;" text="Save" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                      </children></AnchorPane>
               </content>
             </Tab>

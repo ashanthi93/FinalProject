@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 
 public class NewProjectWindowController implements Initializable {
 
@@ -29,7 +32,22 @@ public class NewProjectWindowController implements Initializable {
         }
     }
     
-    @Override
+    @FXML
+    private void addBtnction(ActionEvent event) throws Exception {
+        if(threatCheck.isSelected()){
+            fileOpen("Select Threat Reports");
+        }else if(bugCheck.isSelected()){
+            fileOpen("Select Static Code Analysis Reports");
+        }
+    }
+    
+    private void fileOpen(String title){
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.setTitle(title);
+        fileChooser.showOpenDialog(stage);
+    }
+
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    

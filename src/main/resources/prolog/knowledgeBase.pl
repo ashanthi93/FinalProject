@@ -1,119 +1,47 @@
-stride(
-spoofing,
-security_control("Authentication"),
-[d1]).
-
-stride(
-tampering,
-security_control("Integrity"),
-[d6]).
-
-stride(
-repudiation,
-security_control("Non-repudiation"),
-[d2]).
-
-stride(
-information_disclosure,
-security_control("Confidentiality"),
-[d8]).
-
-stride(
-denial_of_service,
-security_control("Availability"),
-[d3,d7]).
-
-stride(
-elevation_of_privilege,
-security_control("Authorization"),
-[d3,d4,d5]).
-
-
-
-stride_defensive(
-d1,
-name("Authentication")).
-
-stride_defensive(
-d2,
-name("Authorization")).
-
-stride_defensive(
-d3,
-name("Configuration Management")).
-
-stride_defensive(
-d4,
-name("Data Protection in Storage and Transit")).
-
-stride_defensive(
-d5,
-name("Data validation/ Parameter validation")).
-
-stride_defensive(
-d6,
-name("Error Handling and Exception Management")).
-
-stride_defensive(
-d7,
-name("User and Session Management")).
-
-stride_defensive(
-d8,
-name("Auditing and Logging")).
-
+:- [rules].
+:- [stride].
 
 
 owasp_top10(
 a1,
 name("Injection"),
 [c2,c3,c4,c8,c9,c10]).
-
 owasp_top10(
 a2,
 name("Broken Authentication and Session Management"),
 [c5,c8,c9,c10]).
-
 owasp_top10(
 a3,
 name("Cross-Site Scripting (XSS)"),
 [c3,c4,c8,c9,c10]).
-
 owasp_top10(
 a4,
 name("Insecure Direct Object References"),
 [c6,c8,c9,c10]).
-
 owasp_top10(
 a5,
 name("Security Misconfiguration"),
 [c8,c9,c10]).
-
 owasp_top10(
 a6,
 name("Sensitive Data Exposure"),
 [c7,c8,c9,c10]).
-
 owasp_top10(
 a7,
 name("Missing Function Level Access Control"),
 [c6,c8,c9,c10]).
-
 owasp_top10(
 a8,
 name("Cross-Site Request Forgery (CSRF)"),
 [c8,c9,c10]).
-
 owasp_top10(
 a9,
 name("Using Components with Known Vulnerabilities"),
 [c8,c9,c10]).
-
 owasp_top10(
 a10,
 name("Unvalidated Redirects and Forwards"),
 [c4,c8,c9,c10]).
-
 
 
 owasp_top10_proactive(
@@ -172,34 +100,3 @@ name("Error and Exception Handling"),
 
 
 
-owasp(Bug_type):-
-	owasp_top10(
-		Bug_type,
-		_,
-		Y
-	),
-	length(Y,A),
-	testloop(0,A,Y).
-
-testloop(N, Length, List):- 
-	N<Length, 
-	nth0(N,List,B),
-	get_proactive_description(B), nl, 
-	M is N+1, 
-	testloop(M,Length,List).
-
-get_proactive_description(Name):-
-	owasp_top10_proactive(
-		Name,
-		_,
-		Y
-		),
-	write(Y).
-
-remove_frame(A):-
-	owasp_top10_proactive(
-		A,
-		_,
-		_
-	),
-	retract(owasp_top10_proactive(A,_,_)).

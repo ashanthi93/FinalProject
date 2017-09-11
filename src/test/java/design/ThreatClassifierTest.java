@@ -55,7 +55,7 @@ public class ThreatClassifierTest {
         threatArrayList.add(threat);
         D.add(threat);
 
-        threat = this.createThreat("T7", "e", "Elevation of Privilege");
+        threat = this.createThreat("T7", "e", "Elevation of Privileges");
         threatArrayList.add(threat);
         E.add(threat);
 

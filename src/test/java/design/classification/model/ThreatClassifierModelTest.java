@@ -34,7 +34,7 @@ public class ThreatClassifierModelTest {
         threatCategory = this.createThreatCategory("D", "Denial of Service");
         manualThreatCategoryHashMap.put("D", threatCategory);
 
-        threatCategory = this.createThreatCategory("E", "Elevation of Privilege");
+        threatCategory = this.createThreatCategory("E", "Elevation of Privileges");
         manualThreatCategoryHashMap.put("E", threatCategory);
     }
 

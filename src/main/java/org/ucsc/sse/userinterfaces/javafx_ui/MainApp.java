@@ -6,11 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.ucsc.sse.knowedgemodel.prolog.AssociationLoader;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 
 public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        new AssociationLoader().callProlog();
+
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
 
         Scene scene = new Scene(root);
@@ -30,8 +37,9 @@ public class MainApp extends Application {
      *
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         launch(args);
+
     }
 
 }

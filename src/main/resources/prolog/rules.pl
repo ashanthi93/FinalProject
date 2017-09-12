@@ -5,14 +5,14 @@ owasp(Bug_type):-
 		Y
 	),
 	length(Y,A),
-	testloop(0,A,Y).
+	get_proactives(0,A,Y).
 
-testloop(N, Length, List):- 
+get_proactives(N, Length, List):- 
 	N<Length, 
 	nth0(N,List,B),
 	get_proactive_description(B), nl, 
 	M is N+1, 
-	testloop(M,Length,List).
+	get_proactives(M,Length,List).
 
 get_proactive_description(Name):-
 	owasp_top10_proactive(

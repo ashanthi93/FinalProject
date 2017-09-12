@@ -38,7 +38,7 @@
             <artifactId>jpl</artifactId>
             <version>7.0.1</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.jfoenix</groupId>
             <artifactId>jfoenix</artifactId>

@@ -12,6 +12,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class ConfigXMLFileCreator {
 
@@ -60,7 +64,8 @@ public class ConfigXMLFileCreator {
 
         DOMSource source = new DOMSource(document);
 
-        String pathName = "src/main/resources/configurations/" + fileName;
+        File file = new File("src/main/resources/" + fileName );
+        String pathName = file.getAbsolutePath();
 
         StreamResult streamResult = new StreamResult(new File(pathName));
         transformer.transform(source, streamResult);

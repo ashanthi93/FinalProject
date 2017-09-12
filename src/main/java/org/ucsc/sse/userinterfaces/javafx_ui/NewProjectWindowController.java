@@ -1,18 +1,21 @@
 package org.ucsc.sse.userinterfaces.javafx_ui;
 
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXRadioButton;
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.application.Preloader.StateChangeNotification.Type;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import static org.ucsc.sse.userinterfaces.javafx_ui.MainApp.welcomeWindow;
 
 public class NewProjectWindowController implements Initializable {
 
@@ -60,13 +63,32 @@ public class NewProjectWindowController implements Initializable {
         stage.close();
     }
     
-    private void fileOpen(String title, String displayName, String fileType){
+    private void fileOpen(String title, String displayName, String fileType) throws Exception{
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(displayName, fileType);
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = new Stage();
         fileChooser.setTitle(title);
-        fileChooser.showOpenDialog(stage);
+        File file = fileChooser.showOpenDialog(stage);
+        
+        if (file != null) {
+            start("/fxml/HomeWindow.fxml");
+            Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
+            stageMain.close();
+            Stage stageMainWelcome = (Stage) welcomeWindow.getWindow();
+            stageMainWelcome.close();
+        }
+    }
+    
+    public void start(String path) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        stage.setTitle("Home Window");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void initialize(URL url, ResourceBundle rb) {

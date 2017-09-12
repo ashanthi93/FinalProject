@@ -7,16 +7,16 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ucsc.sse.userinterfaces.javafx_ui.SettingsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="756.0" style="-fx-background-color: #3D4956;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ucsc.sse.userinterfaces.javafx_ui.SettingsController">
    <children>
       <TabPane layoutX="14.0" layoutY="14.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
           <Tab closable="false" text="OWASP Top 10">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="756.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="756.0" style="-fx-background-color: #3D4956;">
                      <children>
-                        <JFXButton fx:id="owaspNextBtn" buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #808080;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <TableView fx:id="OWASPT10_Table" editable="true" layoutX="6.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <JFXButton fx:id="owaspNextBtn" buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #48d1cc;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <TableView fx:id="OWASPT10_Table" editable="true" layoutX="6.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #3D4956;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="t10_id" editable="false" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="t10_name" prefWidth="250.0" text="Name" />
@@ -29,26 +29,26 @@
           </Tab>
           <Tab closable="false" text="OWASP Proactives">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="539.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="539.0" style="-fx-background-color: #3D4956;">
                      <children>
-                        <TableView fx:id="proactive_table" editable="true" layoutX="60.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="proactive_table" editable="true" layoutX="60.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #3D4956;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="proact_id" prefWidth="75.0" text="ID" />
                             <TableColumn fx:id="proact_name" prefWidth="75.0" text="Name" />
                               <TableColumn fx:id="proact_description" prefWidth="75.0" text="Description" />
                           </columns>
                         </TableView>
-                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #808080;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                        <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #808080;" text="+" AnchorPane.bottomAnchor="14.0" />
-                        <JFXButton buttonType="RAISED" layoutX="64.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #808080;" text="-" AnchorPane.bottomAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="701.0" layoutY="332.0" style="-fx-background-color: #48d1cc;" text="Next" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="+" AnchorPane.bottomAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="64.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="-" AnchorPane.bottomAnchor="14.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="OWASP Top 10 Mapping">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="780.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="780.0" style="-fx-background-color: #3D4956;">
                      <children>
-                        <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="14.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #d3d3d3;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="14.0" prefHeight="328.0" prefWidth="756.0" style="-fx-background-color: #3D4956;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="proact" prefWidth="56.0" />
                             <TableColumn fx:id="owaspProMap_a1" prefWidth="61.0" text="A1" />
@@ -69,17 +69,17 @@
             </Tab>
             <Tab text="SRTIDE">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3D4956;" />
               </content>
             </Tab>
             <Tab text="STRIDE - Defensive Perspective">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3D4956;" />
               </content>
             </Tab>
             <Tab text="STRIDE - Defensive Mapping">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #3D4956;" />
               </content>
             </Tab>
         </tabs>

@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -53,16 +54,29 @@ public class ConfigXMLFileCreator {
     }
 
     // Transform and write config file
-    public void transformAndSaveFile(String fileName) throws TransformerException {
+    public void transformAndSaveFile(String fileName) {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = transformerFactory.newTransformer();
+        Transformer transformer = null;
+        try {
+            transformer = transformerFactory.newTransformer();
+
+        } catch (TransformerConfigurationException e) {
+            e.printStackTrace();
+        }
 
         DOMSource source = new DOMSource(document);
 
-        String pathName = "src/main/resources/configurations/" + fileName;
+        File file = new File("src/main/resources/" + fileName);
+        String pathName = file.getAbsolutePath();
 
         StreamResult streamResult = new StreamResult(new File(pathName));
-        transformer.transform(source, streamResult);
+
+        try {
+            transformer.transform(source, streamResult);
+
+        } catch (TransformerException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -9,16 +9,18 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    public static Scene welcomeWindow;
+    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
 
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        welcomeWindow = new Scene(root);
+        welcomeWindow.getStylesheets().add("/styles/Styles.css");
         
         stage.setTitle("Welcome To Conexus");
         stage.setResizable(false);
-        stage.setScene(scene);
+        stage.setScene(welcomeWindow);
         stage.show();
     }
 

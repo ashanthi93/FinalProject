@@ -1,3 +1,7 @@
-.logo_lbl {
-    //-fx-background-image:
+.newProjectBtn {
+   -fx-background-image: url('/images/project.png');
+}
+
+.openProjectBtn{
+    -fx-background-image: url('/images/open.png');
 }

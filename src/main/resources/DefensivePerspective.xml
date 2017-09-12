@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><defensive-perspective><model-name>ASF</model-name><threat-type><id>D1</id><name>Authentication</name><description>Credentials and authentication tokens are protected with encryption in storage and transit.
+Protocols are resistant to brute force, dictionary, and replay attacks.
+Strong password policies are enforced.
+Trusted server authentication is used instead of SQL authentication.
+Passwords are stored with salted hashes.
+Password resets do not reveal password hints and valid usernames.
+Account lockouts do not result in a denial of service attack.
+</description></threat-type><threat-type><id>D2</id><name>Authorization</name><description>Strong ACLs are used for enforcing authorized access to resources
+Role-based access controls are used to restrict access to specific operations
+The system follows the principle of least privilege for user and service accounts
+Privilege separation is correctly configured within the presentation, business and data access layers
+</description></threat-type><threat-type><id>D3</id><name>Configuration Management</name><description>Least privileged processes are used and service accounts with no administration capability
+Auditing and logging of all administration activities is enabled
+Access to configuration files and administrator interfaces is restricted to administrators
+</description></threat-type><threat-type><id>D4</id><name>Data Protection in Storage and Transit</name><description>Standard encryption algorithms and correct key sizes are being used
+Hashed message authentication codes (HMACs) are used to protect data integrity
+Secrets (e.g. keys, confidential data ) are cryptographically protected both in transport and in storage
+Built-in secure storage is used for protecting keys
+No credentials and sensitive data are sent in clear text over the wire
+</description></threat-type><threat-type><id>D5</id><name>Data Validation / Parameter Validation</name><description>Data type, format, length, and range checks are enforced
+All data sent from the client is validated
+No security decision is based upon parameters (e.g. URL parameters) that can be manipulated
+Input filtering via white list validation is used
+Output encoding is used
+</description></threat-type><threat-type><id>D6</id><name>Error Handling and Exception Management</name><description>All exceptions are handled in a structured manner
+Privileges are restored to the appropriate level in case of errors and exceptions
+Error messages are scrubbed so that no sensitive information is revealed to the attacker
+</description></threat-type><threat-type><id>D7</id><name>User and Session Management</name><description>No sensitive information is stored in clear text in the cookie
+The contents of the authentication cookies is encrypted
+Cookies are configured to expire
+Sessions are resistant to replay attacks
+Secure communication channels are used to protect authentication cookies
+User is forced to re-authenticate when performing critical functions
+Sessions are expired at logout
+</description></threat-type><threat-type><id>D8</id><name>Auditing and Logging</name><description>Sensitive information (e.g. passwords, PII) is not logged
+Access controls (e.g. ACLs) are enforced on log files to prevent un-authorized access
+Integrity controls (e.g. signatures) are enforced on log files to provide non-repudiation
+Log files provide for audit trail for sensitive operations and logging of key events
+Auditing and logging is enabled across the tiers on multiple servers
+</description></threat-type></defensive-perspective>

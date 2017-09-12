@@ -13,6 +13,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class ConfigXMLFileCreator {
 
@@ -54,16 +58,10 @@ public class ConfigXMLFileCreator {
     }
 
     // Transform and write config file
-    public void transformAndSaveFile(String fileName) {
+    public void transformAndSaveFile(String fileName) throws TransformerException {
 
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
-        Transformer transformer = null;
-        try {
-            transformer = transformerFactory.newTransformer();
-
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
-        }
+        Transformer transformer = transformerFactory.newTransformer();
 
         DOMSource source = new DOMSource(document);
 
@@ -71,12 +69,8 @@ public class ConfigXMLFileCreator {
         String pathName = file.getAbsolutePath();
 
         StreamResult streamResult = new StreamResult(new File(pathName));
+        transformer.transform(source, streamResult);
 
-        try {
-            transformer.transform(source, streamResult);
 
-        } catch (TransformerException e) {
-            e.printStackTrace();
-        }
     }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><bug-controls><model-name>OWASP-Top10</model-name><version>2013</version><control><id>C1</id><name>Verify for Security Early and Often</name><description>Include security while writing testing stories and tasks. Include the Proactive Controls in stubs and drivers
+Security testing stories should be defined such that the lowest child story can be implemented and accepted in a single iterationÍ¾ testing a Proactive Control must be lightweight
+Consider OWASP ASVS as a guide to define security requirements and testing
+Convert scanning output into reusable Proactive Controls to avoid entire classes of problems
+</description></control><control><id>C2</id><name>Parameterize Queries</name><description>Untrusted input should be prevented from being interpreted as part of a SQL command
+Use â€˜Query Parameterizationâ€™
+SQL statements are sent to and parsed by the database server separately from any parameters
+Use defense in depth with use of technologies such as automated static analysis and proper database management system configuration
+Configure database engines to only support parameterized queries
+</description></control><control><id>C3</id><name>Encode Data</name><description>Encoding is translating special characters into some equivalent form that is no longer dangerous in the target interpreter
+Manipulating user generated content: ensure that data is filtered and/or encoded when presenting it in the Web View
+Loading content from an external source: apps that need to display untrusted content inside a Web View should use a dedicated server/host to render and escape HTML/Javascript content in a safe way. This prevents access to local system contents by malicious JavaScript code.
+</description></control><control><id>C4</id><name>Validate All Inputs</name><description>Use  two general approaches to performing input syntax validation white listing preferred over  black listing 
+Regular expressions offer a way to check whether data matches a specific pattern this is a great way to implement whitelist validation. 
+The security of the application should be enforced where that input is used, e.g., if input is used to build an HTML response, then the appropriate HTML encoding should be performed to prevent XSS  attacks. Also, if input is used to build a SQL statement, Query Parameterization should be used.
+</description></control><control><id>C5</id><name>Implement Identity and Authentication Controls</name><description>Use Multi Factor Authentication
+For Mobile Application: Token Based Authentication. avoid storing/persisting authentication credentials locally on the device. Instead, perform initial authentication using the username and password supplied by the user, and then generate a shortlived access token which can be used to authenticate a client request without sending the user's credentials. 
+Implement Secure Password Storage using cryptography controls
+Implement Secure Password Recovery Mechanism
+Session: Generation and Expiration: On any successful authentication and reauthentication the software should generate a new session and session id.
+Mandatory to set expiration timeouts for every session, after a specified period of inactivity.  
+Reauthentication for Sensitive Features
+</description></control><control><id>C6</id><name>Implement Access Controls</name><description>Force All Requests to go Through Access Control Checks
+Deny by Default 
+Principle of Least Privilege: each user or system component should be allocated the minimum privilege required to perform an action for the minimum amount of time
+Avoid Hard Coded Access Control Checks: enforcement layer (checks in code) and your access control decision making process (the access control "engine") should be separated when possible
+Code to the Activity: Consider checking if the user has access to that feature in code, as opposed to checking what role the user is in code
+Server side Trusted Data Should Drive Access Control. Policy data such as a user's role or an access control rule should never be part of the request  
+</description></control><control><id>C7</id><name>Protect Data</name><description>Classify and Encrypt Data at rest. Develop your own crypto algorithm &amp; key size should be optly chosen 
+Encrypt Data in Transit. TLS is by far the most common and widely supported model used by web applications for encryption in transit  
+Implement Protection in Transit
+Mobile Application: Secure Local Storage. Avoid storing the sensitive data  &amp;   authentication credentials, access token, etc. on local device
+</description></control><control><id>C8</id><name>Implement Logging and Intrusion Detection</name><description>Ensure proper level of logging
+Follow a common logging approach within the system and across systems where possible to make correlation easy
+Make sure to always log the timestamp and identifying information like the source IP and userid, but be careful not to log private or confidential data or opt out data or secrets
+Design proper positioning of IDS sensors and management 
+</description></control><control><id>C9</id><name>Leverage Security Frameworks and Libraries</name><description>When possible, the emphasis should be on using the existing secure features of frameworks rather than importing third party libraries. It is preferable to have developers take advantage of what they're already using instead of forcing yet another library on them 
+Not all the frameworks are completely secured hence it is important to build in additional security where possible, updating frequently and verifying them for security early and often like any other software you  depend upon
+</description></control><control><id>C10</id><name>Errors and exceptions handling</name><description>Itâ€™s recommended to manage exceptions in a centralized manner to avoid duplicated try/catch blocks in the code, and to ensure that all unexpected behaviors are correctly handled inside the application.
+Ensure that error messages displayed to users do not leak critical data, but are still verbose enough to explain the issue to the user.
+Ensure that exceptions are logged in a way that gives enough information for Q/A, forensics or incident response teams to understand the problem.
+</description></control></bug-controls>

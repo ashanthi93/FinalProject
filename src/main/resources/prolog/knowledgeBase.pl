@@ -5,44 +5,50 @@
 owasp_top10(
 a1,
 name("Injection"),
-[c2,c3,c4,c8,c9,c10]).
+[c1,c2,c3,c4,c8,c9,c10]).
 owasp_top10(
 a2,
 name("Broken Authentication and Session Management"),
-[c5,c8,c9,c10]).
+[c1,c4,c8,c9,c10]).
 owasp_top10(
 a3,
 name("Cross-Site Scripting (XSS)"),
-[c3,c4,c8,c9,c10]).
+[c1,c5,c8,c9,c10]).
 owasp_top10(
 a4,
 name("Insecure Direct Object References"),
-[c6,c8,c9,c10]).
+[c1,c6,c8,c9,c10]).
 owasp_top10(
 a5,
 name("Security Misconfiguration"),
-[c8,c9,c10]).
+[c1,c8,c9,c10]).
 owasp_top10(
 a6,
 name("Sensitive Data Exposure"),
-[c7,c8,c9,c10]).
+[c1,c7,c8,c9,c10]).
 owasp_top10(
 a7,
 name("Missing Function Level Access Control"),
-[c6,c8,c9,c10]).
+[c1,c6,c8,c9,c10]).
 owasp_top10(
 a8,
 name("Cross-Site Request Forgery (CSRF)"),
-[c8,c9,c10]).
+[c1,c8,c9,c10]).
 owasp_top10(
 a9,
 name("Using Components with Known Vulnerabilities"),
-[c8,c9,c10]).
+[c1,c8,c9,c10]).
 owasp_top10(
 a10,
 name("Unvalidated Redirects and Forwards"),
-[c4,c8,c9,c10]).
+[c1,c8,c9,c10]).
 
+
+owasp_top10_proactive(
+c1,
+name("Verify for Security Early and Often"), 
+"c1 description"
+).
 
 owasp_top10_proactive(
 c2,
@@ -70,7 +76,7 @@ name("Implement Identity and Authentication Controls"),
 
 owasp_top10_proactive(
 c6,
-name("Implement Appropriate Access Controls"), 
+name("Implement Access Controls"), 
 "c6 description"
 ).
 
@@ -94,7 +100,7 @@ name("Leverage Security Frameworks and Libraries"),
 
 owasp_top10_proactive(
 c10,
-name("Error and Exception Handling"), 
+name("Errors and exceptions handling"), 
 "c10 description"
 ).
 

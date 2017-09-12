@@ -1,13 +1,13 @@
 package org.ucsc.sse.knowedgemodel.prolog;
 
 import org.jpl7.Query;
-import org.xml.sax.SAXException;
-import org.ucsc.sse.knowedgemodel.settings.bugmodelconfigs.BugToBugControlMappingConfig;
 import org.ucsc.sse.knowedgemodel.settings.bugmodelconfigs.BugControlConfig;
 import org.ucsc.sse.knowedgemodel.settings.bugmodelconfigs.BugModelConfig;
+import org.ucsc.sse.knowedgemodel.settings.bugmodelconfigs.BugToBugControlMappingConfig;
+import org.ucsc.sse.knowedgemodel.settings.threatmodelconfigs.AttackerDefensiveMappingConfig;
 import org.ucsc.sse.knowedgemodel.settings.threatmodelconfigs.AttackerPerspectiveConfig;
 import org.ucsc.sse.knowedgemodel.settings.threatmodelconfigs.DefensivePerspectiveConfig;
-import org.ucsc.sse.knowedgemodel.settings.threatmodelconfigs.AttackerDefensiveMappingConfig;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -84,7 +84,7 @@ public class AssociationLoader {
         writer.println();
         writer.println();
 
-        
+
         // write owasp proactives to the prolog file
         ArrayList<String[]> proactive = new BugControlConfig().loadConfigFile();
         for (int i = 0; i < proactive.size(); i++) {

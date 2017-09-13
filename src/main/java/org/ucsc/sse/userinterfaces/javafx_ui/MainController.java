@@ -14,29 +14,22 @@ public class MainController implements Initializable {
     
     @FXML
     private void settingsButtonAction(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml");
+        start("/fxml/Settings.fxml", "Settings", true);
     }
     
     @FXML
     private void startAnlzButtonAction(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewProjectWindow.fxml"));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-
-        stage.setTitle("Start New Project");
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        start("/fxml/NewProjectWindow.fxml", "Start New Project", false);
     }
 
-    public void start(String path) throws Exception {
+    public void start(String path, String title, Boolean resizable) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("Settings");
+        stage.setTitle(title);
+        stage.setResizable(resizable);
         stage.setScene(scene);
         stage.show();
     }

@@ -3,12 +3,13 @@ package org.ucsc.sse.knowedgemodel.settings.bugmodelconfigs;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import static org.testng.Assert.*;
 
 /**
- * Created by Ashi on 9/11/2017.
+ * Created by CHAM PC on 9/12/2017.
  */
 public class BugControlConfigTest {
 
@@ -96,7 +97,7 @@ public class BugControlConfigTest {
 
         ArrayList<String[]> bugControls = this.createBugControls();
         BugControlConfig bugControlConfig = new BugControlConfig();
-        bugControlConfig.createConfigFile(bugControls, "OWASP-Top10", "2013");
+        bugControlConfig.createConfigFile(bugControls,"OWASP-Top10","2013");
 
     }
 

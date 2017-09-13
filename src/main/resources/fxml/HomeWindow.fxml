@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.ucsc.sse.userinterfaces.javafx_ui.HomeWindowController">
+    <stylesheets>
+        <URL value="@/styles/Styles.css" />
+    </stylesheets>
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="600.0" style="-fx-background-color: #48d1cc;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+        <menus>
+          <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu fx:id="settingsMenu" mnemonicParsing="false" text="Settings">
+            <items>
+              <MenuItem fx:id="settingsSub1" mnemonicParsing="false" onAction="#settingsSub1Action" text="OWASP Top 10" />
+                  <MenuItem fx:id="settingsSub2" mnemonicParsing="false" onAction="#settingsSub2Action" text="OWASP Proactives" />
+                  <MenuItem fx:id="settingsSub3" mnemonicParsing="false" onAction="#settingsSub3Action" text="OWASP Top 10 Mapping" />
+            </items>
+          </Menu>
+          <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <JFXButton fx:id="newProjectBtn" buttonType="RAISED" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: newProjectBtn;" styleClass="newProjectBtn" stylesheets="@../styles/Styles.css" text=" " />
+      <JFXButton fx:id="openProjectBtn" buttonType="RAISED" layoutX="49.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: openProjectBtn;" styleClass="openProjectBtn" stylesheets="@../styles/Styles.css" text="   " />
+      <TabPane fx:id="tabPane" layoutY="62.0" prefHeight="338.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
+        <tabs>
+          <Tab fx:id="sourceTab" text="Source">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="sourceTable" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="sourceBugColumn" prefWidth="91.0" text="Security Bug" />
+                            <TableColumn fx:id="sourceCategoryColumn" prefWidth="78.0" text="Category" />
+                              <TableColumn fx:id="sourcePreventionColumn" prefWidth="208.0" text="Prevention Techniques" />
+                          </columns>
+                        </TableView>
+                        <JFXButton buttonType="RAISED" layoutX="430.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
+                        <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Next" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0" />
+                        <JFXButton buttonType="RAISED" layoutX="534.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Cancel" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="designTab" text="Design">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="designTable" layoutX="14.0" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="designThreatColumn" prefWidth="75.0" text="Threat" />
+                            <TableColumn fx:id="designCategoryColumn" prefWidth="75.0" text="Category" />
+                              <TableColumn fx:id="designMitigationColumn" prefWidth="190.0" text="Mitigation Techniques" />
+                          </columns>
+                        </TableView>
+                        <JFXButton buttonType="RAISED" layoutX="534.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Cancel" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+                        <JFXButton buttonType="RAISED" layoutX="470.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Next" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0" />
+                        <JFXButton buttonType="RAISED" layoutX="404.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="associationTab" text="Association">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

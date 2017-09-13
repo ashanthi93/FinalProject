@@ -65,12 +65,10 @@ public class ConfigXMLFileCreator {
 
         DOMSource source = new DOMSource(document);
 
-        File file = new File("src/main/resources/" + fileName);
+        File file = new File("src/main/resources/configurations/" + fileName);
         String pathName = file.getAbsolutePath();
 
         StreamResult streamResult = new StreamResult(new File(pathName));
         transformer.transform(source, streamResult);
-
-
     }
 }

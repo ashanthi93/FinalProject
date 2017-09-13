@@ -14,7 +14,7 @@ public class MainController implements Initializable {
     
     @FXML
     private void settingsButtonAction(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true);
+        start("/fxml/Settings.fxml", "Settings", false);
     }
     
     @FXML

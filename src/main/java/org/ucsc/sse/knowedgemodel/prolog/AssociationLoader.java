@@ -131,21 +131,16 @@ public class AssociationLoader {
                 "\tretract(owasp_top10_proactive(A,_,_)).");*/
         writer.close();
 
-        String s1 = String.format("consult('src/main/resources/prolog/knowledgeBase.pl').");
-        Query q1 = new Query(s1);
-        System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
 
-        String s2 = "owasp('a2').";
-        Query q2 = new Query(s2);
+        //new PrologConverter().prologCaller("a1");
 
-        q2.open();
-        q2.getSolution();
         /*while(q2.hasMoreSolutions()){
             Map solution = q2.nextSolution();
             System.out.println(solution.get("A"));
         }*/
 
     }
+
 
 
 }

@@ -18,6 +18,7 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+
         new AssociationLoader().callProlog();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
@@ -41,7 +42,6 @@ public class MainApp extends Application {
      */
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
         launch(args);
-
     }
 
 }

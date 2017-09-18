@@ -45,7 +45,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="sourceTable" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="sourceTable" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="sourceBugColumn" prefWidth="91.0" text="Security Bug" />
                             <TableColumn fx:id="sourceCategoryColumn" prefWidth="78.0" text="Category" />
@@ -63,7 +63,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="designTable" layoutX="14.0" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <TableView fx:id="designTable" layoutX="14.0" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
                           <columns>
                             <TableColumn fx:id="designThreatColumn" prefWidth="75.0" text="Threat" />
                             <TableColumn fx:id="designCategoryColumn" prefWidth="75.0" text="Category" />

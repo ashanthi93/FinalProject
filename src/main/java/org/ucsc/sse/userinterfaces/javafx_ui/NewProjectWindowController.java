@@ -52,7 +52,7 @@ public class NewProjectWindowController implements Initializable {
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("\n    Please select an option first!");
+            alert.setContentText("\n    Please select a report type!");
             alert.showAndWait();
         }
     }
@@ -64,6 +64,7 @@ public class NewProjectWindowController implements Initializable {
     }
     
     private void fileOpen(String title, String displayName, String fileType) throws Exception{
+
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(displayName, fileType);
         fileChooser.getExtensionFilters().add(extFilter);
@@ -72,6 +73,9 @@ public class NewProjectWindowController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
         
         if (file != null) {
+
+
+
             start("/fxml/HomeWindow.fxml");
             Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
             stageMain.close();

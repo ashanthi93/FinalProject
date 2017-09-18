@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.ucsc.sse.dataextractors.ThreatExtractor;
+
 import static org.ucsc.sse.userinterfaces.javafx_ui.MainApp.welcomeWindow;
 
 public class NewProjectWindowController implements Initializable {
@@ -45,7 +47,7 @@ public class NewProjectWindowController implements Initializable {
     @FXML
     private void addBtnAction(ActionEvent event) throws Exception {
         if(threatCheck.isSelected()){
-            fileOpen("Select Threat Reports", "HTM Files (*.htm)", "*.htm");
+            fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
         }else if(bugCheck.isSelected()){
             fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
         }else{
@@ -74,13 +76,26 @@ public class NewProjectWindowController implements Initializable {
         
         if (file != null) {
 
+            ThreatExtractor threatExtractor = ThreatExtractor.getInstance();
 
+            if (threatExtractor.validateFile(file)){
 
-            start("/fxml/HomeWindow.fxml");
-            Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
-            stageMain.close();
-            Stage stageMainWelcome = (Stage) welcomeWindow.getWindow();
-            stageMainWelcome.close();
+                threatExtractor.extractData();
+
+                start("/fxml/HomeWindow.fxml");
+                Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
+                stageMain.close();
+                Stage stageMainWelcome = (Stage) welcomeWindow.getWindow();
+                stageMainWelcome.close();
+
+            }else{
+
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("\n Threat report validation fails !");
+                alert.showAndWait();
+            }
         }
     }
     

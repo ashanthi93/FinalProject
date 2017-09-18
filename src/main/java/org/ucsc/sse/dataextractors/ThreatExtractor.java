@@ -1,6 +1,7 @@
 package org.ucsc.sse.dataextractors;
 
 import org.ucsc.sse.classifierbuilders.design.ThreatClassificationBuilder;
+import org.ucsc.sse.dataextractors.collectors.report_parsers.ThreatReportParser;
 import org.ucsc.sse.datamodels.design.ThreatCategory;
 
 import org.ucsc.sse.dataextractors.collectors.ThreatCollector;
@@ -15,20 +16,45 @@ import java.util.HashMap;
 
 public class ThreatExtractor {
 
-    ThreatCollector threatCollector;
-    HashMap<String, ThreatCategory> threatCategoryHashMap;
+    private static ThreatExtractor instance;
 
-    public ThreatExtractor() {
-        threatCollector = new ThreatCollector();
-        threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+    private ThreatReportParser threatReportParser;
+    private ThreatCollector threatCollector = new ThreatCollector();
+    private HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+
+    private ThreatExtractor(){}
+
+    static {
+        try{
+            instance = new ThreatExtractor();
+        }catch (Exception e){
+            throw new RuntimeException("Exception occurred in creating singleton instance ! ");
+        }
+    }
+
+    public static ThreatExtractor getInstance(){
+        return instance;
+    }
+
+    /**
+     * Need to implement the validator
+     *
+     * @param threatModelingReport
+     * @return
+     */
+    public boolean validateFile(File threatModelingReport){
+
+        threatReportParser = new ThreatReportParser(threatModelingReport);
+        return (threatReportParser.validateFile());
     }
 
     /**
      *
-     * @param xmlFile
      */
-    public void collectThreats(File xmlFile) {
-        threatCollector.readFile(xmlFile);
+    public boolean extractData() {
+
+        threatCollector = threatReportParser.extractData();
+        return ((threatCollector != null) ? true : false);
     }
 
     /**

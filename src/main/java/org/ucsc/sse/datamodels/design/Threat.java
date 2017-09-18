@@ -25,6 +25,9 @@ public class Threat {
     private String description;
 
     @JsonIgnore
+    private String shortDescription;
+
+    @JsonIgnore
     private String element;
 
     @JacksonXmlProperty(localName = "priority")
@@ -32,7 +35,7 @@ public class Threat {
     private String priority;
 
     @JsonIgnore
-    private String interactionId;
+    private String interactionName;
 
     public Threat(){}
 
@@ -69,6 +72,14 @@ public class Threat {
         this.description = description;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     public String getElement() {
         return element;
     }
@@ -85,11 +96,11 @@ public class Threat {
         this.priority = priority;
     }
 
-    public String getInteractionId() {
-        return interactionId;
+    public String getInteractionName() {
+        return interactionName;
     }
 
-    public void setInteractionId(String interactionId) {
-        this.interactionId = interactionId;
+    public void setInteractionName(String interactionName) {
+        this.interactionName = interactionName;
     }
 }

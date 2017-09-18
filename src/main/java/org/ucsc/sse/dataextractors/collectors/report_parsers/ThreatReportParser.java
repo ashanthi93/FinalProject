@@ -1,80 +1,153 @@
 package org.ucsc.sse.dataextractors.collectors.report_parsers;
 
-import org.ucsc.sse.dataextractors.collectors.ThreatCollector;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
+import org.ucsc.sse.datamodels.design.Threat;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class ThreatReportParser {
 
     File threatModelingReport;
 
-    public ThreatReportParser(File threatModelingReport){
+    public ThreatReportParser(File threatModelingReport) {
         this.threatModelingReport = threatModelingReport;
     }
 
-    public boolean validateFile(){
+    public boolean validateFile() {
         return true;
     }
 
-    public ThreatCollector extractData(){
+    public String extractName(){
 
-        Document document = null;
-        document = this.loadFile(document);
+        String threatModelName = null;
 
-        NodeList nodeList = this.loadNodesByTagName(document, "ThreatInstances");
+        /* Need to test with TMT tool */
+        try {
+            SAXReader saxReader = new SAXReader();
+            Document document = saxReader.read(threatModelingReport);
 
-        for (int i=0; i < nodeList.getLength(); i++){
+            String xPath = "/*[name()='ThreatModel']/*[name()='MetaInformation']/*[name()='ThreatModelName']";
 
-            Node node = nodeList.item(i);
-            Element element = (Element) node;
+            Node threatModelNameNode = document.selectSingleNode(xPath);
+            Element threatModelNameElement = (Element) threatModelNameNode;
 
-            NodeList childNodes = element.getChildNodes();
+            threatModelName = threatModelNameElement.getStringValue();
 
-            for (int j=0; j < childNodes.getLength(); j++){
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
 
-                Node child = childNodes.item(j);
-                Element childElement = (Element) child;
+        return threatModelName;
+    }
 
+    /**
+     *
+     *
+     * @return
+     */
+    public List<Threat> extractThreats() {
+
+        List<Threat> threatList = null;
+
+        try {
+            threatList = this.fileParser();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+
+        return threatList;
+    }
+
+    /**
+     *
+     *
+     * @return
+     * @throws DocumentException
+     */
+    private List<Threat> fileParser() throws DocumentException {
+
+        List<Threat> threatList = new ArrayList<Threat>();
+
+        SAXReader saxReader = new SAXReader();
+        Document document = saxReader.read(threatModelingReport);
+
+        String xPath = "/*[name()='ThreatModel']/*[name()='ThreatInstances']";
+
+        Node threatInstancesNode = document.selectNodes(xPath).get(0);
+
+        Element threatInstanceElement = (Element) threatInstancesNode;
+
+        int id = 1;
+
+        for (Iterator<Element> threatsIterator = threatInstanceElement.elementIterator("KeyValueOfstringThreatpc_P0_PhOB"); threatsIterator.hasNext(); ) {
+
+            Element threatElement = threatsIterator.next();
+
+            Element aValueElement = threatElement.element("Value");
+            Element propertyElement = aValueElement.element("Properties");
+
+            HashMap<String,String> keyValueHashMap = new HashMap<String, String>();
+
+            String threatID = "T" + id;
+            keyValueHashMap.put("ThreatID",threatID);
+
+            for (Iterator<Element> keyValueIterator = propertyElement.elementIterator("KeyValueOfstringstring"); keyValueIterator.hasNext(); ) {
+
+                Element keyValueElement = keyValueIterator.next();
+
+                Element keyElement = keyValueElement.element("Key");
+                Element valueElement = keyValueElement.element("Value");
+
+                keyValueHashMap.put(keyElement.getStringValue(),valueElement.getStringValue());
+            }
+
+            Threat threat = this.setThreatValues(keyValueHashMap);
+            threatList.add(threat);
+
+            id++;
+        }
+        return threatList;
+    }
+
+    /**
+     *
+     *
+     * @param keyValueHashMap
+     * @return
+     */
+    private Threat setThreatValues(HashMap<String,String> keyValueHashMap){
+
+        Threat threat = new Threat();
+
+        for (String key : keyValueHashMap.keySet()) {
+
+            String value = keyValueHashMap.get(key);
+
+            if(key.equals("ThreatID")){
+                threat.setId(value);
+            }if (key.equals("Title")) {
+                threat.setName(value);
+            } else if (key.equals("UserThreatCategory")) {
+                threat.setThreatCategoryName(value);
+            } else if (key.equals("UserThreatShortDescription")) {
+                threat.setShortDescription(value);
+            } else if (key.equals("UserThreatDescription")) {
+                threat.setDescription(value);
+            } else if (key.equals("InteractionString")) {
+                threat.setInteractionName(value);
+            } else if (key.equals("Priority")) {
+                threat.setPriority(value);
             }
         }
 
-        ThreatCollector threatCollector = new ThreatCollector();
-        return threatCollector;
+        return threat;
     }
-
-    private Document loadFile(Document document) {
-
-        try {
-
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            document = documentBuilder.parse(threatModelingReport);
-
-            return document;
-
-        }catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public NodeList loadNodesByTagName(Document document, String tagName){
-
-        NodeList nodeList = document.getElementsByTagName(tagName);
-        return nodeList;
-    }
- }
+}

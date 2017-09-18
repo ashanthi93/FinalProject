@@ -2,6 +2,7 @@ package org.ucsc.sse.dataextractors;
 
 import org.ucsc.sse.classifierbuilders.design.ThreatClassificationBuilder;
 import org.ucsc.sse.dataextractors.collectors.report_parsers.ThreatReportParser;
+import org.ucsc.sse.datamodels.design.Threat;
 import org.ucsc.sse.datamodels.design.ThreatCategory;
 
 import org.ucsc.sse.dataextractors.collectors.ThreatCollector;
@@ -13,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class ThreatExtractor {
 
@@ -53,8 +55,15 @@ public class ThreatExtractor {
      */
     public boolean extractData() {
 
-        threatCollector = threatReportParser.extractData();
-        return ((threatCollector != null) ? true : false);
+        String threatModelName = threatReportParser.extractName();
+
+        List<Threat> threatList = threatReportParser.extractThreats();
+
+        /*
+        * Now work with Threat Collector to proceed :)
+        * */
+
+        return ((threatList != null) ? true : false);
     }
 
     /**

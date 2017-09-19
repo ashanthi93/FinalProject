@@ -15,6 +15,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.ucsc.sse.dataextractors.ThreatExtractor;
+
 import static org.ucsc.sse.userinterfaces.javafx_ui.MainApp.welcomeWindow;
 
 public class NewProjectWindowController implements Initializable {
@@ -45,14 +47,14 @@ public class NewProjectWindowController implements Initializable {
     @FXML
     private void addBtnAction(ActionEvent event) throws Exception {
         if(threatCheck.isSelected()){
-            fileOpen("Select Threat Reports", "HTM Files (*.htm)", "*.htm");
+            fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
         }else if(bugCheck.isSelected()){
             fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
         }else{
             Alert alert = new Alert(AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
-            alert.setContentText("\n    Please select an option first!");
+            alert.setContentText("\n    Please select a report type!");
             alert.showAndWait();
         }
     }
@@ -64,6 +66,7 @@ public class NewProjectWindowController implements Initializable {
     }
     
     private void fileOpen(String title, String displayName, String fileType) throws Exception{
+
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(displayName, fileType);
         fileChooser.getExtensionFilters().add(extFilter);
@@ -72,11 +75,27 @@ public class NewProjectWindowController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
         
         if (file != null) {
-            start("/fxml/HomeWindow.fxml");
-            Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
-            stageMain.close();
-            Stage stageMainWelcome = (Stage) welcomeWindow.getWindow();
-            stageMainWelcome.close();
+
+            ThreatExtractor threatExtractor = ThreatExtractor.getInstance();
+
+            if (threatExtractor.validateFile(file)){
+
+                threatExtractor.extractData();
+
+                start("/fxml/HomeWindow.fxml");
+                Stage stageMain = (Stage)cancelBtn.getScene().getWindow();
+                stageMain.close();
+                Stage stageMainWelcome = (Stage) welcomeWindow.getWindow();
+                stageMainWelcome.close();
+
+            }else{
+
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("\n Threat report validation fails !");
+                alert.showAndWait();
+            }
         }
     }
     

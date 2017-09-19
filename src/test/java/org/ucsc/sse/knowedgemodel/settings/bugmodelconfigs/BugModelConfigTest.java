@@ -91,12 +91,11 @@ public class BugModelConfigTest {
         bugModelConfig.createConfigFile(arrayList, "owasp-top10", "2013");
     }
 
-    @Test
+
     public void testLoadConfigFile() throws Exception {
 
     }
 
-    @Test
     public void testLoadBugCategoryIdsAndNames() throws Exception {
 
     }

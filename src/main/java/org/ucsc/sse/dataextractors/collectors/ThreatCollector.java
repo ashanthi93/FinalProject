@@ -31,20 +31,6 @@ public class ThreatCollector {
     }
 
     /**
-     *
-     *
-     * @param xmlFile
-     */
-    public void readFile(File xmlFile) {
-
-        ThreatReportParser threatReportParser = new ThreatReportParser();
-        /*
-        * This file should read xml and
-        * generate ThreatModel, Interaction and Threats
-        */
-    }
-
-    /**
      * @param threatModelID
      * @param diagramName
      */

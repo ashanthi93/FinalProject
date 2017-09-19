@@ -5,26 +5,30 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+
 import org.ucsc.sse.datamodels.design.Threat;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 
 public class ThreatReportParser {
 
-    File threatModelingReport;
+    File threatModelingFile;
 
-    public ThreatReportParser(File threatModelingReport) {
-        this.threatModelingReport = threatModelingReport;
+    public ThreatReportParser(File threatModelingFile) {
+        this.threatModelingFile = threatModelingFile;
     }
 
     public boolean validateFile() {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     public String extractName(){
 
         String threatModelName = null;
@@ -32,7 +36,7 @@ public class ThreatReportParser {
         /* Need to test with TMT tool */
         try {
             SAXReader saxReader = new SAXReader();
-            Document document = saxReader.read(threatModelingReport);
+            Document document = saxReader.read(threatModelingFile);
 
             String xPath = "/*[name()='ThreatModel']/*[name()='MetaInformation']/*[name()='ThreatModelName']";
 
@@ -44,7 +48,6 @@ public class ThreatReportParser {
         } catch (DocumentException e) {
             e.printStackTrace();
         }
-
         return threatModelName;
     }
 
@@ -53,9 +56,9 @@ public class ThreatReportParser {
      *
      * @return
      */
-    public List<Threat> extractThreats() {
+    public ArrayList<Threat> extractThreats() {
 
-        List<Threat> threatList = null;
+        ArrayList<Threat> threatList = null;
 
         try {
             threatList = this.fileParser();
@@ -72,12 +75,12 @@ public class ThreatReportParser {
      * @return
      * @throws DocumentException
      */
-    private List<Threat> fileParser() throws DocumentException {
+    private ArrayList<Threat> fileParser() throws DocumentException {
 
-        List<Threat> threatList = new ArrayList<Threat>();
+        ArrayList<Threat> threatList = new ArrayList<Threat>();
 
         SAXReader saxReader = new SAXReader();
-        Document document = saxReader.read(threatModelingReport);
+        Document document = saxReader.read(threatModelingFile);
 
         String xPath = "/*[name()='ThreatModel']/*[name()='ThreatInstances']";
 
@@ -147,7 +150,6 @@ public class ThreatReportParser {
                 threat.setPriority(value);
             }
         }
-
         return threat;
     }
 }

@@ -2,6 +2,7 @@ package org.ucsc.sse.dataextractors;
 
 import org.ucsc.sse.classifierbuilders.design.ThreatClassificationBuilder;
 import org.ucsc.sse.dataextractors.collectors.report_parsers.ThreatReportParser;
+import org.ucsc.sse.datamodels.design.Threat;
 import org.ucsc.sse.datamodels.design.ThreatCategory;
 
 import org.ucsc.sse.dataextractors.collectors.ThreatCollector;
@@ -12,27 +13,30 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class ThreatExtractor {
 
     private static ThreatExtractor instance;
 
     private ThreatReportParser threatReportParser;
-    private ThreatCollector threatCollector = new ThreatCollector();
+    private ThreatCollector threatCollector;
     private HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<String, ThreatCategory>();
 
-    private ThreatExtractor(){}
+    private ThreatExtractor() {
+    }
 
     static {
-        try{
+        try {
             instance = new ThreatExtractor();
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Exception occurred in creating singleton instance ! ");
         }
     }
 
-    public static ThreatExtractor getInstance(){
+    public static ThreatExtractor getInstance() {
         return instance;
     }
 
@@ -42,19 +46,33 @@ public class ThreatExtractor {
      * @param threatModelingReport
      * @return
      */
-    public boolean validateFile(File threatModelingReport){
+    public boolean validateFile(File threatModelingReport) {
 
         threatReportParser = new ThreatReportParser(threatModelingReport);
         return (threatReportParser.validateFile());
     }
 
     /**
+     * Extract data from the ThreatModelingFile and create & get threat objects.
+     * Then threatList is processed to create ThreatModel, InteractionArrayList, and ThreatArrayList
+     * by using ThreatCollector object.
      *
+     * @return true if ThreatReportParser extracts threats
      */
-    public boolean extractData() {
+    public boolean extractDataAndCreateThreatCollector() {
 
-        threatCollector = threatReportParser.extractData();
-        return ((threatCollector != null) ? true : false);
+        String threatModelName = threatReportParser.extractName();
+        ArrayList<Threat> threatList = threatReportParser.extractThreats();
+
+        if (threatList != null) {
+            threatCollector = new ThreatCollector(threatList);
+
+            threatCollector.createThreatModel("ID", threatModelName);
+            threatCollector.createInteractionsFromThreats();
+
+            return (true);
+        }
+        return (false);
     }
 
     /**

@@ -1,80 +1,155 @@
 package org.ucsc.sse.dataextractors.collectors.report_parsers;
 
-import org.ucsc.sse.dataextractors.collectors.ThreatCollector;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.dom4j.io.SAXReader;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import org.ucsc.sse.datamodels.design.Threat;
+
 import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class ThreatReportParser {
 
-    File threatModelingReport;
+    File threatModelingFile;
 
-    public ThreatReportParser(File threatModelingReport){
-        this.threatModelingReport = threatModelingReport;
+    public ThreatReportParser(File threatModelingFile) {
+        this.threatModelingFile = threatModelingFile;
     }
 
-    public boolean validateFile(){
+    public boolean validateFile() {
         return true;
     }
 
-    public ThreatCollector extractData(){
+    /**
+     *
+     * @return
+     */
+    public String extractName(){
 
-        Document document = null;
-        document = this.loadFile(document);
+        String threatModelName = null;
 
-        NodeList nodeList = this.loadNodesByTagName(document, "ThreatInstances");
+        /* Need to test with TMT tool */
+        try {
+            SAXReader saxReader = new SAXReader();
+            Document document = saxReader.read(threatModelingFile);
 
-        for (int i=0; i < nodeList.getLength(); i++){
+            String xPath = "/*[name()='ThreatModel']/*[name()='MetaInformation']/*[name()='ThreatModelName']";
 
-            Node node = nodeList.item(i);
-            Element element = (Element) node;
+            Node threatModelNameNode = document.selectSingleNode(xPath);
+            Element threatModelNameElement = (Element) threatModelNameNode;
 
-            NodeList childNodes = element.getChildNodes();
+            threatModelName = threatModelNameElement.getStringValue();
 
-            for (int j=0; j < childNodes.getLength(); j++){
-
-                Node child = childNodes.item(j);
-                Element childElement = (Element) child;
-
-            }
+        } catch (DocumentException e) {
+            e.printStackTrace();
         }
-
-        ThreatCollector threatCollector = new ThreatCollector();
-        return threatCollector;
+        return threatModelName;
     }
 
-    private Document loadFile(Document document) {
+    /**
+     *
+     *
+     * @return
+     */
+    public ArrayList<Threat> extractThreats() {
+
+        ArrayList<Threat> threatList = null;
 
         try {
-
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-            document = documentBuilder.parse(threatModelingReport);
-
-            return document;
-
-        }catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+            threatList = this.fileParser();
+        } catch (DocumentException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return threatList;
     }
 
-    public NodeList loadNodesByTagName(Document document, String tagName){
+    /**
+     *
+     *
+     * @return
+     * @throws DocumentException
+     */
+    private ArrayList<Threat> fileParser() throws DocumentException {
 
-        NodeList nodeList = document.getElementsByTagName(tagName);
-        return nodeList;
+        ArrayList<Threat> threatList = new ArrayList<Threat>();
+
+        SAXReader saxReader = new SAXReader();
+        Document document = saxReader.read(threatModelingFile);
+
+        String xPath = "/*[name()='ThreatModel']/*[name()='ThreatInstances']";
+
+        Node threatInstancesNode = document.selectNodes(xPath).get(0);
+
+        Element threatInstanceElement = (Element) threatInstancesNode;
+
+        int id = 1;
+
+        for (Iterator<Element> threatsIterator = threatInstanceElement.elementIterator("KeyValueOfstringThreatpc_P0_PhOB"); threatsIterator.hasNext(); ) {
+
+            Element threatElement = threatsIterator.next();
+
+            Element aValueElement = threatElement.element("Value");
+            Element propertyElement = aValueElement.element("Properties");
+
+            HashMap<String,String> keyValueHashMap = new HashMap<String, String>();
+
+            String threatID = "T" + id;
+            keyValueHashMap.put("ThreatID",threatID);
+
+            for (Iterator<Element> keyValueIterator = propertyElement.elementIterator("KeyValueOfstringstring"); keyValueIterator.hasNext(); ) {
+
+                Element keyValueElement = keyValueIterator.next();
+
+                Element keyElement = keyValueElement.element("Key");
+                Element valueElement = keyValueElement.element("Value");
+
+                keyValueHashMap.put(keyElement.getStringValue(),valueElement.getStringValue());
+            }
+
+            Threat threat = this.setThreatValues(keyValueHashMap);
+            threatList.add(threat);
+
+            id++;
+        }
+        return threatList;
     }
- }
+
+    /**
+     *
+     *
+     * @param keyValueHashMap
+     * @return
+     */
+    private Threat setThreatValues(HashMap<String,String> keyValueHashMap){
+
+        Threat threat = new Threat();
+
+        for (String key : keyValueHashMap.keySet()) {
+
+            String value = keyValueHashMap.get(key);
+
+            if(key.equals("ThreatID")){
+                threat.setId(value);
+            }if (key.equals("Title")) {
+                threat.setName(value);
+            } else if (key.equals("UserThreatCategory")) {
+                threat.setThreatCategoryName(value);
+            } else if (key.equals("UserThreatShortDescription")) {
+                threat.setShortDescription(value);
+            } else if (key.equals("UserThreatDescription")) {
+                threat.setDescription(value);
+            } else if (key.equals("InteractionString")) {
+                threat.setInteractionName(value);
+            } else if (key.equals("Priority")) {
+                threat.setPriority(value);
+            }
+        }
+        return threat;
+    }
+}

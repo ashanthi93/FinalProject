@@ -80,7 +80,7 @@ public class NewProjectWindowController implements Initializable {
 
             if (threatExtractor.validateFile(file)){
 
-                threatExtractor.extractData();
+                threatExtractor.extractDataAndCreateThreatCollector();
 
                 start("/fxml/HomeWindow.fxml");
                 Stage stageMain = (Stage)cancelBtn.getScene().getWindow();

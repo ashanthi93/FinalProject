@@ -7,6 +7,7 @@ import org.ucsc.sse.datamodels.design.ThreatModel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ThreatCollector {
 
@@ -14,7 +15,10 @@ public class ThreatCollector {
     private ArrayList<Interaction> interactionArrayList;
     private ArrayList<Threat> threatArrayList;
 
-    public ThreatCollector() {
+    public ThreatCollector(ArrayList<Threat> threatArrayList) {
+        this.threatModel = new ThreatModel();
+        this.interactionArrayList = new ArrayList<Interaction>();
+        this.threatArrayList = threatArrayList;
     }
 
     /* getters */
@@ -31,71 +35,78 @@ public class ThreatCollector {
     }
 
     /**
-     * @param threatModelID
+     * Create ThreatModel object with id and name
+     *
+     * @param threatModelId
      * @param diagramName
      */
-    private void createThreatModel(String threatModelID, String diagramName) {
+    public void createThreatModel(String threatModelId, String diagramName) {
 
-        threatModel.setId(threatModelID);
+        threatModel.setId(threatModelId);
         threatModel.setDiagramName(diagramName);
     }
 
     /**
-     * Create interaction object, then add into global interaction arrayList of ThreatModel
-     * and then return the interaction object.
-     *
-     * @param interactionName
-     * @param threatArrayList arrayList containing threats of the interaction
-     * @return interaction object
+     * Create interaction objects by using threatArrayList and
+     * then add all interaction objects into interactionArrayList & ThreatModel objects
      */
-    private Interaction createInteraction(String interactionName, ArrayList<Threat> threatArrayList) {
+    public void createInteractionsFromThreats(){
 
-        /* create interaction object */
+        HashMap<String,Interaction> interactionHashMap = new HashMap<String, Interaction>();
+
+        int id = 1;
+
+        for (Threat threat : threatArrayList){
+
+            String interactionName = threat.getInteractionName();
+            Interaction interaction;
+
+            if (interactionHashMap.get(interactionName) == null){
+
+                String interactionId = "I" + id;
+                interaction = this.createInteraction(interactionId, interactionName);
+                id++;
+            }else {
+                interaction = interactionHashMap.get(interactionName);
+            }
+
+            ArrayList<Threat> threatArrayList = interaction.getThreats();
+            threatArrayList.add(threat);
+
+            interaction.setThreats(threatArrayList);
+            interactionHashMap.put(interactionName, interaction);
+        }
+
+        /* Add all interaction objects into public interactionArrayList */
+        for (String interactionName : interactionHashMap.keySet()){
+
+            interactionArrayList.add(interactionHashMap.get(interactionName));
+        }
+
+        this.setInteractionArrayListToThreatModel();
+    }
+
+    /**
+     * Create interaction object using id and name
+     *
+     * @param interactionId
+     * @param interactionName
+     * @return
+     */
+    private Interaction createInteraction(String interactionId, String interactionName) {
+
         Interaction interaction = new Interaction();
 
+        interaction.setId(interactionId);
         interaction.setName(interactionName);
-        interaction.setThreats(threatArrayList);
-
-        //add interaction object to interactionArrayList
-        interactionArrayList.add(interaction);
 
         return interaction;
     }
 
     /**
-     * @param threatId
-     * @param threatName
-     * @param threatCategoryName
-     * @param description
-     * @return
-     */
-    private Threat createThreat(String threatId, String threatName, String threatCategoryName, String description) {
-
-        Threat threat = new Threat();
-
-        threat.setId(threatId);
-        threat.setName(threatName);
-        threat.setThreatCategoryName(threatCategoryName);
-        threat.setDescription(description);
-
-        threatArrayList.add(threat);
-
-        return threat;
-    }
-
-    /**
-     *
+     * Set completed interactionArrayList into ThreatModel object
      */
     private void setInteractionArrayListToThreatModel(){
         threatModel.setInteractions(interactionArrayList);
-    }
-
-    /**
-     *
-     * @param interaction
-     * @param threatArrayList
-     */
-    private void setThreatArrayListToInteraction(Interaction interaction, ArrayList<Threat> threatArrayList){
-        interaction.setThreats(threatArrayList);
     }
 }

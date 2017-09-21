@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.ucsc.sse.knowedgemodel.prolog.AssociationLoader;
+import org.ucsc.sse.knowedgemodel.prolog.PrologConverter;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -19,7 +20,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        new AssociationLoader().callProlog();
+        new PrologConverter().prologCaller("a1");
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
 

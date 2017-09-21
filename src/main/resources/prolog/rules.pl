@@ -10,7 +10,7 @@ owasp(Bug_type):-
 get_proactives(N, Length, List):- 
 	N<Length, 
 	nth0(N,List,B),
-	get_proactive_description(B), nl, 
+	proactiveMapToasf(B), nl, 
 	M is N+1, 
 	get_proactives(M,Length,List).
 
@@ -29,3 +29,7 @@ remove_frame(A):-
 		_
 	),
 	retract(owasp_top10_proactive(A,_,_)).
+
+proactiveMapToasf(C):-
+	map(C,D),
+	write(D).

@@ -1,0 +1,10 @@
+map(c1,d1).
+map(c2,d2).
+map(c3,d3).
+map(c4,d4).
+map(c5,d5).
+map(c6,d6).
+map(c7,d7).
+map(c8,d8).
+map(c9,d1).
+map(c10,d2).

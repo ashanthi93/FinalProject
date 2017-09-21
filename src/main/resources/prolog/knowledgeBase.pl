@@ -1,5 +1,6 @@
 :- [rules].
 :- [stride].
+:- [proactiveToASF].
 
 
 owasp_top10(

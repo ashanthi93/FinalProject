@@ -1,0 +1,40 @@
+package org.sse.reportparser.design;
+
+import org.sse.design.model.Threat;
+
+import java.io.File;
+import java.util.List;
+
+public abstract class ThreatReportParser {
+
+    private File threatModelingFile;
+
+    public void setThreatModelingFile(File threatModelingFile) {
+        this.threatModelingFile = threatModelingFile;
+    }
+
+    public File getThreatModelingFile() {
+        return threatModelingFile;
+    }
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public abstract boolean validateFile() throws Exception;
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public abstract String extractName() throws Exception;
+
+    /**
+     *
+     * @return
+     * @throws Exception
+     */
+    public abstract List<Threat> extractThreats() throws Exception;
+}

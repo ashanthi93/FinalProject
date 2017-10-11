@@ -76,9 +76,9 @@ public class DefensiveControlConfig {
      * @return
      * @throws DocumentException
      */
-    public static ArrayList<ThreatControl> loadConfigFile() throws DocumentException {
+    public static List<ThreatControl> loadConfigFile() throws DocumentException {
 
-        ArrayList<ThreatControl> defensiveControlArrayList = new ArrayList<ThreatControl>();
+        List<ThreatControl> defensiveControlArrayList = new ArrayList<ThreatControl>();
 
         ConfigFileReader configFileReader = new ConfigFileReader();
         configFileReader.readFile(fileName);

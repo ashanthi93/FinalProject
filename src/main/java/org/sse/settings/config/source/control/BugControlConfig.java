@@ -3,6 +3,7 @@ package org.sse.settings.config.source.control;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.sse.categories.source.model.BugControl;
 import org.sse.settings.ConfigFileCreator;
 import org.sse.settings.ConfigFileReader;
 import org.sse.settings.DescriptionProcessor;
@@ -83,7 +84,7 @@ public class BugControlConfig {
      * @return
      * @throws DocumentException
      */
-    public static ArrayList<String[]> loadConfigFile() throws DocumentException {
+    /*public static ArrayList<String[]> loadConfigFile() throws DocumentException {
 
         ArrayList<String[]> OWASP_proactives_list = new ArrayList<String[]>();
 
@@ -98,11 +99,44 @@ public class BugControlConfig {
 
             row[0] = node.valueOf(idTag);
             row[1] = node.valueOf(nameTag);
-            row[2] = node.valueOf(descriptionTag);
+
+            List<Node> pointNodes = node.selectNodes(descriptionTag);
+
+            for (Node pointNode : pointNodes){
+
+            }
 
             OWASP_proactives_list.add(row);
         }
         return OWASP_proactives_list;
+    }*/
+
+    public static List<BugControl> loadConfigFile() throws DocumentException {
+
+        List<BugControl> bugControls = new ArrayList<BugControl>();
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + proactiveTag);
+
+        for (Node node : nodeList){
+
+            BugControl bugControl = new BugControl();
+
+            bugControl.setId(node.valueOf(idTag));
+            bugControl.setName(node.valueOf(nameTag));
+
+            List<Node> pointNodes = node.selectNodes(descriptionTag);
+            List<String> description = new ArrayList<String>();
+
+            for (Node pointNode : pointNodes){
+                description.add(pointNode.valueOf(pointTag));
+            }
+
+            bugControls.add(bugControl);
+        }
+        return bugControls;
     }
 
     public static HashMap<String,String> loadControlIdsAndNames() throws DocumentException {

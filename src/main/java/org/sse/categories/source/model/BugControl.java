@@ -1,12 +1,17 @@
 package org.sse.categories.source.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BugControl {
 
     private String id;
     private String name;
-    private String description;
+    private List<String> description;
 
-    public BugControl(){}
+    public BugControl(){
+        description = new ArrayList<String>();
+    }
 
     /* getters and setters */
     public String getId() {
@@ -25,11 +30,11 @@ public class BugControl {
         this.name = name;
     }
 
-    public String getDescription() {
+    public List<String> getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(List<String> description) {
         this.description = description;
     }
 

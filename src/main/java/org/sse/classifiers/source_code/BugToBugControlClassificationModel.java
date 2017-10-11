@@ -1,10 +1,8 @@
 package org.sse.classifiers.source_code;
 
-import org.xml.sax.SAXException;
-import org.sse.settings.config.source.MappingConfig;
+import org.dom4j.DocumentException;
+import org.sse.settings.config.source.mapping.MappingConfig;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.*;
 
 public class BugToBugControlClassificationModel {
@@ -15,14 +13,12 @@ public class BugToBugControlClassificationModel {
         owaspProactiveMapping = new HashMap<Integer, BugToBugControlMapping>();
     }
 
-    public void createMapping() throws ParserConfigurationException, SAXException, IOException {
-
-        MappingConfig readConfig = new MappingConfig();
+    public void createMapping() throws DocumentException {
 
         Map<String, String[]> OWASP_proactives_mapping;
         HashMap<String, ArrayList<String>> controlsMapping = new HashMap<String, ArrayList<String>>();
 
-        OWASP_proactives_mapping = new TreeMap<String, String[]>(readConfig.loadConfigFile());
+        OWASP_proactives_mapping = new TreeMap<String, String[]>(MappingConfig.loadConfigFile());
 
         for (String key : OWASP_proactives_mapping.keySet()){
             for (String proactive : OWASP_proactives_mapping.get(key)){
@@ -64,7 +60,7 @@ public class BugToBugControlClassificationModel {
 
     }
 
-    public HashMap<Integer, BugToBugControlMapping> getMapping() throws IOException, SAXException, ParserConfigurationException {
+    public HashMap<Integer, BugToBugControlMapping> getMapping() throws DocumentException {
         if (owaspProactiveMapping.isEmpty()){
             this.createMapping();
         }

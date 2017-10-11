@@ -1,8 +1,9 @@
 package org.sse.knowedgemodel.prolog;
 
+import org.dom4j.DocumentException;
 import org.sse.settings.config.source.control.BugControlConfig;
 import org.sse.settings.config.source.BugModelConfig;
-import org.sse.settings.config.source.MappingConfig;
+import org.sse.settings.config.source.mapping.MappingConfig;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 
 public class AssociationLoader {
 
-    public void callProlog() throws IOException, SAXException, ParserConfigurationException {
+    public void callProlog() throws DocumentException, IOException, ParserConfigurationException, SAXException {
 
         PrintWriter writer = new PrintWriter("src/main/resources/prolog/knowledgeBase.pl");
         writer.print(""); // clear the existing file.
@@ -57,7 +58,7 @@ public class AssociationLoader {
 
         // write owasp top 10 to the prolog file
         ArrayList<String[]> owasp = BugModelConfig.loadConfigFile();
-        HashMap<String, String[]> owaspMapping = new MappingConfig().loadConfigFile();
+        HashMap<String, String[]> owaspMapping = MappingConfig.loadConfigFile();
 
         for (int i = 0; i < owasp.size(); i++) {
             String[] data = owasp.get(i);
@@ -82,7 +83,7 @@ public class AssociationLoader {
 
 
         // write owasp proactives to the prolog file
-        ArrayList<String[]> proactive = new BugControlConfig().loadConfigFile();
+        ArrayList<String[]> proactive = BugControlConfig.loadConfigFile();
         for (int i = 0; i < proactive.size(); i++) {
             String data[] = proactive.get(i);
             String s = "owasp_top10_proactive(\n" + data[0].toLowerCase() + ",\n" + "name(\"" + data[1] + "\"), \n" + "\"" + data[0].toLowerCase() + " description\"\n" + ").";

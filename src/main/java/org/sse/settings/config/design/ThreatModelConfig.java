@@ -93,29 +93,9 @@ public class ThreatModelConfig {
         ArrayList<String[]> threatDetails = loadConfigFile();
 
         for (String[] threatDetail : threatDetails){
-
             threatIdsAndNames.put(threatDetail[0],threatDetail[1]);
         }
 
         return threatIdsAndNames;
-
-    /*    HashMap<String,String> threatIdsAndNames = new HashMap<String, String>();
-
-        ConfigFileReader configFileReader = new ConfigFileReader();
-        configFileReader.loadFile(fileName);
-
-        NodeList nodeList = configFileReader.loadNodesByTagName(threatTypeTag);
-
-        for (int i = 0; i<nodeList.getLength(); i++){
-
-            Node node = nodeList.item(i);
-            Element element = (Element) node;
-
-            String id = element.getElementsByTagName(idTag).item(0).getTextContent();
-            String name = element.getElementsByTagName(nameTag).item(0).getTextContent();
-
-            threatIdsAndNames.put(id,name);
-        }
-        return threatIdsAndNames;*/
     }
 }

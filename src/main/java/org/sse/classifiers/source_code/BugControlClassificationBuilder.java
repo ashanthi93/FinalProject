@@ -1,5 +1,6 @@
 package org.sse.classifiers.source_code;
 
+import org.dom4j.DocumentException;
 import org.sse.categories.source.model.BugControl;
 import org.xml.sax.SAXException;
 import org.sse.settings.config.source.control.BugControlConfig;
@@ -18,11 +19,9 @@ public class BugControlClassificationBuilder {
         bugControlsWithDescriptionHashMap = new HashMap<Integer, BugControl>();
     }
 
-    public void createBugControlsWithDescription() throws ParserConfigurationException, SAXException, IOException {
+    public void createBugControlsWithDescription() throws DocumentException {
 
-        BugControlConfig proactives = new BugControlConfig();
-
-        ArrayList<String[]> proactives_list = proactives.loadConfigFile();
+        ArrayList<String[]> proactives_list = BugControlConfig.loadConfigFile();
 
         for (String[] proactive : proactives_list){
 
@@ -34,7 +33,7 @@ public class BugControlClassificationBuilder {
         }
     }
 
-    public HashMap<Integer, BugControl> getBugControlsWithDescription() throws IOException, SAXException, ParserConfigurationException {
+    public HashMap<Integer, BugControl> getBugControlsWithDescription() throws DocumentException {
 
         if (bugControlsWithDescriptionHashMap.isEmpty()){
             this.createBugControlsWithDescription();

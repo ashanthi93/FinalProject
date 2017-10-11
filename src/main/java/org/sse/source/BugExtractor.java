@@ -1,5 +1,6 @@
 package org.sse.source;
 
+import org.dom4j.DocumentException;
 import org.sse.categories.source.model.BugCategory;
 import org.sse.reportparser.source.BugReportParser;
 import org.sse.source.model.Bug;
@@ -67,7 +68,7 @@ public class BugExtractor {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    public void classifyBugs() throws IOException, SAXException, ParserConfigurationException {
+    public void classifyBugs() throws DocumentException {
 
         List<Bug> bugList = getAllBugs();
         HashMap<String, BugCategory> bugCategoryHashMap = BugCategoriesLoader.getBugCategoryHashMap();

@@ -121,6 +121,7 @@
     <security-control>
         <id>T3</id>
         <name>Configuration Management</name>
+        <name>Configuration Management</name>
         <description>
             <point>Standard encryption algorithms and correct key sizes are being used .</point>
             <point>Hashed message authentication codes -LRB- HMACs -RRB- are used to protect data integrity .</point>

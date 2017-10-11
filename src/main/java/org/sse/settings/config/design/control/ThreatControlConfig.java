@@ -1,17 +1,21 @@
 package org.sse.settings.config.design.control;
 
+import org.dom4j.DocumentException;
 import org.dom4j.Element;
+import org.dom4j.Node;
 import org.sse.design.model.ThreatControl;
 import org.sse.settings.ConfigFileCreator;
+import org.sse.settings.ConfigFileReader;
 import org.sse.settings.DescriptionProcessor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ThreatControlConfig {
 
-    private static final String parentTag = "threat-control";
+    private static final String parentTag = "threat-controls";
     private static final String securityControlTag = "security-control";
     private static final String idTag = "id";
     private static final String nameTag = "name";
@@ -66,5 +70,27 @@ public class ThreatControlConfig {
         /* end of threat-type tags*/
 
         configFileCreator.writeFile(fileName);
+    }
+
+    /**
+     *
+     *
+     * @return
+     * @throws DocumentException
+     */
+    public static HashMap<String,String> loadThreatControlIdsAndNames() throws DocumentException {
+
+        HashMap<String,String> threatControlIdsAndNames = new HashMap<String, String>();
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + securityControlTag);
+
+        for (Node node : nodeList){
+            threatControlIdsAndNames.put(node.valueOf(idTag), node.valueOf(nameTag));
+        }
+
+        return threatControlIdsAndNames;
     }
 }

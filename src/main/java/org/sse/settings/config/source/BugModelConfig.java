@@ -1,24 +1,22 @@
 package org.sse.settings.config.source;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.sse.settings.ConfigXMlFileCreator;
-import org.sse.settings.ConfigXMLFileReader;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.sse.settings.ConfigFileCreator;
+import org.sse.settings.ConfigFileReader;;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class BugModelConfig {
 
     private static String parentTag = "bug-categorization-model";
     private static String modelNameTag = "model-name";
     private static String versionTag = "version";
-    private static String typeTag = "bug-category";
+    private static String bugCategoryTag = "bug-category";
     private static String idTag = "id";
     private static String nameTag = "name";
     private static String descriptionTag = "description";
@@ -29,81 +27,72 @@ public class BugModelConfig {
 
     /**
      *
-     *
-     * @param bugCategories     id, name, description order
+     * @param bugCategories
      * @param categoryModelName
      * @param versionValue
-     * @throws ParserConfigurationException
-     * @throws TransformerException
+     * @throws IOException
      */
-    public static void createConfigFile(ArrayList<String[]> bugCategories, String categoryModelName, String versionValue) throws ParserConfigurationException, TransformerException {
+    public static void createConfigFile(ArrayList<String[]> bugCategories, String categoryModelName, String versionValue) throws IOException {
 
-        ConfigXMlFileCreator configXMlFileCreator = new ConfigXMlFileCreator();
-        configXMlFileCreator.createFile();
+        ConfigFileCreator configFileCreator = new ConfigFileCreator();
+        configFileCreator.createFile();
 
-        configXMlFileCreator.createParentElement(parentTag);
+        configFileCreator.createRootElement(parentTag);
 
-        Element parentNameElement = configXMlFileCreator.createChildElement(modelNameTag, categoryModelName);
-        Element versionElement = configXMlFileCreator.createChildElement(versionTag, versionValue);
+        Element parentNameElement = configFileCreator.createChildElement(modelNameTag, categoryModelName);
+        Element versionElement = configFileCreator.createChildElement(versionTag, versionValue);
 
-        configXMlFileCreator.addToParent(parentNameElement);
-        configXMlFileCreator.addToParent(versionElement);
+        configFileCreator.addToRoot(parentNameElement);
+        configFileCreator.addToRoot(versionElement);
 
         /* create type tags */
         for (String[] OWASPType : bugCategories) {
 
             /* create type tag */
-            Element typeElement = configXMlFileCreator.createChildElement(typeTag);
+            Element typeElement = configFileCreator.createChildElement(bugCategoryTag);
 
-            Element type_idElement = configXMlFileCreator.createChildElement(idTag, OWASPType[0]);
-            Element type_nameElement = configXMlFileCreator.createChildElement(nameTag, OWASPType[1]);
-            Element type_descriptionElement = configXMlFileCreator.createChildElement(descriptionTag, OWASPType[2]);
+            Element type_idElement = configFileCreator.createChildElement(idTag, OWASPType[0]);
+            Element type_nameElement = configFileCreator.createChildElement(nameTag, OWASPType[1]);
+            Element type_descriptionElement = configFileCreator.createChildElement(descriptionTag, OWASPType[2]);
 
-            typeElement.appendChild(type_idElement);
-            typeElement.appendChild(type_nameElement);
-            typeElement.appendChild(type_descriptionElement);
+            typeElement.add(type_idElement);
+            typeElement.add(type_nameElement);
+            typeElement.add(type_descriptionElement);
             /* end of type tag */
 
-            configXMlFileCreator.addToParent(typeElement);
+            configFileCreator.addToRoot(typeElement);
         }
         /* end of type tags */
 
-        configXMlFileCreator.transformAndSaveFile(fileName);
+        configFileCreator.writeFile(fileName);
     }
 
     /**
      *
      *
      * @return
-     * @throws ParserConfigurationException
-     * @throws IOException
-     * @throws SAXException
+     * @throws DocumentException
      */
-    public static ArrayList<String[]> loadConfigFile() throws ParserConfigurationException, IOException, SAXException {
+    public static ArrayList<String[]> loadConfigFile() throws DocumentException {
 
         ArrayList<String[]> OWASP_T10_list = new ArrayList<String[]>();
 
-        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
-        configXMLFileReader.loadFile(fileName);
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
 
-        NodeList nodeList = configXMLFileReader.loadNodesByTagName(typeTag);
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + bugCategoryTag);
 
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (Node node : nodeList){
 
-            Node node = nodeList.item(i);
+            String[] row = new String[3];
 
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+            row[0] = node.valueOf(idTag);
+            row[1] = node.valueOf(nameTag);
+            row[2] = node.valueOf(descriptionTag);
 
-                Element element = (Element) node;
-                String[] row = new String[3];
-
-                row[0] = element.getElementsByTagName(idTag).item(0).getTextContent();
-                row[1] = element.getElementsByTagName(nameTag).item(0).getTextContent();
-                row[2] = element.getElementsByTagName(descriptionTag).item(0).getTextContent();
-
-                OWASP_T10_list.add(row);
-            }
+            OWASP_T10_list.add(row);
         }
+
         return OWASP_T10_list;
     }
 
@@ -111,29 +100,25 @@ public class BugModelConfig {
      *
      *
      * @return
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws DocumentException
      */
-    public static HashMap<String,String> loadBugCategoryIdsAndNames() throws IOException, SAXException, ParserConfigurationException {
+    public static HashMap<String,String> loadBugCategoryIdsAndNames() throws DocumentException {
 
         HashMap<String,String> bugIdsAndNames = new HashMap<String, String>();
 
-        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
-        configXMLFileReader.loadFile(fileName);
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
 
-        NodeList nodeList = configXMLFileReader.loadNodesByTagName(typeTag);
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + bugCategoryTag);
 
-        for (int i = 0; i<nodeList.getLength(); i++){
+        for (Node node : nodeList){
 
-            Node node = nodeList.item(i);
-            Element element = (Element) node;
-
-            String id = element.getElementsByTagName(idTag).item(0).getTextContent();
-            String name = element.getElementsByTagName(nameTag).item(0).getTextContent();
+            String id = node.valueOf(idTag);
+            String name = node.valueOf(nameTag);
 
             bugIdsAndNames.put(id,name);
         }
+
         return bugIdsAndNames;
     }
 

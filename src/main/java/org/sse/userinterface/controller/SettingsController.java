@@ -25,6 +25,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
 import org.sse.categories.source.model.BugCategory;
 import org.sse.categories.source.BugCategoriesLoader;
@@ -100,7 +102,7 @@ public class SettingsController implements Initializable {
     ObservableList<BugToBugControlMapping> OWASP_proactive_MappingData;
     BugToBugControlClassificationModel owaspMappingModel = new BugToBugControlClassificationModel();
 
-    public SettingsController() throws ParserConfigurationException, IOException, SAXException {
+    public SettingsController() throws DocumentException, ParserConfigurationException, SAXException, IOException {
         //For OWASP Top 10 table
         OWASP_T10_list = BugCategoriesLoader.getBugCategoryWithDescriptionHashMap();
         TreeMap<Integer, BugCategory> owaspTreeMap = new TreeMap<Integer, BugCategory>(OWASP_T10_list);

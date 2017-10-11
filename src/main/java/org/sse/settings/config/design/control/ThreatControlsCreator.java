@@ -12,11 +12,8 @@ public class ThreatControlsCreator {
 
     private static HashMap<String, ThreatControl> threatControls;
 
-    static {
-        threatControls = new HashMap<String, ThreatControl>();
-    }
-
     private ThreatControlsCreator(){
+        threatControls = new HashMap<String, ThreatControl>();
     }
 
     /**

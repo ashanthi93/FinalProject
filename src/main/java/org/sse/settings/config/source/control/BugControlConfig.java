@@ -1,108 +1,124 @@
 package org.sse.settings.config.source.control;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-import org.sse.settings.ConfigXMlFileCreator;
-import org.sse.settings.ConfigXMLFileReader;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.sse.settings.ConfigFileCreator;
+import org.sse.settings.ConfigFileReader;
+import org.sse.settings.DescriptionProcessor;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class BugControlConfig {
 
-    String parentTag = "bug-control";
-    String modelNameTag = "model-name";
-    String versionTag = "version";
-    String proactiveTag = "control";
-    String idTag = "id";
-    String nameTag = "name";
-    String descriptionTag = "description";
+    private static final String parentTag = "bug-controls";
+    private static final String modelNameTag = "model-name";
+    private static final String versionTag = "version";
+    private static final String proactiveTag = "control";
+    private static final String idTag = "id";
+    private static final String nameTag = "name";
+    private static final String descriptionTag = "description";
+    private static final String pointTag = "point";
 
-    String fileName = "BugControls.xml";
+    private static final String fileName = "BugControl.xml";
 
-    public BugControlConfig() {}
+    private BugControlConfig() {}
 
     /**
-     *
      *
      * @param bugControls
      * @param modelNameValue
      * @param versionValue
-     * @throws ParserConfigurationException
-     * @throws TransformerException
+     * @throws IOException
      */
-    public void createConfigFile(ArrayList<String[]> bugControls, String modelNameValue, String versionValue) throws ParserConfigurationException, TransformerException {
+    public static void createConfigFile(ArrayList<String[]> bugControls, String modelNameValue, String versionValue) throws IOException {
 
-        ConfigXMlFileCreator configXMlFileCreator = new ConfigXMlFileCreator();
-        configXMlFileCreator.createFile();
+        ConfigFileCreator configFileCreator = new ConfigFileCreator();
+        configFileCreator.createFile();
 
-        configXMlFileCreator.createParentElement(parentTag);
+        configFileCreator.createRootElement(parentTag);
 
-        Element modelNameElement = configXMlFileCreator.createChildElement(modelNameTag, modelNameValue);
-        Element versionNameElement = configXMlFileCreator.createChildElement(versionTag, versionValue);
+        Element modelNameElement = configFileCreator.createChildElement(modelNameTag, modelNameValue);
+        Element versionNameElement = configFileCreator.createChildElement(versionTag, versionValue);
 
-        configXMlFileCreator.addToParent(modelNameElement);
-        configXMlFileCreator.addToParent(versionNameElement);
+        configFileCreator.addToRoot(modelNameElement);
+        configFileCreator.addToRoot(versionNameElement);
 
         /* create proactive tags */
         for (String[] OWASPProactive : bugControls) {
 
             /* create proactive tag */
-            Element proactiveElement = configXMlFileCreator.createChildElement(proactiveTag);
+            Element proactiveElement = configFileCreator.createChildElement(proactiveTag);
 
-            Element proactive_idElement = configXMlFileCreator.createChildElement(idTag, OWASPProactive[0]);
-            Element proactive_nameElement = configXMlFileCreator.createChildElement(nameTag, OWASPProactive[1]);
-            Element proactive_descriptionElement = configXMlFileCreator.createChildElement(descriptionTag, OWASPProactive[2]);
+            Element proactive_idElement = configFileCreator.createChildElement(idTag, OWASPProactive[0]);
+            Element proactive_nameElement = configFileCreator.createChildElement(nameTag, OWASPProactive[1]);
 
-            proactiveElement.appendChild(proactive_idElement);
-            proactiveElement.appendChild(proactive_nameElement);
-            proactiveElement.appendChild(proactive_descriptionElement);
+            Element proactive_descriptionElement = configFileCreator.createChildElement(descriptionTag);
+
+            List<String> sentences = DescriptionProcessor.getSentences(OWASPProactive[2]);
+
+            for (String sentence : sentences){
+
+                Element pointElement = configFileCreator.createChildElement(pointTag, sentence);
+                proactive_descriptionElement.add(pointElement);
+            }
+
+            proactiveElement.add(proactive_idElement);
+            proactiveElement.add(proactive_nameElement);
+            proactiveElement.add(proactive_descriptionElement);
             /* end of proactive tag */
 
-            configXMlFileCreator.addToParent(proactiveElement);
+            configFileCreator.addToRoot(proactiveElement);
         }
         /* end of proactive tags */
 
-        configXMlFileCreator.transformAndSaveFile(fileName);
+        configFileCreator.writeFile(fileName);
     }
 
     /**
      *
-     *
      * @return
-     * @throws IOException
-     * @throws SAXException
-     * @throws ParserConfigurationException
+     * @throws DocumentException
      */
-    public ArrayList<String[]> loadConfigFile() throws IOException, SAXException, ParserConfigurationException {
+    public static ArrayList<String[]> loadConfigFile() throws DocumentException {
 
         ArrayList<String[]> OWASP_proactives_list = new ArrayList<String[]>();
 
-        ConfigXMLFileReader configXMLFileReader = new ConfigXMLFileReader();
-        configXMLFileReader.loadFile(fileName);
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
 
-        NodeList nodeList = configXMLFileReader.loadNodesByTagName(proactiveTag);
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + proactiveTag);
 
-        for (int i = 0; i < nodeList.getLength(); i++) {
+        for (Node node : nodeList){
 
-            Node node = nodeList.item(i);
+            String[] row = new String[3];
 
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
+            row[0] = node.valueOf(idTag);
+            row[1] = node.valueOf(nameTag);
+            row[2] = node.valueOf(descriptionTag);
 
-                Element element = (Element) node;
-                String[] row = new String[3];
-
-                row[0] = element.getElementsByTagName(idTag).item(0).getTextContent();
-                row[1] = element.getElementsByTagName(nameTag).item(0).getTextContent();
-                row[2] = element.getElementsByTagName(descriptionTag).item(0).getTextContent();
-
-                OWASP_proactives_list.add(row);
-            }
+            OWASP_proactives_list.add(row);
         }
         return OWASP_proactives_list;
+    }
+
+    public static HashMap<String,String> loadControlIdsAndNames() throws DocumentException {
+
+        HashMap<String,String> controlIdsAndNames = new HashMap<String, String>();
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + proactiveTag);
+
+        for (Node node : nodeList){
+
+            controlIdsAndNames.put(node.valueOf(idTag),node.valueOf(nameTag));
+        }
+
+        return controlIdsAndNames;
     }
 }

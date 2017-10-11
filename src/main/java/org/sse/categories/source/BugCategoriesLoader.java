@@ -1,5 +1,6 @@
 package org.sse.categories.source;
 
+import org.dom4j.DocumentException;
 import org.sse.categories.source.model.BugCategory;
 import org.xml.sax.SAXException;
 import org.sse.settings.config.source.BugModelConfig;
@@ -20,7 +21,7 @@ public class BugCategoriesLoader {
     }
 
     /* getters & setters */
-    public static HashMap<String, BugCategory> getBugCategoryHashMap() throws ParserConfigurationException, SAXException, IOException {
+    public static HashMap<String, BugCategory> getBugCategoryHashMap() throws DocumentException {
 
         if (bugCategoryHashMap.isEmpty()){
             initializeBugCategoryHashMap();
@@ -32,7 +33,7 @@ public class BugCategoriesLoader {
         BugCategoriesLoader.bugCategoryHashMap = bugCategoryHashMap;
     }
 
-    public static HashMap<Integer, BugCategory> getBugCategoryWithDescriptionHashMap() throws IOException, SAXException, ParserConfigurationException {
+    public static HashMap<Integer, BugCategory> getBugCategoryWithDescriptionHashMap() throws DocumentException {
 
         if (bugCategoryWithDescriptionHashMap.isEmpty()){
             initializeBugCategoryHashMapWithDescription();
@@ -47,7 +48,7 @@ public class BugCategoriesLoader {
      * @throws SAXException
      * @throws IOException
      */
-    private static void initializeBugCategoryHashMap() throws ParserConfigurationException, SAXException, IOException {
+    private static void initializeBugCategoryHashMap() throws DocumentException {
 
         HashMap<String, String> bugIdsAndNames = BugModelConfig.loadBugCategoryIdsAndNames();
 
@@ -66,7 +67,7 @@ public class BugCategoriesLoader {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    private static void initializeBugCategoryHashMapWithDescription() throws IOException, SAXException, ParserConfigurationException {
+    private static void initializeBugCategoryHashMapWithDescription() throws DocumentException {
 
         ArrayList<String[]> OWASP_T10_list = BugModelConfig.loadConfigFile();
 

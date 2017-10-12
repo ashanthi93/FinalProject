@@ -1,10 +1,10 @@
 package org.sse.outputgenerators.report.creator;
 
-import org.sse.datamodels.association.Association;
+import org.sse.association.model.Association;
 import org.sse.outputgenerators.report.model.AssociationReport;
-import org.sse.categories.design.model.ThreatCategory;
+import org.sse.design.model.ThreatCategory;
 import org.xml.sax.SAXException;
-import org.sse.categories.source.model.BugCategory;
+import org.sse.source.model.BugCategory;
 import org.sse.source.model.Bug;
 
 import javax.xml.parsers.ParserConfigurationException;

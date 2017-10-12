@@ -1,10 +1,12 @@
 package org.sse.settings.config.source;
 
+import org.sse.source.model.BugCategory;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.testng.Assert.*;
 
@@ -86,7 +88,7 @@ public class BugModelConfigTest {
     @Test
     public void testLoadConfigFile() throws Exception {
 
-        ArrayList<String[]> configs = BugModelConfig.loadConfigFile();
+        List<BugCategory> configs = BugModelConfig.loadConfigFile();
         System.out.println(configs.size());
     }
 

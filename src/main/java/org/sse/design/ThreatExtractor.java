@@ -1,7 +1,7 @@
 package org.sse.design;
 
-import org.sse.categories.design.ThreatCategoriesLoader;
-import org.sse.categories.design.model.ThreatCategory;
+import org.dom4j.DocumentException;
+import org.sse.design.model.ThreatCategory;
 import org.sse.reportparser.ReportParserFactory;
 import org.sse.reportparser.design.ThreatReportParser;
 import org.sse.design.model.Threat;
@@ -95,7 +95,7 @@ public class ThreatExtractor {
      * @throws SAXException
      * @throws ParserConfigurationException
      */
-    public void classifyThreats() throws IOException, SAXException, ParserConfigurationException {
+    public void classifyThreats() throws DocumentException {
 
         List<Threat> threatList = this.getAllThreats();
         HashMap<String, ThreatCategory> threatCategoryHashMap = ThreatCategoriesLoader.getThreatCategoryHashMap();

@@ -1,6 +1,6 @@
 package org.sse.outputgenerators.report.model;
 
-import org.sse.datamodels.association.Association;
+import org.sse.association.model.Association;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;

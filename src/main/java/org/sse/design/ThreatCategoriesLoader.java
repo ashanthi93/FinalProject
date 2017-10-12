@@ -1,15 +1,13 @@
-package org.sse.categories.design;
+package org.sse.design;
 
-import org.sse.categories.design.model.ThreatCategory;
-import org.xml.sax.SAXException;
+import org.dom4j.DocumentException;
+import org.sse.design.model.ThreatCategory;
+import org.sse.settings.config.design.ThreatModelConfig;
 
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class ThreatCategoriesLoader {
 
-    /* change pkg to classification and add classification model loaders */
     private static HashMap<String, ThreatCategory> threatCategoryHashMap;
 
     private ThreatCategoriesLoader(){
@@ -17,10 +15,10 @@ public class ThreatCategoriesLoader {
     }
 
     /* getter & setter */
-    public static HashMap<String, ThreatCategory> getThreatCategoryHashMap() throws ParserConfigurationException, SAXException, IOException {
+    public static HashMap<String, ThreatCategory> getThreatCategoryHashMap() throws DocumentException {
 
         if (threatCategoryHashMap.isEmpty()){
-            //initializeThreatCategoryHashMap();
+            initializeThreatCategoryHashMap();
         }
         return (threatCategoryHashMap);
     }
@@ -31,12 +29,9 @@ public class ThreatCategoriesLoader {
 
     /**
      *
-     *
-     * @throws ParserConfigurationException
-     * @throws SAXException
-     * @throws IOException
+     * @throws DocumentException
      */
-    /*private static void initializeThreatCategoryHashMap() throws ParserConfigurationException, SAXException, IOException{
+    private static void initializeThreatCategoryHashMap() throws DocumentException {
 
         HashMap<String,String> threatIdsAndNames = ThreatModelConfig.loadThreatCategoryIdsAndNames();
 
@@ -45,7 +40,7 @@ public class ThreatCategoriesLoader {
             ThreatCategory threatCategory = createThreatCategory(threatID, threatIdsAndNames.get(threatID));
             threatCategoryHashMap.put(threatID, threatCategory);
         }
-    }*/
+    }
 
     /**
      *

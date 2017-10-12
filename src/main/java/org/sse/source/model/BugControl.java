@@ -1,4 +1,4 @@
-package org.sse.categories.source.model;
+package org.sse.source.model;
 
 import java.util.ArrayList;
 import java.util.List;

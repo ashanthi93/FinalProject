@@ -3,7 +3,7 @@ package org.sse.settings.config.source.control;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
-import org.sse.categories.source.model.BugControl;
+import org.sse.source.model.BugControl;
 import org.sse.settings.ConfigFileCreator;
 import org.sse.settings.ConfigFileReader;
 import org.sse.settings.DescriptionProcessor;
@@ -127,11 +127,12 @@ public class BugControlConfig {
             bugControl.setId(node.valueOf(idTag));
             bugControl.setName(node.valueOf(nameTag));
 
-            List<Node> pointNodes = node.selectNodes(descriptionTag);
+            List<Node> pointNodes = node.selectSingleNode(descriptionTag).selectNodes(pointTag);
+
             List<String> description = new ArrayList<String>();
 
             for (Node pointNode : pointNodes){
-                description.add(pointNode.valueOf(pointTag));
+                description.add(pointNode.getStringValue());
             }
 
             bugControls.add(bugControl);

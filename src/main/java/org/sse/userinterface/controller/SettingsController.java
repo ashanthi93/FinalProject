@@ -28,10 +28,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
 import org.xml.sax.SAXException;
-import org.sse.categories.source.model.BugCategory;
-import org.sse.categories.source.BugCategoriesLoader;
-import org.sse.categories.source.model.BugControl;
-import org.sse.classifiers.source_code.BugControlClassificationBuilder;
+import org.sse.source.model.BugCategory;
+import org.sse.source.BugCategoriesLoader;
+import org.sse.source.model.BugControl;
+import org.sse.source.BugControlsLoader;
 import org.sse.classifiers.source_code.BugToBugControlClassificationModel;
 import org.sse.classifiers.source_code.BugToBugControlMapping;
 
@@ -69,7 +69,7 @@ public class SettingsController implements Initializable {
     
     HashMap<Integer, BugControl> proactives_list;
     ObservableList<BugControl> proactive_data;
-    BugControlClassificationBuilder bugControlModel = new BugControlClassificationBuilder();
+    BugControlsLoader bugControlModel = new BugControlsLoader();
     
     //For OWASP_proactives mapping table
     @FXML

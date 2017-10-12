@@ -3,6 +3,7 @@ package org.sse.settings.config.design.control;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.sse.design.model.Threat;
 import org.sse.design.model.ThreatControl;
 import org.sse.settings.ConfigFileCreator;
 import org.sse.settings.ConfigFileReader;
@@ -70,6 +71,35 @@ public class ThreatControlConfig {
         /* end of threat-type tags*/
 
         configFileCreator.writeFile(fileName);
+    }
+
+    public static List<ThreatControl> loadConfigFile() throws DocumentException {
+
+        List<ThreatControl> threatControls = new ArrayList<ThreatControl>();
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + securityControlTag);
+
+        for(Node node : nodeList){
+            ThreatControl threatControl = new ThreatControl();
+
+            threatControl.setId(node.valueOf(idTag));
+            threatControl.setName(node.valueOf(nameTag));
+
+            List<Node> pointNodes = node.selectSingleNode(descriptionTag).selectNodes(pointTag);
+
+            List<String> description = new ArrayList<String>();
+
+            for (Node pointNode : pointNodes){
+                description.add(pointNode.getStringValue());
+            }
+            threatControl.setDescription(description);
+
+            threatControls.add(threatControl);
+        }
+        return threatControls;
     }
 
     /**

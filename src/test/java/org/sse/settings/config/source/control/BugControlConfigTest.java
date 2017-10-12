@@ -1,10 +1,12 @@
 package org.sse.settings.config.source.control;
 
+import org.sse.source.model.BugControl;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.*;
 
@@ -96,7 +98,7 @@ public class BugControlConfigTest {
     @Test
     public void testLoadConfigFile() throws Exception {
 
-        ArrayList<String[]> bugContols = BugControlConfig.loadConfigFile();
+        List<BugControl> bugContols = BugControlConfig.loadConfigFile();
         System.out.println(bugContols.size());
     }
 

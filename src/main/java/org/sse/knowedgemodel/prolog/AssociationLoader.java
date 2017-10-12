@@ -57,7 +57,7 @@ public class AssociationLoader {
         }*/
 
         // write owasp top 10 to the prolog file
-        ArrayList<String[]> owasp = BugModelConfig.loadConfigFile();
+        /*ArrayList<String[]> owasp = BugModelConfig.loadConfigFile();
         HashMap<String, String[]> owaspMapping = MappingConfig.loadConfigFile();
 
         for (int i = 0; i < owasp.size(); i++) {
@@ -126,7 +126,7 @@ public class AssociationLoader {
                 "\t\t_\n" +
                 "\t),\n" +
                 "\tretract(owasp_top10_proactive(A,_,_)).");*/
-        writer.close();
+        //writer.close();
 
 
         //new PrologConverter().prologCaller("a1");

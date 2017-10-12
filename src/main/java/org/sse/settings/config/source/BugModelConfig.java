@@ -4,7 +4,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.sse.settings.ConfigFileCreator;
-import org.sse.settings.ConfigFileReader;;
+import org.sse.settings.ConfigFileReader;
+import org.sse.source.model.BugCategory;;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,9 +74,9 @@ public class BugModelConfig {
      * @return
      * @throws DocumentException
      */
-    public static ArrayList<String[]> loadConfigFile() throws DocumentException {
+    public static List<BugCategory> loadConfigFile() throws DocumentException {
 
-        ArrayList<String[]> OWASP_T10_list = new ArrayList<String[]>();
+        List<BugCategory> bugCategoryList = new ArrayList<BugCategory>();
 
         ConfigFileReader configFileReader = new ConfigFileReader();
         configFileReader.readFile(fileName);
@@ -84,16 +85,16 @@ public class BugModelConfig {
 
         for (Node node : nodeList){
 
-            String[] row = new String[3];
+            BugCategory bugCategory = new BugCategory();
 
-            row[0] = node.valueOf(idTag);
-            row[1] = node.valueOf(nameTag);
-            row[2] = node.valueOf(descriptionTag);
+            bugCategory.setId(node.valueOf(idTag));
+            bugCategory.setName(node.valueOf(nameTag));
+            bugCategory.setDescription(node.valueOf(descriptionTag));
 
-            OWASP_T10_list.add(row);
+            bugCategoryList.add(bugCategory);
         }
 
-        return OWASP_T10_list;
+        return bugCategoryList;
     }
 
     /**

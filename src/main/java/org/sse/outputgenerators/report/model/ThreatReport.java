@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import org.sse.categories.design.model.ThreatCategory;
+import org.sse.design.model.ThreatCategory;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package org.sse.outputgenerators.report.creator;
 
-import org.sse.categories.design.model.ThreatCategory;
+import org.sse.design.model.ThreatCategory;
 import org.sse.outputgenerators.report.model.ThreatReport;
 
 import java.text.DateFormat;

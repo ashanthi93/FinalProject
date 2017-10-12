@@ -1,4 +1,4 @@
-package org.sse.categories.design.model;
+package org.sse.design.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;

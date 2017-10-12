@@ -1,4 +1,4 @@
-package org.sse.datamodels.association;
+package org.sse.association.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;

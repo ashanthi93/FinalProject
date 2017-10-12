@@ -1,7 +1,7 @@
 package org.sse.outputgenerators.report.creator;
 
 import org.sse.outputgenerators.report.model.BugReport;
-import org.sse.categories.source.model.BugCategory;
+import org.sse.source.model.BugCategory;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

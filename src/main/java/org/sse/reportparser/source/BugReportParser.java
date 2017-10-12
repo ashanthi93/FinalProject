@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class BugReportParser {
 
-    File bugReportFile;
+    protected File bugReportFile;
 
     public void setBugReportFile(File bugReportFile) {
         this.bugReportFile = bugReportFile;

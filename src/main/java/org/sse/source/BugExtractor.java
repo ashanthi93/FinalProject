@@ -1,12 +1,11 @@
 package org.sse.source;
 
 import org.dom4j.DocumentException;
-import org.sse.categories.source.model.BugCategory;
+import org.sse.source.model.BugCategory;
 import org.sse.reportparser.source.BugReportParser;
 import org.sse.source.model.Bug;
 import org.sse.source.model.BugCollection;
 import org.xml.sax.SAXException;
-import org.sse.categories.source.BugCategoriesLoader;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;

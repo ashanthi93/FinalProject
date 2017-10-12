@@ -135,6 +135,8 @@ public class BugControlConfig {
                 description.add(pointNode.getStringValue());
             }
 
+            bugControl.setDescription(description.toString());
+
             bugControls.add(bugControl);
         }
         return bugControls;

@@ -15,9 +15,13 @@ public class BugCategoriesLoader {
     private static HashMap<String, BugCategory> bugCategoryHashMap;
     private static HashMap<Integer, BugCategory> bugCategoryWithDescriptionHashMap;
 
-    private BugCategoriesLoader(){
+    static{
         bugCategoryHashMap = new HashMap<String, BugCategory>();
         bugCategoryWithDescriptionHashMap = new HashMap<Integer, BugCategory>();
+    }
+
+    private BugCategoriesLoader(){
+
     }
 
     /* getters */

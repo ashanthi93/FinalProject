@@ -7,10 +7,9 @@ public class BugControl {
 
     private String id;
     private String name;
-    private List<String> description;
+    private String description;
 
     public BugControl(){
-        description = new ArrayList<String>();
     }
 
     /* getters and setters */
@@ -30,11 +29,11 @@ public class BugControl {
         this.name = name;
     }
 
-    public List<String> getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(List<String> description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

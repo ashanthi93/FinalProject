@@ -1,4 +1,4 @@
-package org.sse.association.model;
+package org.sse.association.semantic.model;
 
 import org.sse.source.model.BugControl;
 import org.sse.design.model.ThreatControl;

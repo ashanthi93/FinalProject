@@ -1,6 +1,6 @@
 package org.sse.association.semantic;
 
-import org.sse.association.model.SemanticAssociation;
+import org.sse.association.semantic.model.SemanticAssociation;
 import org.sse.source.model.BugControl;
 import org.sse.design.model.ThreatControl;
 

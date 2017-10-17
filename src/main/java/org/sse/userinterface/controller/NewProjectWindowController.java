@@ -18,6 +18,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.dom4j.DocumentException;
 import org.sse.design.ThreatExtractor;
 import org.sse.userinterface.MainApp;
 import org.xml.sax.SAXException;
@@ -96,21 +97,18 @@ public class NewProjectWindowController implements Initializable {
 
                 } else {
 
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("\n Threat report validation fails !");
+                    Alert alert = this.createAlert(AlertType.ERROR, "Error", null, "\n Threat report validation fails !");
                     alert.showAndWait();
                 }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (RuntimeException e) {
             e.printStackTrace();
+            Alert alert = createAlert(AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
+            alert.showAndWait();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            Alert alert = createAlert(AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,6 +123,16 @@ public class NewProjectWindowController implements Initializable {
         stage.setTitle("Home Window");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private Alert createAlert(AlertType alertType, String title, String headerText, String contentText){
+
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+
+        return alert;
     }
 
     public void initialize(URL url, ResourceBundle rb) {

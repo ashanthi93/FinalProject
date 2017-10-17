@@ -1,5 +1,6 @@
 package org.sse.reportparser.design;
 
+import org.dom4j.DocumentException;
 import org.sse.design.model.Threat;
 
 import java.io.File;
@@ -22,19 +23,19 @@ public abstract class ThreatReportParser {
      * @return
      * @throws Exception
      */
-    public abstract boolean validateFile() throws Exception;
+    public abstract boolean validateFile();
 
     /**
      *
      * @return
      * @throws Exception
      */
-    public abstract String extractName() throws Exception;
+    public abstract String extractName() throws DocumentException;
 
     /**
      *
      * @return
      * @throws Exception
      */
-    public abstract List<Threat> extractThreats() throws Exception;
+    public abstract List<Threat> extractThreats() throws DocumentException;
 }

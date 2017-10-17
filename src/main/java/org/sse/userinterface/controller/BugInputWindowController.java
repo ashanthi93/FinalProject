@@ -8,12 +8,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
 import org.sse.source.model.Bug;
 import org.sse.source.model.BugCategory;
@@ -52,6 +55,18 @@ public class BugInputWindowController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
         setOWASPT10TableProperties();
+
+        //bugTable.getItems().add(new Bug());
+        bugTable.getItems().addAll(new Bug());
+
+        bugTable.setRowFactory(new Callback<TableView<Bug>, TableRow<Bug>>() {
+
+            public TableRow<Bug> call(TableView<Bug> param) {
+                TableRow<Bug> row = new TableRow<Bug>();
+                return row;
+            }
+        });
+
     }
 
     private void setOWASPT10TableProperties(){
@@ -64,8 +79,16 @@ public class BugInputWindowController implements Initializable {
         category.prefWidthProperty().bind(bugTable.widthProperty().divide(5));*/
 
         ObservableList<String> OWASPcategories = FXCollections.observableArrayList(
-                new String("Bla"),
-                new String("Blo")
+                new String("A1: Injection"),
+                new String("A2: Broken Authentication and Session Management"),
+                new String("A3: Cross-Site Scripting (XSS)"),
+                new String("A4: Insecure Direct Object References"),
+                new String("A5: Security Misconfiguration"),
+                new String("A6: Sensitive Data Exposure"),
+                new String("A7: Missing Function Level Access Control"),
+                new String("A8: Cross-Site Request Forgery (CSRF)"),
+                new String("A9: Using Components with Known Vulnerabilities"),
+                new String("A10 Unvalidated Redirects and Forwards")
         );
 
         category.setCellFactory(ComboBoxTableCell.<Bug, String>forTableColumn(new DefaultStringConverter(), OWASPcategories));

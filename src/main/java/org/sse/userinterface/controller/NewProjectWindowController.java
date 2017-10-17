@@ -2,12 +2,6 @@ package org.sse.userinterface.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,15 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 import org.dom4j.DocumentException;
 import org.sse.design.ThreatExtractor;
 import org.sse.userinterface.MainApp;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class NewProjectWindowController implements Initializable {
 
@@ -55,12 +51,12 @@ public class NewProjectWindowController implements Initializable {
         if (threatCheck.isSelected()) {
             fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
         } else if (bugCheck.isSelected()) {
-            fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
+            //fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
+
+            start("/fxml/BugInputWindow.fxml", "Bug Input Window");
+
         } else {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("\n    Please select a report type!");
+            Alert alert = this.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please select a report type!");
             alert.showAndWait();
         }
     }
@@ -89,43 +85,43 @@ public class NewProjectWindowController implements Initializable {
 
                     threatExtractor.classifyThreats();
 
-                    start("/fxml/HomeWindow.fxml");
+                    start("/fxml/HomeWindow.fxml", "Home Window");
                     Stage stageMain = (Stage) cancelBtn.getScene().getWindow();
                     stageMain.close();
                     Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
                     stageMainWelcome.close();
 
                 } else {
+                    Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error", null, "\n Threat report validation fails !");
 
-                    Alert alert = this.createAlert(AlertType.ERROR, "Error", null, "\n Threat report validation fails !");
                     alert.showAndWait();
                 }
             }
         } catch (RuntimeException e) {
             e.printStackTrace();
-            Alert alert = createAlert(AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
             alert.showAndWait();
         } catch (DocumentException e) {
             e.printStackTrace();
-            Alert alert = createAlert(AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
             alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void start(String path) throws Exception {
+    public void start(String path, String title) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("Home Window");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }
 
-    private Alert createAlert(AlertType alertType, String title, String headerText, String contentText){
+    private Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
 
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

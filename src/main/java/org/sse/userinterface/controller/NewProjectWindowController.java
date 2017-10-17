@@ -2,12 +2,6 @@ package org.sse.userinterface.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,14 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import jdk.internal.org.xml.sax.SAXException;
 import org.sse.design.ThreatExtractor;
 import org.sse.userinterface.MainApp;
-import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class NewProjectWindowController implements Initializable {
 
@@ -54,9 +51,12 @@ public class NewProjectWindowController implements Initializable {
         if (threatCheck.isSelected()) {
             fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
         } else if (bugCheck.isSelected()) {
-            fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
+            //fileOpen("Select Static Code Analysis Reports", "XML Files (*.xml)", "*.xml");
+
+            start("/fxml/BugInputWindow.fxml", "Bug Input Window");
+
         } else {
-            Alert alert = new Alert(AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
             alert.setHeaderText(null);
             alert.setContentText("\n    Please select a report type!");
@@ -89,7 +89,7 @@ public class NewProjectWindowController implements Initializable {
 
                     threatExtractor.classifyThreats();
 
-                    start("/fxml/HomeWindow.fxml");
+                    start("/fxml/HomeWindow.fxml", "Home Window");
                     Stage stageMain = (Stage) cancelBtn.getScene().getWindow();
                     stageMain.close();
                     Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
@@ -97,7 +97,7 @@ public class NewProjectWindowController implements Initializable {
 
                 } else {
 
-                    Alert alert = new Alert(AlertType.ERROR);
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.setContentText("\n Threat report validation fails !");
@@ -117,13 +117,13 @@ public class NewProjectWindowController implements Initializable {
         }
     }
 
-    public void start(String path) throws Exception {
+    public void start(String path, String title) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle("Home Window");
+        stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
     }

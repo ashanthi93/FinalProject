@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sse.userinterface.controller.HomeWindowController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.sse.userinterface.controller.HomeWindowController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -20,6 +20,7 @@
         <menus>
           <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
             <items>
+                  <MenuItem fx:id="addBugsMenuItem" mnemonicParsing="false" text="Add Bugs Manually" />
               <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
             </items>
           </Menu>

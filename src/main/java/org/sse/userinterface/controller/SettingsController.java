@@ -7,19 +7,18 @@ package org.sse.userinterface.controller;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.ResourceBundle;
-import java.util.TreeMap;
+import java.util.*;
+
+import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -41,6 +40,27 @@ import org.sse.classifiers.source_code.BugToBugControlMapping;
  * @author CHAM PC
  */
 public class SettingsController implements Initializable {
+
+    @FXML
+    private JFXButton owaspNextBtn;
+
+    @FXML
+    private JFXButton proactiveNextBtn;
+
+    @FXML
+    private JFXButton btnSave;
+
+    @FXML
+    private TabPane settingsTabPane;
+
+    //for updated OWASP Top 10 table
+    List<BugCategory> updatedOWASP_T10_list;
+
+    //for updated OWASP proactives table
+    List<BugControl> updatedProactives_list;
+
+    //for updated OWASP Top 10 mapping table
+    List<BugToBugControlMapping> updatedOWASP_proactives_mapping;
 
     //For OWASP Top 10 table
     @FXML
@@ -323,6 +343,55 @@ public class SettingsController implements Initializable {
         owaspProMap_a10.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
         
         proactMap_table.setItems(OWASP_proactive_MappingData);
+    }
+
+    @FXML
+    private void owaspNextBtnAction(ActionEvent event) throws Exception {
+        updatedOWASP_T10_list = new ArrayList<BugCategory>();
+
+        ObservableList<BugCategory> updatedOWASP_T10 = OWASPT10_Table.getItems();
+
+        updatedOWASP_T10_list = updatedOWASP_T10;
+
+        SingleSelectionModel<Tab> selectionModel = settingsTabPane.getSelectionModel();
+        selectionModel.select(1);
+    }
+
+    @FXML
+    private void proactiveNextBtnAction(ActionEvent event) throws Exception {
+        updatedProactives_list = new ArrayList<BugControl>();
+
+        ObservableList<BugControl> updatedProactives = proactive_table.getItems();
+
+        updatedProactives_list = updatedProactives;
+
+        SingleSelectionModel<Tab> selectionModel = settingsTabPane.getSelectionModel();
+        selectionModel.select(2);
+    }
+
+    @FXML
+    private void btnSaveAction(ActionEvent event) throws Exception {
+        updatedOWASP_proactives_mapping = new ArrayList<BugToBugControlMapping>();
+
+        ObservableList<BugToBugControlMapping> updatedMapping = proactMap_table.getItems();
+
+        updatedOWASP_proactives_mapping = updatedMapping;
+
+        updateOWASPT10();
+        updateProactives();
+        updateOWASP_proactives_mapping();
+    }
+
+    private void updateOWASPT10(){
+
+    }
+
+    private void updateProactives(){
+
+    }
+
+    private void updateOWASP_proactives_mapping(){
+
     }
     
 }

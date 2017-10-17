@@ -11,13 +11,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import jdk.internal.org.xml.sax.SAXException;
+
+import org.dom4j.DocumentException;
 import org.sse.design.ThreatExtractor;
 import org.sse.userinterface.MainApp;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -56,10 +56,7 @@ public class NewProjectWindowController implements Initializable {
             start("/fxml/BugInputWindow.fxml", "Bug Input Window");
 
         } else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("\n    Please select a report type!");
+            Alert alert = this.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please select a report type!");
             alert.showAndWait();
         }
     }
@@ -95,22 +92,19 @@ public class NewProjectWindowController implements Initializable {
                     stageMainWelcome.close();
 
                 } else {
+                    Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error", null, "\n Threat report validation fails !");
 
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setHeaderText(null);
-                    alert.setContentText("\n Threat report validation fails !");
                     alert.showAndWait();
                 }
             }
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         } catch (RuntimeException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
+            alert.showAndWait();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -125,6 +119,16 @@ public class NewProjectWindowController implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
+
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+
+        return alert;
     }
 
     public void initialize(URL url, ResourceBundle rb) {

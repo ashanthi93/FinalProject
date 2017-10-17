@@ -35,7 +35,7 @@ public class MsThreatReportParser extends ThreatReportParser {
 
         String threatModelName = new String(threatModelNameElement.getStringValue());
 
-        return threatModelName;
+        return (threatModelName == null ? "NewModel" : threatModelName );
     }
 
     @Override

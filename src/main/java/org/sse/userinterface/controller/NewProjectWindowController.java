@@ -80,7 +80,6 @@ public class NewProjectWindowController implements Initializable {
         File file = fileChooser.showOpenDialog(stage);
 
         try {
-
             if (file != null) {
 
                 ThreatExtractor threatExtractor = ThreatExtractor.getInstance();

@@ -16,8 +16,8 @@ public class ThreatModelConfigTest {
         threatDetails.add(new String[]{"T","Tampering"});
         threatDetails.add(new String[]{"R","Repudiation"});
         threatDetails.add(new String[]{"I","Information Disclosure"});
-        threatDetails.add(new String[]{"D","Denial of Service"});
-        threatDetails.add(new String[]{"E","Elevation of Privileges"});
+        threatDetails.add(new String[]{"D","Denial Of Service"});
+        threatDetails.add(new String[]{"E","Elevation Of Privilege"});
 
         ThreatModelConfig.createConfigFile(threatDetails);
     }

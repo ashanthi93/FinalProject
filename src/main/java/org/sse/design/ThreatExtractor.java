@@ -24,6 +24,7 @@ public class ThreatExtractor {
 
     private ThreatExtractor() {
         threatReportParser = ReportParserFactory.getThreatReportParser();
+        threatModel = new ThreatModel();
     }
 
     static {
@@ -89,8 +90,6 @@ public class ThreatExtractor {
     }
 
     /**
-     *
-     *
      * @throws IOException
      * @throws SAXException
      * @throws ParserConfigurationException
@@ -100,17 +99,17 @@ public class ThreatExtractor {
         List<Threat> threatList = this.getAllThreats();
         HashMap<String, ThreatCategory> threatCategoryHashMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
-        for (Threat threat : threatList){
+        for (Threat threat : threatList) {
 
             boolean isValidThreatCategoryName = false;
 
-            for (String defaultThreatCategoryId : threatCategoryHashMap.keySet()){
+            for (String defaultThreatCategoryId : threatCategoryHashMap.keySet()) {
 
                 ThreatCategory threatCategory = threatCategoryHashMap.get(defaultThreatCategoryId);
 
                 String defaultThreatCategoryName = threatCategory.getName();
 
-                if (defaultThreatCategoryName.equals(threat.getName())){
+                if (defaultThreatCategoryName.equals(threat.getThreatCategoryName())) {
 
                     List<Threat> threatListForCategory = threatCategory.getThreatList();
                     threatListForCategory.add(threat);
@@ -119,10 +118,11 @@ public class ThreatExtractor {
                     threatCategoryHashMap.put(defaultThreatCategoryId, threatCategory);
 
                     isValidThreatCategoryName = true;
+                    break;
                 }
             }
 
-            if(!isValidThreatCategoryName){
+            if (!isValidThreatCategoryName) {
                 throw new RuntimeException("Invalid Threat Category ! ");
             }
         }

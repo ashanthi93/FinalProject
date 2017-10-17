@@ -10,8 +10,11 @@ public class ThreatCategoriesLoader {
 
     private static HashMap<String, ThreatCategory> threatCategoryHashMap;
 
-    private ThreatCategoriesLoader(){
+    static {
         threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+    }
+
+    private ThreatCategoriesLoader(){
     }
 
     /* getter & setter */

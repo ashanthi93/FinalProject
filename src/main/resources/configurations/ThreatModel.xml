@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<threat-model><threat-type><id>S</id><name>Spoofing</name></threat-type><threat-type><id>T</id><name>Tampering</name></threat-type><threat-type><id>R</id><name>Repudiation</name></threat-type><threat-type><id>I</id><name>Information Disclosure</name></threat-type><threat-type><id>D</id><name>Denial of Service</name></threat-type><threat-type><id>E</id><name>Elevation of Privileges</name></threat-type></threat-model>
+<threat-model>
+    <threat-type>
+        <id>S</id>
+        <name>Spoofing</name>
+    </threat-type>
+    <threat-type>
+        <id>T</id>
+        <name>Tampering</name>
+    </threat-type>
+    <threat-type>
+        <id>R</id>
+        <name>Repudiation</name>
+    </threat-type>
+    <threat-type>
+        <id>I</id>
+        <name>Information Disclosure</name>
+    </threat-type>
+    <threat-type>
+        <id>D</id>
+        <name>Denial Of Service</name>
+    </threat-type>
+    <threat-type>
+        <id>E</id>
+        <name>Elevation Of Privilege</name>
+    </threat-type>
+</threat-model>

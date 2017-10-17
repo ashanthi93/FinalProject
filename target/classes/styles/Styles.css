@@ -1,0 +1,15 @@
+.newProjectBtn {
+   -fx-background-image: url('/images/project.png');
+}
+
+.openProjectBtn{
+    -fx-background-image: url('/images/open.png');
+}
+
+.tab-pane *.tab-header-background {
+    -fx-background-color:  #3D4956;
+}
+
+#proactMap_table .table_column{
+    -fx-alignment: CENTER;
+}

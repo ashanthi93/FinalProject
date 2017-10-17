@@ -29,6 +29,7 @@ public class UmbcSemanticAssociationCaller extends SemanticAssociationCaller {
             String listStubsUri = builder.build().toString();
             HttpGet getStubMethod = new HttpGet(listStubsUri);
 
+
             HttpResponse getStubResponse = client.execute(getStubMethod);
 
             String responseBody = EntityUtils.toString(getStubResponse.getEntity());

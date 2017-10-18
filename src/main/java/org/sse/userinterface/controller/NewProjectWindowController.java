@@ -121,7 +121,7 @@ public class NewProjectWindowController implements Initializable {
         stage.show();
     }
 
-    private Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
+    public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
 
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

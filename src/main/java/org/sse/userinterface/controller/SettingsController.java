@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
@@ -160,14 +161,23 @@ public class SettingsController implements Initializable {
     private void setOWASPT10TableProperties(){
         t10_id.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("id"));
         t10_id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
+
         
         t10_name.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("name"));
         t10_name.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
         t10_name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
+        t10_name.setOnEditCommit(event -> {
+            BugCategory row = event.getRowValue();
+            row.setName(event.getNewValue());
+        });
         
         t10_description.setCellValueFactory(new PropertyValueFactory<BugCategory, String>("description"));
         t10_description.setCellFactory(TextFieldTableCell.<BugCategory>forTableColumn());
         t10_description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
+        t10_description.setOnEditCommit(event -> {
+            BugCategory row = event.getRowValue();
+            row.setDescription(event.getNewValue());
+        });
                 
         OWASPT10_Table.setItems(owasp_data);
     }
@@ -175,14 +185,26 @@ public class SettingsController implements Initializable {
     private void setOWASPProactivesTableProperties(){
         proact_id.setCellValueFactory(new PropertyValueFactory<BugControl, String>("id"));
         proact_id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
+        proact_id.setOnEditCommit(event -> {
+            BugControl row = event.getRowValue();
+            row.setId(event.getNewValue());
+        });
         
         proact_name.setCellValueFactory(new PropertyValueFactory<BugControl, String>("name"));
         proact_name.setCellFactory(TextFieldTableCell.<BugControl>forTableColumn());
         proact_name.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(5));
+        proact_name.setOnEditCommit(event -> {
+            BugControl row = event.getRowValue();
+            row.setName(event.getNewValue());
+        });
         
         proact_description.setCellValueFactory(new PropertyValueFactory<BugControl, String>("description"));
         proact_description.setCellFactory(TextFieldTableCell.<BugControl>forTableColumn());
         proact_description.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(1.5));
+        proact_description.setOnEditCommit(event -> {
+            BugControl row = event.getRowValue();
+            row.setDescription(event.getNewValue());
+        });
                 
         proactive_table.setItems(proactive_data);
     }
@@ -191,7 +213,11 @@ public class SettingsController implements Initializable {
 
         proact.setCellValueFactory(new PropertyValueFactory<BugToBugControlMapping, String>("control"));
         proact.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        
+        proact.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setControl(event.getNewValue());
+        });
+
         owaspProMap_a1.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
             public ObservableValue<CheckBox> call(CellDataFeatures<BugToBugControlMapping, CheckBox> p) {
@@ -206,6 +232,14 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a1.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a1.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            if(event.getNewValue().selectedProperty().get()){
+                row.setA1(true);
+            }else{
+                row.setA1(false);
+            }
+        });
 
         owaspProMap_a2.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -221,6 +255,14 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a2.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a2.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            if(event.getNewValue().selectedProperty().get()){
+                row.setA2(true);
+            }else{
+                row.setA2(false);
+            }
+        });
 
         owaspProMap_a3.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -236,6 +278,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a3.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a3.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA3(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a4.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -251,6 +297,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a4.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a4.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA4(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a5.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -266,6 +316,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a5.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a5.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA5(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a6.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -281,6 +335,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a6.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a6.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA6(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a7.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -296,6 +354,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a7.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a7.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA7(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a8.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -311,6 +373,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a8.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a8.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA8(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a9.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -326,6 +392,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a9.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a9.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA9(event.getNewValue().isSelected());
+        });
 
         owaspProMap_a10.setCellValueFactory( new Callback<CellDataFeatures<BugToBugControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
@@ -341,6 +411,10 @@ public class SettingsController implements Initializable {
             }
         });
         owaspProMap_a10.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
+        owaspProMap_a10.setOnEditCommit(event -> {
+            BugToBugControlMapping row = event.getRowValue();
+            row.setA10(event.getNewValue().isSelected());
+        });
         
         proactMap_table.setItems(OWASP_proactive_MappingData);
     }
@@ -376,6 +450,10 @@ public class SettingsController implements Initializable {
         ObservableList<BugToBugControlMapping> updatedMapping = proactMap_table.getItems();
 
         updatedOWASP_proactives_mapping = updatedMapping;
+
+        for(BugToBugControlMapping bug: updatedOWASP_proactives_mapping){
+            System.out.println(bug.getControl() + ", " + bug.getA1() + ", " + bug.getA2() + ", " + bug.getA3() + ", " + bug.getA4() + ", " + bug.getA5() + ", " + bug.getA6() + ", "+bug.getA7() + ", "+bug.getA8() + ", "+bug.getA9() + ", "+bug.getA10());
+        }
 
         updateOWASPT10();
         updateProactives();

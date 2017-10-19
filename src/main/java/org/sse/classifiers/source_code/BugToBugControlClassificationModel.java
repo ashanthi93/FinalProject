@@ -1,6 +1,7 @@
 package org.sse.classifiers.source_code;
 
 import org.dom4j.DocumentException;
+import org.sse.settings.config.source.control.BugControlConfig;
 import org.sse.settings.config.source.mapping.MappingConfig;
 
 import java.util.*;
@@ -15,20 +16,24 @@ public class BugToBugControlClassificationModel {
 
     public void createMapping() throws DocumentException {
 
-        Map<String, String[]> OWASP_proactives_mapping;
         HashMap<String, ArrayList<String>> controlsMapping = new HashMap<String, ArrayList<String>>();
 
-        OWASP_proactives_mapping = new TreeMap<String, String[]>(MappingConfig.loadConfigFile());
+        /* Initialize the controlsMapping list */
+        HashMap<String,String> controlIdsAndNamesMap = BugControlConfig.loadControlIdsAndNames();
+
+        for (String controlId : controlIdsAndNamesMap.keySet()){
+            controlsMapping.put(controlId, new ArrayList<>());
+        }
+        
+        Map<String, String[]> OWASP_proactives_mapping = new TreeMap<String, String[]>(MappingConfig.loadConfigFile());
 
         for (String key : OWASP_proactives_mapping.keySet()){
+
             for (String proactive : OWASP_proactives_mapping.get(key)){
-                if(!controlsMapping.containsKey(proactive)){
-                    ArrayList<String> values = new ArrayList<String>();
-                    values.add(key);
-                    controlsMapping.put(proactive, values);
-                }else{
-                    controlsMapping.get(proactive).add(key);
-                }
+
+                ArrayList<String> values = controlsMapping.get(proactive);
+                values.add(key);
+                controlsMapping.put(proactive, values);
             }
         }
 

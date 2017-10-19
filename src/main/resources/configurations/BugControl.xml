@@ -8,7 +8,7 @@
         <description>
             <point>Include security while writing testing stories and tasks .</point>
             <point>Include the Proactive Controls in stubs and drivers Security testing stories should be defined such
-                that the lowest child story can be implemented and accepted in a single iteration� 3/4 testing a
+                that the lowest child story can be implemented and accepted in a single iteration 3/4 testing a
                 Proactive Control must be lightweight Consider OWASP ASVS as a guide to define security requirements and
                 testing Convert scanning output into reusable Proactive Controls to avoid entire classes of problems
             </point>
@@ -18,8 +18,8 @@
         <id>C2</id>
         <name>Parameterize Queries</name>
         <description>
-            <point>Untrusted input should be prevented from being interpreted as part of a SQL command Use � $ �Query
-                Parameterization� $ � SQL statements are sent to and parsed by the database server separately from any
+            <point>Untrusted input should be prevented from being interpreted as part of a SQL command Use  $ Query
+                Parameterization $  SQL statements are sent to and parsed by the database server separately from any
                 parameters Use defense in depth with use of technologies such as automated static analysis and proper
                 database management system configuration Configure database engines to only support parameterized
                 queries
@@ -133,7 +133,7 @@
         <id>C10</id>
         <name>Errors and exceptions handling</name>
         <description>
-            <point>It� $ � s recommended to manage exceptions in a centralized manner to avoid duplicated try/catch
+            <point>It is recommended to manage exceptions in a centralized manner to avoid duplicated try/catch
                 blocks in the code , and to ensure that all unexpected behaviors are correctly handled inside the
                 application .
             </point>

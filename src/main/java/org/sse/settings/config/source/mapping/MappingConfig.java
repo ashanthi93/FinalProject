@@ -72,20 +72,22 @@ public class MappingConfig {
         ConfigFileReader configFileReader = new ConfigFileReader();
         configFileReader.readFile(fileName);
 
-        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + mappingTag);
+        List<Node> mappingNodeList = configFileReader.getNodes("//" + parentTag + "/" + mappingTag);
 
-        for (Node node : nodeList){
+        for (Node mappingNode : mappingNodeList){
 
-            String bugId = node.valueOf(bugIdTag);
+            String bugId = mappingNode.valueOf(bugIdTag);
 
-            List<Node> controlNodes = node.selectNodes(controlsTag);
+            Node controlNode = mappingNode.selectSingleNode(controlsTag);
 
-            int size = controlNodes.size();
-            String[] controlIdValues = new String[size];
+            List<Node> controlIdNodes = controlNode.selectNodes(controlIdTag);
 
-            for (Node controlNode : controlNodes){
-                controlIdValues[size-1] = controlNode.valueOf(controlIdTag);
-                size--;
+            int index = 0;
+            String[] controlIdValues = new String[controlIdNodes.size()];
+
+            for (Node controlIdNode : controlIdNodes){
+                controlIdValues[index] = controlIdNode.getStringValue();
+                index++;
             }
 
             OWASP_mapping.put(bugId, controlIdValues);

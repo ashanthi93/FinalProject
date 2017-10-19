@@ -84,33 +84,6 @@ public class BugControlConfig {
      * @return
      * @throws DocumentException
      */
-    /*public static ArrayList<String[]> loadConfigFile() throws DocumentException {
-
-        ArrayList<String[]> OWASP_proactives_list = new ArrayList<String[]>();
-
-        ConfigFileReader configFileReader = new ConfigFileReader();
-        configFileReader.readFile(fileName);
-
-        List<Node> nodeList = configFileReader.getNodes("//" + parentTag + "/" + proactiveTag);
-
-        for (Node node : nodeList){
-
-            String[] row = new String[3];
-
-            row[0] = node.valueOf(idTag);
-            row[1] = node.valueOf(nameTag);
-
-            List<Node> pointNodes = node.selectNodes(descriptionTag);
-
-            for (Node pointNode : pointNodes){
-
-            }
-
-            OWASP_proactives_list.add(row);
-        }
-        return OWASP_proactives_list;
-    }*/
-
     public static List<BugControl> loadConfigFile() throws DocumentException {
 
         List<BugControl> bugControls = new ArrayList<BugControl>();
@@ -142,6 +115,11 @@ public class BugControlConfig {
         return bugControls;
     }
 
+    /**
+     *
+     * @return
+     * @throws DocumentException
+     */
     public static HashMap<String,String> loadControlIdsAndNames() throws DocumentException {
 
         HashMap<String,String> controlIdsAndNames = new HashMap<String, String>();

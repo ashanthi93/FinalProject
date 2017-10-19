@@ -19,8 +19,7 @@
         <description>
             <point>Data type , format , length , and range checks are enforced .</point>
             <point>All data sent from the client is validated .</point>
-            <point>No security decision is based upon parameters -LRB- e.g. URL parameters -RRB- that can be manipulated
-                .
+            <point>No security decision is based upon parameters -LRB- e.g. URL parameters -RRB- that can be manipulated.
             </point>
             <point>Input filtering via white list validation is used .</point>
             <point>Output encoding is used</point>

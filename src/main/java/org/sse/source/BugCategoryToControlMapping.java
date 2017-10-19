@@ -1,6 +1,6 @@
-package org.sse.classifiers.source_code;
+package org.sse.source;
 
-public class BugToBugControlMapping {
+public class BugCategoryToControlMapping {
 
     private String control;
     private Boolean a1;

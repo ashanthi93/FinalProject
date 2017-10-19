@@ -1,4 +1,4 @@
-package org.sse.classifiers.source_code;
+package org.sse.source;
 
 import org.dom4j.DocumentException;
 import org.sse.settings.config.source.control.BugControlConfig;
@@ -6,12 +6,12 @@ import org.sse.settings.config.source.mapping.MappingConfig;
 
 import java.util.*;
 
-public class BugToBugControlClassificationModel {
+public class BugCategoryToControlMappingHandler {
 
-    HashMap<Integer, BugToBugControlMapping> owaspProactiveMapping;
+    HashMap<Integer, BugCategoryToControlMapping> owaspProactiveMapping;
 
-    public BugToBugControlClassificationModel(){
-        owaspProactiveMapping = new HashMap<Integer, BugToBugControlMapping>();
+    public BugCategoryToControlMappingHandler(){
+        owaspProactiveMapping = new HashMap<Integer, BugCategoryToControlMapping>();
     }
 
     public void createMapping() throws DocumentException {
@@ -24,7 +24,7 @@ public class BugToBugControlClassificationModel {
         for (String controlId : controlIdsAndNamesMap.keySet()){
             controlsMapping.put(controlId, new ArrayList<>());
         }
-        
+
         Map<String, String[]> OWASP_proactives_mapping = new TreeMap<String, String[]>(MappingConfig.loadConfigFile());
 
         for (String key : OWASP_proactives_mapping.keySet()){
@@ -57,7 +57,7 @@ public class BugToBugControlClassificationModel {
 
             }
 
-            BugToBugControlMapping mappingProactive = this.createOWASPToProactiveMapping(key, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+            BugCategoryToControlMapping mappingProactive = this.createOWASPToProactiveMapping(key, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
 
             int keyId = Integer.parseInt(key.substring(1));
             owaspProactiveMapping.put(keyId, mappingProactive);
@@ -65,16 +65,16 @@ public class BugToBugControlClassificationModel {
 
     }
 
-    public HashMap<Integer, BugToBugControlMapping> getMapping() throws DocumentException {
+    public HashMap<Integer, BugCategoryToControlMapping> getMapping() throws DocumentException {
         if (owaspProactiveMapping.isEmpty()){
             this.createMapping();
         }
         return owaspProactiveMapping;
     }
 
-    private BugToBugControlMapping createOWASPToProactiveMapping(String control, Boolean a1, Boolean a2, Boolean a3, Boolean a4, Boolean a5, Boolean a6, Boolean a7, Boolean a8, Boolean a9, Boolean a10){
+    private BugCategoryToControlMapping createOWASPToProactiveMapping(String control, Boolean a1, Boolean a2, Boolean a3, Boolean a4, Boolean a5, Boolean a6, Boolean a7, Boolean a8, Boolean a9, Boolean a10){
 
-        BugToBugControlMapping mapping = new BugToBugControlMapping();
+        BugCategoryToControlMapping mapping = new BugCategoryToControlMapping();
         mapping.setControl(control);
         mapping.setA1(a1);
         mapping.setA2(a2);

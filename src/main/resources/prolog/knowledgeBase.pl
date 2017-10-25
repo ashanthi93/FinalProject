@@ -1,7 +1,6 @@
 :- [rules].
 :- [stride].
 
-
 owasp_top10(
 a1,
 name("Injection"),

@@ -97,48 +97,15 @@ public class AssociationLoader {
         //write owasp proactives to the prolog file
         List<BugControl> proactive = BugControlConfig.loadConfigFile();
         for (int i = 0; i < proactive.size(); i++) {
+            BugControl bug = proactive.get(i);
+            String bugDesc = bug.getDescription().replace("[","").replace("]","");
             //String data[] = proactive.get(i).getName();
-            String s = "owasp_top10_proactive(\n" + proactive.get(i).getId().toLowerCase() + ",\n" + "name(\"" + proactive.get(i).getName() + "\"), \n" + "\"" + proactive.get(i).getId().toLowerCase() + " description\"\n" + ").";
+            String s = "owasp_top10_proactive(\n" + bug.getId().toLowerCase() + ",\n" + "name(\"" + bug.getName() + "\"), \n" + "\"" + bugDesc +"\""+ ").";
             //System.out.println(s);
             writer.println(s);
             writer.println();
 
         }
-
-        /*writer.println();
-        writer.println();
-
-        writer.println("owasp(Bug_type):-\n" +
-                "\towasp_top10(\n" +
-                "\t\tBug_type,\n" +
-                "\t\t_,\n" +
-                "\t\tY\n" +
-                "\t),\n" +
-                "\tlength(Y,A),\n" +
-                "\ttestloop(0,A,Y).\n" +
-                "\n" +
-                "testloop(N, Length, List):- \n" +
-                "\tN<Length, \n" +
-                "\tnth0(N,List,B),\n" +
-                "\tget_proactive_description(B), nl, \n" +
-                "\tM is N+1, \n" +
-                "\ttestloop(M,Length,List).\n" +
-                "\n" +
-                "get_proactive_description(Name):-\n" +
-                "\towasp_top10_proactive(\n" +
-                "\t\tName,\n" +
-                "\t\t_,\n" +
-                "\t\tY\n" +
-                "\t\t),\n" +
-                "\twrite(Y).\n" +
-                "\n" +
-                "remove_frame(A):-\n" +
-                "\towasp_top10_proactive(\n" +
-                "\t\tA,\n" +
-                "\t\t_,\n" +
-                "\t\t_\n" +
-                "\t),\n" +
-                "\tretract(owasp_top10_proactive(A,_,_)).");*/
         writer.close();
 
 

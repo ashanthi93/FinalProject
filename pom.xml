@@ -90,11 +90,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.5.3</version>
         </dependency>
-        <!--dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.0.2</version>
-        </dependency-->
+            <artifactId>httpcore</artifactId>
+            <version>4.0.1</version>
+        </dependency>
 
     </dependencies>
 

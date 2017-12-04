@@ -4,18 +4,14 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-/**
- * Created by Ashi on 10/11/2017.
- */
 public class UmbcSemanticAssociationCallerTest {
-
 
     @Test
     public void testGetSemanticSimilarity() throws Exception {
 
-
-        //SemanticAssociationCaller sm = new UmbcSemanticAssociationCaller();
-        //sm.getSemanticSimilarity("apple","apple");
+        SemanticAssociationCaller sm = new UmbcSemanticAssociationCaller();
+        double value = sm.getSemanticSimilarity("A small violin is being played by a girl","a child is performing on a tiny instrument");
+        System.out.println(value);
     }
 
 }

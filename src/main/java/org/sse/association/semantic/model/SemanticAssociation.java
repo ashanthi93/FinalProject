@@ -29,11 +29,17 @@ public class SemanticAssociation {
         this.bugControl = bugControl;
     }
 
-    public double getsemanticSimilarity() {
+    public double getSemanticSimilarity() {
         return semanticSimilarity;
     }
 
-    public void setsemanticSimilarity(double semanticSimilarity) {
+    public void setSemanticSimilarity(double semanticSimilarity) {
         this.semanticSimilarity = semanticSimilarity;
+    }
+
+    @Override
+    public String toString() {
+        String value = threatControl.getName() + " - " + bugControl.getName() + " : " + semanticSimilarity;
+        return (value);
     }
 }

@@ -34,14 +34,12 @@ public class UmbcSemanticAssociationCaller extends SemanticAssociationCaller {
 
             String responseBody = EntityUtils.toString(getStubResponse.getEntity());
 
-            System.out.print(responseBody);
+            return (Double.parseDouble(responseBody.toString()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }

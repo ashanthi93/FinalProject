@@ -27,7 +27,7 @@ public abstract class SemanticAssociationCaller {
 
         semanticAssociation.setThreatControl(threatControl);
         semanticAssociation.setBugControl(bugControl);
-        semanticAssociation.setsemanticSimilarity(semanticSimilarity);
+        semanticAssociation.setSemanticSimilarity(semanticSimilarity);
 
         return semanticAssociation;
     }

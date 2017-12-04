@@ -10,7 +10,7 @@
             <point>Trusted server authentication is used instead of SQL authentication .</point>
             <point>Passwords are stored with salted hashes .</point>
             <point>Password resets do not reveal password hints and valid usernames .</point>
-            <point>Account lockouts do not result in a denial of service attack</point>
+            <point>Account lockouts do not result in a denial of service attack .</point>
         </description>
     </security-control>
     <security-control>
@@ -20,9 +20,7 @@
             <point>Strong ACLs are used for enforcing authorized access to resources .</point>
             <point>Role-based access control are used to restrict access to specific operations .</point>
             <point>The system follows the principle of least privilege for user and service accounts .</point>
-            <point>Privilege separation is correctly configured within the presentation , business and data access
-                layers
-            </point>
+            <point>Privilege separation is correctly configured within the presentation , business and data access layers .</point>
         </description>
     </security-control>
     <security-control>
@@ -31,11 +29,9 @@
         <description>
             <point>Standard encryption algorithms and correct key sizes are being used .</point>
             <point>Hashed message authentication codes -LRB- HMACs -RRB- are used to protect data integrity .</point>
-            <point>Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport
-                and in storage .
-            </point>
+            <point>Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport and in storage .</point>
             <point>Built-in secure storage is used for protecting keys .</point>
-            <point>No credentials and sensitive data are sent in clear text over the wire</point>
+            <point>No credentials and sensitive data are sent in clear text over the wire .</point>
         </description>
     </security-control>
     <security-control>
@@ -44,11 +40,9 @@
         <description>
             <point>Standard encryption algorithms and correct key sizes are being used .</point>
             <point>Hashed message authentication codes -LRB- HMACs -RRB- are used to protect data integrity .</point>
-            <point>Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport
-                and in storage .
-            </point>
+            <point>Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport and in storage .</point>
             <point>Built-in secure storage is used for protecting keys .</point>
-            <point>No credentials and sensitive data are sent in clear text over the wire</point>
+            <point>No credentials and sensitive data are sent in clear text over the wire .</point>
         </description>
     </security-control>
     <security-control>
@@ -57,11 +51,9 @@
         <description>
             <point>Data type , format , length , and range checks are enforced .</point>
             <point>All data sent from the client is validated .</point>
-            <point>No security decision is based upon parameters -LRB- e.g. URL parameters -RRB- that can be manipulated
-                .
-            </point>
+            <point>No security decision is based upon parameters -LRB- e.g. URL parameters -RRB- that can be manipulated .</point>
             <point>Input filtering via white list validation is used .</point>
-            <point>Output encoding is used</point>
+            <point>Output encoding is used .</point>
         </description>
     </security-control>
     <security-control>
@@ -70,7 +62,7 @@
         <description>
             <point>All exceptions are handled in a structured manner .</point>
             <point>Privileges are restored to the appropriate level in case of errors and exceptions .</point>
-            <point>Error messages are scrubbed so that no sensitive information is revealed to the attacker</point>
+            <point>Error messages are scrubbed so that no sensitive information is revealed to the attacker .</point>
         </description>
     </security-control>
     <security-control>
@@ -83,7 +75,7 @@
             <point>Sessions are resistant to replay attacks .</point>
             <point>Secure communication channels are used to protect authentication cookies .</point>
             <point>User is forced to re-authenticate when performing critical functions .</point>
-            <point>Sessions are expired at logout</point>
+            <point>Sessions are expired at logout .</point>
         </description>
     </security-control>
     <security-control>
@@ -93,11 +85,9 @@
             <point>Sensitive information -LRB- e.g. passwords , PII -RRB- is not logged .</point>
             <point>Access control -LRB- e.g. ACLs -RRB- are enforced on log files to prevent un-authorized access .
             </point>
-            <point>Integrity control -LRB- e.g. signatures -RRB- are enforced on log files to provide non-repudiation
-                .
-            </point>
+            <point>Integrity control -LRB- e.g. signatures -RRB- are enforced on log files to provide non-repudiation .</point>
             <point>Log files provide for audit trail for sensitive operations and logging of key events .</point>
-            <point>Auditing and logging is enabled across the tiers on multiple servers</point>
+            <point>Auditing and logging is enabled across the tiers on multiple servers .</point>
         </description>
     </security-control>
 </attacker-control>

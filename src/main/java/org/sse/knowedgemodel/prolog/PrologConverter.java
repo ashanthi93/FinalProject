@@ -48,7 +48,7 @@ public class PrologConverter {
     }
 
     private String getMitigations(String bug){
-        
+
         return "s";
     }
 

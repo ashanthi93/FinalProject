@@ -142,6 +142,10 @@ name("Leverage Security Frameworks and Libraries"),
 owasp_top10_proactive(
 c10,
 name("Errors and exceptions handling"), 
+<<<<<<< HEAD
+"c10 description"
+).
+=======
 "It is recommended to manage exceptions in a centralized manner to avoid duplicated try/catch
                 blocks in the code , and to ensure that all unexpected behaviors are correctly handled inside the
                 application .
@@ -151,3 +155,4 @@ name("Errors and exceptions handling"),
                 incident response teams to understand the problem .
             ").
 
+>>>>>>> 0deef10cef4c82e164d106de4d24da8cba126c52

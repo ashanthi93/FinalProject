@@ -53,7 +53,7 @@ public class SemanticAssociationsLoader {
 
                 semanticAssociation.setThreatControl(threatControl);
                 semanticAssociation.setBugControl(bugControl);
-                semanticAssociation.setsemanticSimilarity((similaritySum / count));
+                semanticAssociation.setSemanticSimilarity((similaritySum / count));
 
                 semanticAssociationList.add(semanticAssociation);
             }

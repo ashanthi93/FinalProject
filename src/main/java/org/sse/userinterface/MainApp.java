@@ -19,7 +19,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        //new AssociationLoader().callProlog();
+        new AssociationLoader().callProlog();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
 

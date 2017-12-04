@@ -2,16 +2,17 @@ package org.sse.userinterface.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.sse.source.model.BugCategory;
 
 public class HomeWindowController implements Initializable {
     
@@ -29,7 +30,19 @@ public class HomeWindowController implements Initializable {
     private void settingsSub3Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 2);
     }
-    
+
+    // Table to hold source code bugs and details
+
+    @FXML
+    private TableView<BugCategory> OWASPT10_Table;
+
+    @FXML
+    private TableColumn<BugCategory, String> t10_id;
+    @FXML
+    private TableColumn<BugCategory, String> t10_name;
+    @FXML
+    private TableColumn<BugCategory, String> t10_description;
+
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = new Stage();

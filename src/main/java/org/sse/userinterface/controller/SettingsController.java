@@ -296,201 +296,173 @@ public class SettingsController implements Initializable {
 
         owaspProMap_a1.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(TableColumn.CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA1()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA1());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA1(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a1.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a1.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            if (event.getNewValue().selectedProperty().get()) {
-                row.setA1(true);
-            } else {
-                row.setA1(false);
-            }
-        });
 
         owaspProMap_a2.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA2()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA2());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA2(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a2.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a2.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            if (event.getNewValue().selectedProperty().get()) {
-                row.setA2(true);
-            } else {
-                row.setA2(false);
-            }
-        });
 
         owaspProMap_a3.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA3()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA3());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA3(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a3.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a3.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA3(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a4.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA4()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA4());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA4(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a4.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a4.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA4(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a5.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA5()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA5());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA5(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a5.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a5.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA5(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a6.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA6()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA6());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA6(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a6.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a6.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA6(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a7.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA7()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA7());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA7(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a7.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a7.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA7(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a8.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA8()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA8());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA8(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a8.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a8.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA8(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a9.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA9()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA9());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA9(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a9.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a9.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA9(event.getNewValue().isSelected());
-        });
 
         owaspProMap_a10.setCellValueFactory(new Callback<CellDataFeatures<BugCategoryToControlMapping, CheckBox>, ObservableValue<CheckBox>>() {
 
-            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> p) {
-                BugCategoryToControlMapping obj = p.getValue();
-                CheckBox box = new CheckBox();
-                box.setAlignment(Pos.CENTER);
+            public ObservableValue<CheckBox> call(CellDataFeatures<BugCategoryToControlMapping, CheckBox> param) {
+                BugCategoryToControlMapping obj = param.getValue();
 
-                if (obj.getA10()) {
-                    box.selectedProperty().setValue(Boolean.TRUE);
-                }
-                return new SimpleObjectProperty<CheckBox>(box);
+                CheckBox checkBox = new CheckBox();
+                checkBox.selectedProperty().setValue(obj.getA10());
+                checkBox.selectedProperty().addListener((ov, old_val, new_val) -> {
+                    obj.setA10(new_val);
+                });
+
+                checkBox.setAlignment(Pos.CENTER);
+                return new SimpleObjectProperty<CheckBox>(checkBox);
             }
         });
         owaspProMap_a10.prefWidthProperty().bind(proactMap_table.widthProperty().divide(11));
-        owaspProMap_a10.setOnEditCommit(event -> {
-            BugCategoryToControlMapping row = event.getRowValue();
-            row.setA10(event.getNewValue().isSelected());
-        });
 
         proactMap_table.setItems(OWASP_proactive_MappingData);
     }
@@ -607,19 +579,22 @@ public class SettingsController implements Initializable {
 
         updatedOWASP_proactives_mapping = updatedMapping;
 
-        /*for(BugCategoryToControlMapping bug: updatedOWASP_proactives_mapping){
-            System.out.println(bug.getControl() + ", " + bug.getA1() + ", " + bug.getA2() + ", " + bug.getA3() + ", " + bug.getA4() + ", " + bug.getA5() + ", " + bug.getA6() + ", "+bug.getA7() + ", "+bug.getA8() + ", "+bug.getA9() + ", "+bug.getA10());
-        }*/
-
         if (!isT10Edited && !isProactivesEdited) {
-            for (int i = 0; i < copyOf_mapping_data.size(); i++) {
-                if (!copyOf_mapping_data.get(i).getControl().equals(updatedOWASP_proactives_mapping.get(i).getControl()) || !copyOf_mapping_data.get(i).getA1().equals(updatedOWASP_proactives_mapping.get(i).getA1()) ||
-                        !copyOf_mapping_data.get(i).getA2().equals(updatedOWASP_proactives_mapping.get(i).getA2()) || !copyOf_mapping_data.get(i).getA3().equals(updatedOWASP_proactives_mapping.get(i).getA3()) ||
-                        !copyOf_mapping_data.get(i).getA4().equals(updatedOWASP_proactives_mapping.get(i).getA4()) || !copyOf_mapping_data.get(i).getA5().equals(updatedOWASP_proactives_mapping.get(i).getA5()) ||
-                        !copyOf_mapping_data.get(i).getA6().equals(updatedOWASP_proactives_mapping.get(i).getA6()) || !copyOf_mapping_data.get(i).getA7().equals(updatedOWASP_proactives_mapping.get(i).getA7()) ||
-                        !copyOf_mapping_data.get(i).getA8().equals(updatedOWASP_proactives_mapping.get(i).getA8()) || !copyOf_mapping_data.get(i).getA9().equals(updatedOWASP_proactives_mapping.get(i).getA9()) ||
-                        !copyOf_mapping_data.get(i).getA10().equals(updatedOWASP_proactives_mapping.get(i).getA10())) {
 
+            for (int i = 0; i < copyOf_mapping_data.size(); i++) {
+
+                if (!copyOf_mapping_data.get(i).getControl().equals(updatedOWASP_proactives_mapping.get(i).getControl())
+                        || !copyOf_mapping_data.get(i).getA1().equals(updatedOWASP_proactives_mapping.get(i).getA1())
+                        || !copyOf_mapping_data.get(i).getA2().equals(updatedOWASP_proactives_mapping.get(i).getA2())
+                        || !copyOf_mapping_data.get(i).getA3().equals(updatedOWASP_proactives_mapping.get(i).getA3())
+                        || !copyOf_mapping_data.get(i).getA4().equals(updatedOWASP_proactives_mapping.get(i).getA4())
+                        || !copyOf_mapping_data.get(i).getA5().equals(updatedOWASP_proactives_mapping.get(i).getA5())
+                        || !copyOf_mapping_data.get(i).getA6().equals(updatedOWASP_proactives_mapping.get(i).getA6())
+                        || !copyOf_mapping_data.get(i).getA7().equals(updatedOWASP_proactives_mapping.get(i).getA7())
+                        || !copyOf_mapping_data.get(i).getA8().equals(updatedOWASP_proactives_mapping.get(i).getA8())
+                        || !copyOf_mapping_data.get(i).getA9().equals(updatedOWASP_proactives_mapping.get(i).getA9())
+                        || !copyOf_mapping_data.get(i).getA10().equals(updatedOWASP_proactives_mapping.get(i).getA10()
+                )) {
                     isMappingEdited = true;
                     break;
                 }

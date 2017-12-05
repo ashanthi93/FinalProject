@@ -102,4 +102,8 @@ public class BugCategoryToControlMapping {
         this.a10 = a10;
     }
 
+    public String toString(){
+        String output = (this.getControl() + ", " + this.getA1() + ", " + this.getA2() + ", " + this.getA3() + ", " + this.getA4() + ", " + this.getA5() + ", " + this.getA6() + ", "+this.getA7() + ", "+this.getA8() + ", "+this.getA9() + ", "+this.getA10());
+        return output;
+    }
 }

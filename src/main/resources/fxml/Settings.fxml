@@ -39,8 +39,8 @@
                                     </columns>
                                 </TableView>
                                 <JFXButton fx:id="proactiveNextBtn" buttonType="RAISED" layoutX="701.0" layoutY="332.0" onAction="#proactiveNextBtnAction" style="-fx-background-color: #48d1cc;" text="Next" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
-                                <JFXButton buttonType="RAISED" layoutX="14.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="+" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" />
-                                <JFXButton buttonType="RAISED" layoutX="54.0" layoutY="332.0" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="-" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" />
+                                <JFXButton fx:id="proactAddBtn" buttonType="RAISED" layoutX="14.0" layoutY="332.0" onAction="#proactAddBtnAction" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="+" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" />
+                                <JFXButton fx:id="proactDeleteBtn" buttonType="RAISED" layoutX="54.0" layoutY="332.0" onAction="#proactDeleteBtnAction" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #48d1cc;" text="-" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" />
                             </children>
                         </AnchorPane>
                     </content>

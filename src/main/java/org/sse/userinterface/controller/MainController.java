@@ -16,6 +16,8 @@ import org.sse.source.BugCategoriesLoader;
 
 public class MainController implements Initializable {
 
+    public static Scene newProjectWindow;
+
     @FXML
     private void settingsButtonAction(ActionEvent event) throws Exception {
 
@@ -47,12 +49,12 @@ public class MainController implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        newProjectWindow = new Scene(root);
+        newProjectWindow.getStylesheets().add("/styles/Styles.css");
 
         stage.setTitle(title);
         stage.setResizable(resizable);
-        stage.setScene(scene);
+        stage.setScene(newProjectWindow);
         stage.show();
     }
     

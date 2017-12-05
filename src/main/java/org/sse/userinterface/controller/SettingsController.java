@@ -5,6 +5,7 @@
  */
 package org.sse.userinterface.controller;
 
+import java.beans.beancontext.BeanContextChildComponentProxy;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -13,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,10 +39,22 @@ import org.sse.source.BugControlsLoader;
 import org.sse.source.BugCategoryToControlMappingHandler;
 import org.sse.source.BugCategoryToControlMapping;
 
+import static org.sse.userinterface.controller.NewProjectWindowController.createAlert;
+
 public class SettingsController implements Initializable {
+
+    Boolean isT10Edited = false;
+    Boolean isProactivesEdited = false;
+    Boolean isMappingEdited = false;
 
     @FXML
     private JFXButton owaspNextBtn;
+
+    @FXML
+    private JFXButton proactAddBtn;
+
+    @FXML
+    private JFXButton proactDeleteBtn;
 
     @FXML
     private JFXButton proactiveNextBtn;
@@ -79,7 +93,8 @@ public class SettingsController implements Initializable {
 
     HashMap<Integer, BugCategory> OWASP_T10_list;
     ObservableList<BugCategory> owasp_data;
-
+    ArrayList<BugCategory> copyOf_owasp_data = new ArrayList<BugCategory>();
+    
     //For OWASP Proactives table
     @FXML
     private TableView<BugControl> proactive_table;
@@ -93,7 +108,8 @@ public class SettingsController implements Initializable {
 
     HashMap<Integer, BugControl> proactives_list;
     ObservableList<BugControl> proactive_data;
-
+    ArrayList<BugControl> copyOf_proactive_data = new ArrayList<BugControl>();
+    
     //For OWASP_proactives mapping table
     @FXML
     private TableView<BugCategoryToControlMapping> proactMap_table;
@@ -123,6 +139,7 @@ public class SettingsController implements Initializable {
 
     HashMap<Integer, BugCategoryToControlMapping> OWASP_proactives_mapping;
     ObservableList<BugCategoryToControlMapping> OWASP_proactive_MappingData;
+    ArrayList<BugCategoryToControlMapping> copyOf_mapping_data = new ArrayList<BugCategoryToControlMapping>();
     BugCategoryToControlMappingHandler owaspMappingModel = new BugCategoryToControlMappingHandler();
 
     public SettingsController() throws DocumentException, ParserConfigurationException, SAXException, IOException {
@@ -132,15 +149,39 @@ public class SettingsController implements Initializable {
         TreeMap<Integer, BugCategory> owaspTreeMap = new TreeMap<Integer, BugCategory>(OWASP_T10_list);
         owasp_data = FXCollections.observableArrayList(owaspTreeMap.values());
 
+        for(BugCategory obj : owasp_data){
+            BugCategory copy = new BugCategory();
+            copy.setId(obj.getId());
+            copy.setName(obj.getName());
+            copy.setDescription(obj.getDescription());
+            copyOf_owasp_data.add(copy);
+        }
+        
         //for OWASP proactives table
         proactives_list = BugControlsLoader.getBugControlsWithDescription();
         TreeMap<Integer, BugControl> proactivesTreeMap = new TreeMap<Integer, BugControl>(proactives_list);
         proactive_data = FXCollections.observableArrayList(proactivesTreeMap.values());
 
+        for(BugControl obj : proactive_data){
+            BugControl copy = new BugControl();
+            copy.setId(obj.getId());
+            copy.setName(obj.getName());
+            copy.setDescription(obj.getDescription());
+            copyOf_proactive_data.add(copy);
+        }
+
         //for OWASP_proactives mapping table 
         OWASP_proactives_mapping = owaspMappingModel.getMapping();
         TreeMap<Integer, BugCategoryToControlMapping> proactiveMappingTreeMap = new TreeMap<Integer, BugCategoryToControlMapping>(OWASP_proactives_mapping);
         OWASP_proactive_MappingData = FXCollections.observableArrayList(proactiveMappingTreeMap.values());
+
+        for(BugCategoryToControlMapping obj : OWASP_proactive_MappingData){
+            BugCategoryToControlMapping copy = new BugCategoryToControlMapping();
+            copy.setControl(obj.getControl());
+            copy.setA1(obj.getA1()); copy.setA2(obj.getA2()); copy.setA3(obj.getA3()); copy.setA4(obj.getA4()); copy.setA5(obj.getA5());
+            copy.setA6(obj.getA6()); copy.setA7(obj.getA7()); copy.setA8(obj.getA8()); copy.setA9(obj.getA9()); copy.setA10(obj.getA10());
+            copyOf_mapping_data.add(copy);
+        }
     }
 
     /**
@@ -196,6 +237,7 @@ public class SettingsController implements Initializable {
 
     private void setOWASPProactivesTableProperties() {
         proact_id.setCellValueFactory(new PropertyValueFactory<BugControl, String>("id"));
+        proact_id.setCellFactory(TextFieldTableCell.<BugControl>forTableColumn());
         proact_id.prefWidthProperty().bind(OWASPT10_Table.widthProperty().divide(9));
         proact_id.setOnEditCommit(event -> {
             BugControl row = event.getRowValue();
@@ -433,39 +475,103 @@ public class SettingsController implements Initializable {
 
     @FXML
     private void owaspNextBtnAction(ActionEvent event) throws Exception {
+
         updatedOWASP_T10_list = new ArrayList<BugCategory>();
 
         ObservableList<BugCategory> updatedOWASP_T10 = OWASPT10_Table.getItems();
 
         updatedOWASP_T10_list = updatedOWASP_T10;
 
+        //updatedOWASP_T10.sorted();
+        for(int i=0; i<copyOf_owasp_data.size(); i++){
+            if(!copyOf_owasp_data.get(i).getName().equals(updatedOWASP_T10_list.get(i).getName()) || !copyOf_owasp_data.get(i).getDescription().equals(updatedOWASP_T10_list.get(i).getDescription())){
+                isT10Edited = true;
+                break;
+            }
+        }
+
+        for (BugCategory obj: updatedOWASP_T10_list) {
+            if(obj.getId().equals("") || obj.getName().equals("") || obj.getDescription().equals("")){
+                Alert alert = createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please enter all the details in every row!");
+                alert.showAndWait();
+                return;
+            }
+        }
+
         SingleSelectionModel<Tab> selectionModel = settingsTabPane.getSelectionModel();
         selectionModel.select(1);
     }
 
     @FXML
+    private void proactAddBtnAction(ActionEvent event) throws Exception {
+        BugControl newRow = new BugControl();
+        newRow.setId("");
+        newRow.setName("");
+        newRow.setDescription("");
+        proactive_table.getItems().add(newRow);
+    }
+
+    @FXML
+    private void proactDeleteBtnAction(ActionEvent event) throws Exception {
+        proactive_table.getItems().removeAll(proactive_table.getSelectionModel().getSelectedItems());
+    }
+
+    @FXML
     private void proactiveNextBtnAction(ActionEvent event) throws Exception {
+
         updatedProactives_list = new ArrayList<BugControl>();
 
         ObservableList<BugControl> updatedProactives = proactive_table.getItems();
 
         updatedProactives_list = updatedProactives;
+        //updatedProactives_list.sort(Comparator.comparing(BugControl::getId));
+
+        int updatedSize = updatedProactives_list.size();
+        int previousSize = copyOf_proactive_data.size();
+        if(updatedSize == previousSize){
+            for(int i=0; i<updatedSize; i++){
+                if(!copyOf_proactive_data.get(i).getName().equals(updatedProactives_list.get(i).getName()) || !copyOf_proactive_data.get(i).getDescription().equals(updatedProactives_list.get(i).getDescription())){
+                    isProactivesEdited = true;
+                    break;
+                }
+            }
+        }else{
+            isProactivesEdited = true;
+            for (BugControl obj: updatedProactives_list) {
+                if(obj.getId().equals("") || obj.getName().equals("") || obj.getDescription().equals("")){
+                    Alert alert = createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please enter all the details in every row!");
+                    alert.showAndWait();
+                    return;
+                }
+            }
+        }
 
         SingleSelectionModel<Tab> selectionModel = settingsTabPane.getSelectionModel();
         selectionModel.select(2);
+
+        if(isT10Edited || isProactivesEdited){
+            proactMap_table.getItems().removeAll(OWASP_proactive_MappingData);
+            for(int i=0; i<updatedSize; i++){
+                BugCategoryToControlMapping newRow = new BugCategoryToControlMapping();
+                newRow.setControl(updatedProactives_list.get(i).getId());
+                newRow.setA1(false);newRow.setA2(false);newRow.setA3(false);newRow.setA4(false);newRow.setA5(false);newRow.setA6(false);newRow.setA7(false);newRow.setA8(false);newRow.setA9(false);newRow.setA10(false);
+                proactMap_table.getItems().add(newRow);
+            }
+        }
     }
 
     @FXML
     private void btnSaveAction(ActionEvent event) throws Exception {
+
         updatedOWASP_proactives_mapping = new ArrayList<BugCategoryToControlMapping>();
 
         ObservableList<BugCategoryToControlMapping> updatedMapping = proactMap_table.getItems();
 
         updatedOWASP_proactives_mapping = updatedMapping;
 
-        for (BugCategoryToControlMapping bug : updatedOWASP_proactives_mapping) {
-            System.out.println(bug.getControl() + ", " + bug.getA1() + ", " + bug.getA2() + ", " + bug.getA3() + ", " + bug.getA4() + ", " + bug.getA5() + ", " + bug.getA6() + ", " + bug.getA7() + ", " + bug.getA8() + ", " + bug.getA9() + ", " + bug.getA10());
-        }
+        /*for(BugCategoryToControlMapping bug: updatedOWASP_proactives_mapping){
+            System.out.println(bug.getControl() + ", " + bug.getA1() + ", " + bug.getA2() + ", " + bug.getA3() + ", " + bug.getA4() + ", " + bug.getA5() + ", " + bug.getA6() + ", "+bug.getA7() + ", "+bug.getA8() + ", "+bug.getA9() + ", "+bug.getA10());
+        }*/
 
         updateOWASPT10();
         updateProactives();

@@ -123,4 +123,13 @@ public class BugModelConfig {
         return bugIdsAndNames;
     }
 
+    public static String getVersionTag() throws DocumentException {
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        String versionName = configFileReader.getNode("//" + parentTag).valueOf(versionTag);
+
+        return versionName;
+    }
 }

@@ -41,6 +41,11 @@ public class BugCategoriesLoader {
         return bugCategoryWithDescriptionHashMap;
     }
 
+    public static String getVersionName() throws DocumentException {
+
+        return (BugModelConfig.getVersionTag());
+    }
+
     /**
      *
      * @throws ParserConfigurationException

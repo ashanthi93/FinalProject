@@ -9,8 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.sse.source.BugCategoriesLoader;
 
 public class MainController implements Initializable {
 

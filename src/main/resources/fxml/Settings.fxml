@@ -75,7 +75,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="371.0" prefWidth="780.0" style="-fx-background-color: #3D4956;">
                             <children>
-                                <TableView fx:id="proactMap_table" layoutX="57.0" layoutY="45.0" prefHeight="283.0" prefWidth="746.0" style="-fx-background-color: #3D4956;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="45.0">
+                                <TableView id="proactMap_table" fx:id="proactMap_table" layoutX="57.0" layoutY="45.0" prefHeight="283.0" prefWidth="746.0" style="-fx-background-color: #3D4956;" AnchorPane.bottomAnchor="43.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="45.0">
                                     <columns>
                                         <TableColumn fx:id="proact" prefWidth="100.0" style="-fx-alignment: CENTER; -fx-font-weight: bold" />
                                         <TableColumn fx:id="owaspProMap_a1" prefWidth="65.0" style="-fx-alignment: CENTER;" text="A1" />

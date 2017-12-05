@@ -15,6 +15,7 @@ public class BugModelConfigTest {
     @BeforeTest
     public void testCreateConfigFile() throws Exception {
 
+        /*
         ArrayList<String[]> bugCategories = new ArrayList<String[]>();
 
         String[] bugCategory = {"A1", "Injection", "Injection flaws, such as SQL, OS, and LDAP injection occur when untrusted data is sent to an\n" +
@@ -82,7 +83,7 @@ public class BugModelConfigTest {
 
         bugCategories.add(bugCategory);
 
-        BugModelConfig.createConfigFile(bugCategories,"owasp-top10","2013");
+        BugModelConfig.createConfigFile(bugCategories,"owasp-top10","2013");\*/
     }
 
     @Test

@@ -18,6 +18,7 @@ public class BugControlConfigTest {
     @BeforeTest
     public void testCreateConfigFile() throws Exception {
 
+        /*
         ArrayList<String[]> bugControls = new ArrayList<String[]>();
 
         String[] control = {"C1", "Verify for Security Early and Often", "Include security while writing testing stories and tasks. Include the Proactive Controls in stubs and drivers\n" +
@@ -92,7 +93,7 @@ public class BugControlConfigTest {
         bugControls.add(control);
 
 
-        BugControlConfig.createConfigFile(bugControls,"OWASP-Proactives","2013");
+        BugControlConfig.createConfigFile(bugControls,"OWASP-Proactives","2013");*/
     }
 
     @Test

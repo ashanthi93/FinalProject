@@ -6,7 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,6 +29,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import org.sse.source.model.BugCollection;
+import org.sse.userinterface.MainApp;
 import org.sse.userinterface.controller.NewProjectWindowController;
 
 public class BugInputWindowController implements Initializable {
@@ -67,21 +71,26 @@ public class BugInputWindowController implements Initializable {
             }else if(bugObj.getName() != null && (bugObj.getCategoryName() == null || bugObj.getDescription() == null)){
                 Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
                 alert.showAndWait();
-                if(!updetedList.contains(bugObj)){
+                return;
+                /*if(!updetedList.contains(bugObj)){
                     updetedList.add(bugObj);
-                }
+                }*/
             }else if(bugObj.getCategoryName() != null && (bugObj.getName() == null || bugObj.getDescription() == null)){
                 Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
                 alert.showAndWait();
-                if(!updetedList.contains(bugObj)){
+                return;
+                /*if(!updetedList.contains(bugObj)){
                     updetedList.add(bugObj);
-                }
+                }*/
             }else if(bugObj.getDescription() != null && (bugObj.getName() == null || bugObj.getCategoryName() == null)){
                 Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
                 alert.showAndWait();
-                if(!updetedList.contains(bugObj)){
+                return;
+                /*if(!updetedList.contains(bugObj)){
                     updetedList.add(bugObj);
-                }
+                }*/
+            }else{
+                updetedList.add(bugObj);
             }
         }
 
@@ -93,6 +102,23 @@ public class BugInputWindowController implements Initializable {
         }else{
             BugCollection collectedBugs = new BugCollection();
             collectedBugs.setBugList(updetedList);
+
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
+
+            stage.setTitle("Home Window");
+            stage.setResizable(true);
+            stage.setScene(scene);
+            stage.show();
+
+            Stage stage2 = (Stage) addBtn.getScene().getWindow();
+            stage2.close();
+            Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
+            stageMain.close();
+            Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
+            stageMainWelcome.close();
         }
 
     }

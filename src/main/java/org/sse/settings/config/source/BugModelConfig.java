@@ -33,7 +33,7 @@ public class BugModelConfig {
      * @param versionValue
      * @throws IOException
      */
-    public static void createConfigFile(ArrayList<String[]> bugCategories, String categoryModelName, String versionValue) throws IOException {
+    public static void createConfigFile(List<BugCategory> bugCategories, String categoryModelName, String versionValue) throws IOException {
 
         ConfigFileCreator configFileCreator = new ConfigFileCreator();
         configFileCreator.createFile();
@@ -47,14 +47,14 @@ public class BugModelConfig {
         configFileCreator.addToRoot(versionElement);
 
         /* create type tags */
-        for (String[] OWASPType : bugCategories) {
+        for (BugCategory OWASPType : bugCategories) {
 
             /* create type tag */
             Element typeElement = configFileCreator.createChildElement(bugCategoryTag);
 
-            Element type_idElement = configFileCreator.createChildElement(idTag, OWASPType[0]);
-            Element type_nameElement = configFileCreator.createChildElement(nameTag, OWASPType[1]);
-            Element type_descriptionElement = configFileCreator.createChildElement(descriptionTag, OWASPType[2]);
+            Element type_idElement = configFileCreator.createChildElement(idTag, OWASPType.getId());
+            Element type_nameElement = configFileCreator.createChildElement(nameTag, OWASPType.getName());
+            Element type_descriptionElement = configFileCreator.createChildElement(descriptionTag, OWASPType.getDescription());
 
             typeElement.add(type_idElement);
             typeElement.add(type_nameElement);
@@ -123,4 +123,13 @@ public class BugModelConfig {
         return bugIdsAndNames;
     }
 
+    public static String getVersionTag() throws DocumentException {
+
+        ConfigFileReader configFileReader = new ConfigFileReader();
+        configFileReader.readFile(fileName);
+
+        String versionName = configFileReader.getNode("//" + parentTag).valueOf(versionTag);
+
+        return versionName;
+    }
 }

@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class KbBuilder {
-    public void kbWriter() throws DocumentException, IOException, ParserConfigurationException, SAXException {
+
+    public static void write() throws DocumentException, IOException, ParserConfigurationException, SAXException {
 
         PrintWriter writer = new PrintWriter("src/main/resources/prolog/knowledgeBase.pl");
         writer.print(""); // clear the existing file.
@@ -59,8 +60,6 @@ public class KbBuilder {
         //write owasp top 10 to the prolog file
         List<BugCategory> owasp = BugModelConfig.loadConfigFile();
         HashMap<String, String[]> owaspMapping = MappingConfig.loadConfigFile();
-
-
 
         for (int i = 0; i < owasp.size(); i++) {
             //String[] data = owasp.get(i);

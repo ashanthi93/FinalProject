@@ -1,4 +1,5 @@
 
+
 owasp(X,Bug_type):-
 	owasp_top10(
 		Bug_type,

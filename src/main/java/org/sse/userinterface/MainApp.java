@@ -20,9 +20,9 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        new PrologConverter().getPreventionTechniques("spoofing");
 
-        new KbBuilder().kbWriter();
-        new PrologConverter().getMitigationTechniques("a1");
+        //KbBuilder.write();
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/MainScene.fxml"));
 

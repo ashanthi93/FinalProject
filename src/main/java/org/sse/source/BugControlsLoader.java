@@ -9,10 +9,14 @@ import java.util.List;
 
 public class BugControlsLoader {
 
-    HashMap<Integer, BugControl> bugControlsWithDescriptionHashMap;
+    private static HashMap<Integer, BugControl> bugControlsWithDescriptionHashMap;
 
-    public BugControlsLoader(){
-        bugControlsWithDescriptionHashMap = new HashMap<Integer, BugControl>();
+    static {
+        bugControlsWithDescriptionHashMap = new HashMap<>();
+    }
+
+    private BugControlsLoader(){
+
     }
 
     /**
@@ -20,19 +24,24 @@ public class BugControlsLoader {
      * @return
      * @throws DocumentException
      */
-    public HashMap<Integer, BugControl> getBugControlsWithDescription() throws DocumentException {
+    public static HashMap<Integer, BugControl> getBugControlsWithDescription() throws DocumentException {
 
         if (bugControlsWithDescriptionHashMap.isEmpty()){
-            this.createBugControlsWithDescription();
+            createBugControlsWithDescription();
         }
         return bugControlsWithDescriptionHashMap;
+    }
+
+    public static String getVersionName() throws DocumentException {
+
+        return (BugControlConfig.getVersionTag());
     }
 
     /**
      *
      * @throws DocumentException
      */
-    private void createBugControlsWithDescription() throws DocumentException {
+    private static void createBugControlsWithDescription() throws DocumentException {
 
         List<BugControl> bugControlList = BugControlConfig.loadConfigFile();
 

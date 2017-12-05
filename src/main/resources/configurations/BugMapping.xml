@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<<<<<<< HEAD
-<bug-controls-for-bug><mapping><bug-id>A1</bug-id><controls/></mapping><mapping><bug-id>A10</bug-id><controls/></mapping><mapping><bug-id>A2</bug-id><controls/></mapping><mapping><bug-id>A3</bug-id><controls/></mapping><mapping><bug-id>A4</bug-id><controls/></mapping><mapping><bug-id>A5</bug-id><controls/></mapping><mapping><bug-id>A6</bug-id><controls/></mapping><mapping><bug-id>A7</bug-id><controls/></mapping><mapping><bug-id>A8</bug-id><controls/></mapping><mapping><bug-id>A9</bug-id><controls/></mapping></bug-controls-for-bug>
-=======
 <bug-controls-for-bug>
     <mapping>
         <bug-id>A1</bug-id>
@@ -65,4 +62,3 @@
         </controls>
     </mapping>
 </bug-controls-for-bug>
->>>>>>> a2ad2339450e7555d73e8a7df0e4b26ab304b1be

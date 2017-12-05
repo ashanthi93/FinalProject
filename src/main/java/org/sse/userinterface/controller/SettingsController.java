@@ -556,11 +556,34 @@ public class SettingsController implements Initializable {
         /*for(BugCategoryToControlMapping bug: updatedOWASP_proactives_mapping){
             System.out.println(bug.getControl() + ", " + bug.getA1() + ", " + bug.getA2() + ", " + bug.getA3() + ", " + bug.getA4() + ", " + bug.getA5() + ", " + bug.getA6() + ", "+bug.getA7() + ", "+bug.getA8() + ", "+bug.getA9() + ", "+bug.getA10());
         }*/
-        
 
-        updateOWASPT10();
-        updateProactives();
-        updateOWASP_proactives_mapping();
+        if(!isT10Edited && !isProactivesEdited){
+            for(int i=0; i<copyOf_mapping_data.size(); i++){
+                if(!copyOf_mapping_data.get(i).getControl().equals(updatedOWASP_proactives_mapping.get(i).getControl()) || !copyOf_mapping_data.get(i).getA1().equals(updatedOWASP_proactives_mapping.get(i).getA1()) ||
+                        !copyOf_mapping_data.get(i).getA2().equals(updatedOWASP_proactives_mapping.get(i).getA2()) || !copyOf_mapping_data.get(i).getA3().equals(updatedOWASP_proactives_mapping.get(i).getA3()) ||
+                        !copyOf_mapping_data.get(i).getA4().equals(updatedOWASP_proactives_mapping.get(i).getA4()) || !copyOf_mapping_data.get(i).getA5().equals(updatedOWASP_proactives_mapping.get(i).getA5()) ||
+                        !copyOf_mapping_data.get(i).getA6().equals(updatedOWASP_proactives_mapping.get(i).getA6()) || !copyOf_mapping_data.get(i).getA7().equals(updatedOWASP_proactives_mapping.get(i).getA7()) ||
+                        !copyOf_mapping_data.get(i).getA8().equals(updatedOWASP_proactives_mapping.get(i).getA8()) || !copyOf_mapping_data.get(i).getA9().equals(updatedOWASP_proactives_mapping.get(i).getA9()) ||
+                        !copyOf_mapping_data.get(i).getA10().equals(updatedOWASP_proactives_mapping.get(i).getA10())){
+
+                    isMappingEdited = true;
+                    break;
+                }
+            }
+        }else{
+            isMappingEdited = true;
+        }
+
+        if(isT10Edited){
+            updateOWASPT10();
+        }
+        if(isProactivesEdited){
+            updateProactives();
+        }
+        if(isMappingEdited){
+            updateOWASP_proactives_mapping();
+        }
+
     }
 
     private void updateOWASPT10(){

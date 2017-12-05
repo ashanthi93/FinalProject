@@ -35,7 +35,7 @@ public class BugControlConfig {
      * @param versionValue
      * @throws IOException
      */
-    public static void createConfigFile(ArrayList<String[]> bugControls, String modelNameValue, String versionValue) throws IOException {
+    public static void createConfigFile(List<BugControl> bugControls, String modelNameValue, String versionValue) throws IOException {
 
         ConfigFileCreator configFileCreator = new ConfigFileCreator();
         configFileCreator.createFile();
@@ -49,17 +49,17 @@ public class BugControlConfig {
         configFileCreator.addToRoot(versionNameElement);
 
         /* create proactive tags */
-        for (String[] OWASPProactive : bugControls) {
+        for (BugControl OWASPProactive : bugControls) {
 
             /* create proactive tag */
             Element proactiveElement = configFileCreator.createChildElement(proactiveTag);
 
-            Element proactive_idElement = configFileCreator.createChildElement(idTag, OWASPProactive[0]);
-            Element proactive_nameElement = configFileCreator.createChildElement(nameTag, OWASPProactive[1]);
+            Element proactive_idElement = configFileCreator.createChildElement(idTag, OWASPProactive.getId());
+            Element proactive_nameElement = configFileCreator.createChildElement(nameTag, OWASPProactive.getName());
 
             Element proactive_descriptionElement = configFileCreator.createChildElement(descriptionTag);
 
-            List<String> sentences = DescriptionProcessor.getSentences(OWASPProactive[2]);
+            List<String> sentences = DescriptionProcessor.getSentences(OWASPProactive.getDescription());
 
             for (String sentence : sentences){
 

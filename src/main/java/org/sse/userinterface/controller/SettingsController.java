@@ -30,7 +30,10 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Text;
+import org.sse.knowedgemodel.prolog.KbBuilder;
 import org.sse.settings.config.source.BugModelConfig;
+import org.sse.settings.config.source.control.BugControlConfig;
+import org.sse.settings.config.source.mapping.MappingConfig;
 import org.xml.sax.SAXException;
 import org.sse.source.model.BugCategory;
 import org.sse.source.BugCategoriesLoader;
@@ -576,19 +579,83 @@ public class SettingsController implements Initializable {
         updateOWASPT10();
         updateProactives();
         updateOWASP_proactives_mapping();
+
+        if (isT10Edited || isProactivesEdited || isMappingEdited){
+            KbBuilder.write();
+        }
     }
 
-    private void updateOWASPT10() {
-
-
+    private void updateOWASPT10() throws IOException {
+        BugModelConfig.createConfigFile(updatedOWASP_T10_list,"OWASP-Top-10", owaspTop10Version.getText());
     }
 
-    private void updateProactives() {
-
+    private void updateProactives() throws IOException {
+        BugControlConfig.createConfigFile(updatedProactives_list,"OWASP-Proactives", proactiveVersion.getText());
     }
 
-    private void updateOWASP_proactives_mapping() {
+    private void updateOWASP_proactives_mapping() throws IOException {
 
+        HashMap<String, List<String>> mappingHashMap = new HashMap<>();
+
+        for (BugCategory OWASPCategory : updatedOWASP_T10_list){
+            mappingHashMap.put(OWASPCategory.getId(), new ArrayList<>());
+        }
+
+        for (BugCategoryToControlMapping bugCategoryToControlMapping : updatedOWASP_proactives_mapping){
+
+            String controlId = bugCategoryToControlMapping.getControl();
+
+            if (bugCategoryToControlMapping.getA1()){
+                List<String> controlIds = mappingHashMap.get("A1");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA2()){
+                List<String> controlIds = mappingHashMap.get("A2");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA3()){
+                List<String> controlIds = mappingHashMap.get("A3");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA4()){
+                List<String> controlIds = mappingHashMap.get("A4");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA5()){
+                List<String> controlIds = mappingHashMap.get("A5");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA6()){
+                List<String> controlIds = mappingHashMap.get("A6");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA7()){
+                List<String> controlIds = mappingHashMap.get("A7");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA8()){
+                List<String> controlIds = mappingHashMap.get("A8");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA9()){
+                List<String> controlIds = mappingHashMap.get("A9");
+                controlIds.add(controlId);
+            }
+
+            if (bugCategoryToControlMapping.getA10()){
+                List<String> controlIds = mappingHashMap.get("A10");
+                controlIds.add(controlId);
+            }
+        }
+
+        MappingConfig.createFile(mappingHashMap);
     }
-
 }

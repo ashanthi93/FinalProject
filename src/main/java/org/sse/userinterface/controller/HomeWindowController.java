@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.sse.design.model.ThreatCategory;
 import org.sse.source.model.BugCategory;
 
 public class HomeWindowController implements Initializable {
@@ -42,6 +43,19 @@ public class HomeWindowController implements Initializable {
     private TableColumn<BugCategory, String> t10_name;
     @FXML
     private TableColumn<BugCategory, String> t10_description;
+
+    // create design table
+    @FXML
+    private TableView<ThreatCategory> designTable;
+
+    @FXML
+    private TableColumn<ThreatCategory, String> designThreatColumn;
+    @FXML
+    private TableColumn<ThreatCategory, String> designCategoryColumn;
+    @FXML
+    private TableColumn<ThreatCategory, String> designMitigationColumn;
+
+
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));

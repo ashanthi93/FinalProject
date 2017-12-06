@@ -4,13 +4,16 @@ import org.jpl7.Query;
 import org.jpl7.Term;
 import org.sse.source.model.BugControl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class PrologConverter {
 
-    String s1 = String.format("consult('src/main/resources/prolog/new/knowledgeBase.pl').");
+    String s1 = String.format("consult('src/main/resources/prolog/knowledgeBase.pl').");
     Query q1 = new Query(s1);
-    
+
 
     public void prologCaller(String x) {
 
@@ -47,40 +50,50 @@ public class PrologConverter {
         }*/
     }
 
-    public String getPreventionTechniques(String threat){
+    public List<String> getMitigationTechniques(String threat){
 
         System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
-        String rule = "get_prevention_techniques(X,'" + threat + "').";
+        String rule = "get_mitigation_techniques(X,'" + threat + "').";
         Query q = new Query(rule);
         System.out.println(q);
         q.open();
         String solution = "";
         while (q.hasMoreSolutions()){
             String sol = q.nextSolution().toString();
-            sol=sol.replace("{X='","").replace("'}","");
+            sol=sol.replace("{X='","").replace("'}","").replace("\n", "");
             solution = solution +" "+ sol;
         }
-        System.out.println(solution);
-        return " ";
+        List<String> mitigations = Arrays.asList(solution.split("[.]"));
+
+        for (String x : mitigations) {
+            System.out.println(x);
+        }
+
+        return mitigations;
     }
 
-    public String getMitigationTechniques(String bug) {
+    public List<String> getPreventionTechniques(String bug) {
 
         System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
-        String rule = "get_mitigation_techniques(X,'" + bug + "').";
+        String rule = "get_prevention_techniques(X,'" + bug + "').";
         Query q = new Query(rule);
         System.out.println(q);
         q.open();
         String solution = "";
-        System.out.println(q.getSolution().toString());
         while (q.hasMoreSolutions()){
             String sol = q.nextSolution().toString();
-            sol=sol.replace("{X='","").replace("'}","");
+            sol=sol.replace("{X='","").replace("'}","").replace("\n", "");
             solution = solution +" "+ sol;
         }
-        System.out.println(solution);
-        return " ";
+        List<String> preventions = Arrays.asList(solution.split("[.]"));
+
+        for (String x : preventions) {
+            System.out.println(x);
+        }
+        return preventions;
 
     }
+
+
 
 }

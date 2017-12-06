@@ -2,6 +2,7 @@ package org.sse.design;
 
 import org.dom4j.DocumentException;
 import org.sse.design.model.ThreatCategory;
+import org.sse.knowedgemodel.prolog.PrologConverter;
 import org.sse.reportparser.ReportParserFactory;
 import org.sse.reportparser.design.ThreatReportParser;
 import org.sse.design.model.Threat;
@@ -18,6 +19,7 @@ import java.util.List;
 
 public class ThreatExtractor {
 
+    PrologConverter prologConverter = new PrologConverter();
     private static ThreatExtractor instance;
     private ThreatReportParser threatReportParser;
     private ThreatModel threatModel;
@@ -109,11 +111,18 @@ public class ThreatExtractor {
 
                 String defaultThreatCategoryName = threatCategory.getName();
 
+
                 if (defaultThreatCategoryName.equals(threat.getThreatCategoryName())) {
 
                     List<Threat> threatListForCategory = threatCategory.getThreatList();
                     threatListForCategory.add(threat);
                     threatCategory.setThreatList(threatListForCategory);
+                    System.out.println(defaultThreatCategoryName.toLowerCase());
+
+                    // add mitigation techniques to threat object
+                    String category = defaultThreatCategoryName.toLowerCase().replace(" ", "_");
+                    List<String> mitigations = prologConverter.getMitigationTechniques(category);
+                    threatCategory.setMitigationList(mitigations);
 
                     threatCategoryHashMap.put(defaultThreatCategoryId, threatCategory);
 
@@ -128,12 +137,16 @@ public class ThreatExtractor {
         }
 
         ThreatCategoriesLoader.setThreatCategoryHashMap(threatCategoryHashMap);
+        this.generateThreatReport();
     }
 
     /**
      *
      */
-    public void generateThreatReport() {
+    public void generateThreatReport() throws DocumentException {
+
+        HashMap<String, ThreatCategory> threats =ThreatCategoriesLoader.getThreatCategoryHashMap();
+        System.out.println("Spoofing".toLowerCase());
 
     }
 }

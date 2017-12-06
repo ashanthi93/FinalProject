@@ -20,7 +20,7 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        new PrologConverter().getPreventionTechniques("spoofing");
+        new PrologConverter().getPreventionTechniques("a1");
 
         //KbBuilder.write();
 

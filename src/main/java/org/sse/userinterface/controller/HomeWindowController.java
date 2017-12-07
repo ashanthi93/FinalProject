@@ -146,8 +146,9 @@ public class HomeWindowController implements Initializable {
         }
     }
 
-    public HomeWindowController() {
+    public HomeWindowController() throws DocumentException {
 
+        threatLoader();
         try {
             initializeDesignTab();
 
@@ -162,6 +163,9 @@ public class HomeWindowController implements Initializable {
      */
     private void initializeDesignTab() throws DocumentException {
 
+    }
+
+    private void threatLoader () throws DocumentException {
         threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
         int id = 0;
@@ -201,7 +205,6 @@ public class HomeWindowController implements Initializable {
         }
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
-
     /**
      *
      */
@@ -227,6 +230,8 @@ public class HomeWindowController implements Initializable {
             boolean returned = fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
             if(returned){
                 homeTabPane.getSelectionModel().select(1);
+                threatLoader();
+                setThreatProperties();
             }
         }else {
             homeTabPane.getSelectionModel().select(2);

@@ -1,57 +1,43 @@
 package org.sse.userinterface.controller;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.jfoenix.controls.JFXButton;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+
 import org.sse.design.model.ThreatCategory;
+import org.sse.outputgenerators.FileFormat;
+import org.sse.outputgenerators.ReportType;
 import org.sse.outputgenerators.report.builder.concrete.JSONReportBuilder;
 import org.sse.outputgenerators.report.builder.concrete.XMLReportBuilder;
+import org.sse.outputgenerators.report.creator.AssociationReportCreator;
 import org.sse.outputgenerators.report.creator.BugCategoryReportCreator;
 import org.sse.outputgenerators.report.creator.ThreatCategoryReportCreator;
+import org.sse.outputgenerators.report.model.AssociationReport;
 import org.sse.outputgenerators.report.model.BugReport;
 import org.sse.outputgenerators.report.model.ThreatReport;
 import org.sse.source.model.BugCategory;
 
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
 public class HomeWindowController implements Initializable {
 
-    @FXML
-    private void settingsSub1Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 0);
-    }
-
-    @FXML
-    private void settingsSub2Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 1);
-    }
-
-    @FXML
-    private void settingsSub3Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 2);
-    }
-
     // Table to hold source code bugs and details
-
     @FXML
     private TableView<BugCategory> OWASPT10_Table;
 
@@ -72,6 +58,9 @@ public class HomeWindowController implements Initializable {
     private TableColumn<ThreatCategory, String> designCategoryColumn;
     @FXML
     private TableColumn<ThreatCategory, String> designMitigationColumn;
+
+    @FXML
+    private TabPane homeTabPane;
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
@@ -94,45 +83,192 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void sourceSaveBtnAction(ActionEvent event) throws Exception {
+    private void settingsSub1Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 0);
+    }
 
-        Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+    @FXML
+    private void settingsSub2Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 1);
+    }
 
-        BugReport bugReport = this.convertToBugReport();
-        String outputXMLFile = this.convertToXML(bugReport);
+    @FXML
+    private void settingsSub3Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 2);
+    }
 
-        boolean isSaveSucceed = this.fileSaveAction(currentStage, outputXMLFile);
+    @FXML
+    private void designSaveBtnAction(ActionEvent event) {
 
-        if (isSaveSucceed) {
-            //success window
-        } else {
-            //error
+        try {
+            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+            this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.CNX);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
-    private void designSaveBtnAction(ActionEvent event) throws Exception {
+    private void sourceSaveBtnAction(ActionEvent event) throws Exception {
 
-        Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+        try {
+            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+            this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.CNX);
 
-        ThreatReport threatReport = this.convertToThreatReport();
-        String outputXMLFile = this.convertToXML(threatReport);
-
-        boolean isSaveSucceed = this.fileSaveAction(currentStage, outputXMLFile);
-
-        if (isSaveSucceed) {
-            //success window
-        } else {
-            //error
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private boolean fileSaveAction(Window currentStage, String outputXMLFile) {
+    @FXML
+    private void analysisSaveBtnAction(ActionEvent event) {
+
+        try {
+            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+            this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.CNX);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void xmlMenuItemAction(ActionEvent event) {
+
+        try {
+            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+
+            Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
+
+            if (selectedTab.getId().equals("sourceTab")) {
+                this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.XML);
+
+            } else if (selectedTab.getId().equals("designTab")) {
+                this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.XML);
+
+            } else {
+                this.saveReport(currentStage, ReportType.ASSOCIATION_REPORT, FileFormat.XML);
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void jsonMenuItemAction(ActionEvent event) throws Exception {
+
+        try {
+            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
+
+            Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
+
+            if (selectedTab.getId().equals("sourceTab")) {
+                this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.JSON);
+
+            } else if (selectedTab.getId().equals("designTab")) {
+                this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.JSON);
+
+            } else {
+                this.saveReport(currentStage, ReportType.ASSOCIATION_REPORT, FileFormat.JSON);
+            }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param currentStage
+     * @param reportType
+     * @param fileFormat
+     * @throws JsonProcessingException
+     */
+    private void saveReport(Window currentStage, ReportType reportType, FileFormat fileFormat) throws IOException, SAXException, ParserConfigurationException {
+
+        Object reportObject = null;
+
+        switch (reportType) {
+            case THREAT_REPORT:
+                reportObject = this.convertToThreatReport();
+                break;
+            case BUG_REPORT:
+                reportObject = this.convertToBugReport();
+                break;
+            case ASSOCIATION_REPORT:
+                reportObject = this.convertToAssociationReport();
+                break;
+            default:
+                return;
+        }
+
+        if (reportObject != null) {
+
+            String outputFileAsString;
+            String fileDescription;
+            String fileExtension;
+
+            switch (fileFormat) {
+                case CNX:
+                    outputFileAsString = this.convertToXML(reportObject);
+                    fileDescription = "CNX File";
+                    fileExtension = "*.cnx";
+                    break;
+                case XML:
+                    outputFileAsString = this.convertToXML(reportObject);
+                    fileDescription = "XML File";
+                    fileExtension = "*.xml";
+                    break;
+                case JSON:
+                    outputFileAsString = this.convertToJSON(reportObject);
+                    fileDescription = "JSON File";
+                    fileExtension = "*.json";
+                    break;
+                default:
+                    return;
+            }
+
+            boolean isSaveSucceed = this.fileSaveAction(currentStage, outputFileAsString, fileDescription, fileExtension);
+
+        /*
+        * error messages*/
+        } else {
+            throw new NullPointerException("Report can not be null");
+        }
+    }
+
+    /**
+     * @param currentStage
+     * @param outputXMLFile
+     * @param fileExtensionDescription
+     * @param fileExtensionFormat
+     * @return
+     */
+    private boolean fileSaveAction(Window currentStage, String outputXMLFile,
+                                   String fileExtensionDescription, String fileExtensionFormat) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save As");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("CNX Files", "*.cnx")
+                new FileChooser.ExtensionFilter(fileExtensionDescription, fileExtensionFormat)
         );
 
         File file = fileChooser.showSaveDialog(currentStage);
@@ -152,7 +288,6 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     *
      * @return
      */
     private ThreatReport convertToThreatReport() {
@@ -164,14 +299,12 @@ public class HomeWindowController implements Initializable {
         }
 
         ThreatCategoryReportCreator threatCategoryReportCreator = new ThreatCategoryReportCreator(threatCategoryHashMap);
-
         ThreatReport threatReport = threatCategoryReportCreator.generateReport("Threats Analysis Report");
 
         return threatReport;
     }
 
     /**
-     *
      * @return
      */
     private BugReport convertToBugReport() {
@@ -183,7 +316,6 @@ public class HomeWindowController implements Initializable {
         }
 
         BugCategoryReportCreator bugCategoryReportCreator = new BugCategoryReportCreator(bugCategoryHashMap);
-
         BugReport bugReport = bugCategoryReportCreator.generateReport("Bug Analysis Report");
 
         return bugReport;
@@ -191,6 +323,29 @@ public class HomeWindowController implements Initializable {
 
     /**
      *
+     * @return
+     * @throws ParserConfigurationException
+     * @throws SAXException
+     * @throws IOException
+     */
+    private AssociationReport convertToAssociationReport() throws ParserConfigurationException, SAXException, IOException {
+
+        HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping = new HashMap<>();
+        HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
+
+        /*
+        * Implement the code here
+        *
+        */
+
+        AssociationReportCreator associationReportCreator =
+                new AssociationReportCreator(bugCategoryToThreatCategoryMapping, threatCategoryHashMap);
+        AssociationReport associationReport = associationReportCreator.generateReport("Association Analysis Report");
+
+        return associationReport;
+    }
+
+    /**
      * @param object
      * @return
      * @throws JsonProcessingException
@@ -204,7 +359,6 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     *
      * @param object
      * @return
      * @throws JsonProcessingException

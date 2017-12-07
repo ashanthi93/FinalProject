@@ -2,6 +2,8 @@ package org.sse.userinterface.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -19,6 +22,9 @@ import org.sse.userinterface.MainApp;
 import java.io.File;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class NewProjectWindowController implements Initializable {
@@ -85,6 +91,7 @@ public class NewProjectWindowController implements Initializable {
 
                     threatExtractor.classifyThreats();
 
+                    HomeWindowController.selectedIndex = "DESIGN";
                     start("/fxml/HomeWindow.fxml", "Home Window");
                     Stage stageMain = (Stage) cancelBtn.getScene().getWindow();
                     stageMain.close();

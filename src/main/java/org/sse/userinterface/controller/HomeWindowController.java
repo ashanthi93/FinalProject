@@ -16,17 +16,17 @@ import org.sse.design.model.ThreatCategory;
 import org.sse.source.model.BugCategory;
 
 public class HomeWindowController implements Initializable {
-    
+
     @FXML
     private void settingsSub1Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 0);
     }
-    
+
     @FXML
     private void settingsSub2Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 1);
     }
-    
+
     @FXML
     private void settingsSub3Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 2);
@@ -55,7 +55,8 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TableColumn<ThreatCategory, String> designMitigationColumn;
 
-
+    @FXML
+    private JFXButton saveBtn;
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource(path));
@@ -67,16 +68,16 @@ public class HomeWindowController implements Initializable {
         stage.setResizable(resizable);
         stage.setScene(scene);
         stage.show();
-        
+
         TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
         SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
         selectionModel.select(index);
-        
+
     }
-    
+
 
     public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
+
+    }
+
 }

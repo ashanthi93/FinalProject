@@ -29,15 +29,14 @@ public class ThreatCategoryReportCreator {
         threatReport.setName(reportName);
         threatReport.setDate(this.getDate());
 
-        ArrayList<ThreatCategory> threatCategorieArrayList = new ArrayList<ThreatCategory>();
+        ArrayList<ThreatCategory> threatCategoryArrayList = new ArrayList<ThreatCategory>();
 
         for (String threatCategoryID : threatCategoryHashMap.keySet()){
 
             ThreatCategory threatCategory = threatCategoryHashMap.get(threatCategoryID);
 
-            threatCategorieArrayList.add(threatCategory);
+            threatCategoryArrayList.add(threatCategory);
         }
-
         return threatReport;
     }
 

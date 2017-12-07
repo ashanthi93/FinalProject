@@ -15,22 +15,24 @@ import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.converter.DefaultStringConverter;
+import org.dom4j.DocumentException;
+import org.sse.source.BugCategoriesLoader;
 import org.sse.source.BugExtractor;
 import org.sse.source.model.Bug;
 import org.sse.source.model.BugCategory;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import org.sse.source.model.BugCollection;
 import org.sse.userinterface.MainApp;
 import org.sse.userinterface.controller.NewProjectWindowController;
+
+import static org.sse.userinterface.controller.HomeWindowController.isHomeOpened;
 
 public class BugInputWindowController implements Initializable {
 
@@ -103,35 +105,44 @@ public class BugInputWindowController implements Initializable {
             BugCollection collectedBugs = new BugCollection();
             collectedBugs.setBugList(updetedList);
 
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
-            Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("/styles/Styles.css");
+            //NewProjectWindowController.selectedIndex = "SOURCE";
+            if(!isHomeOpened){
+                Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add("/styles/Styles.css");
 
-            stage.setTitle("Home Window");
-            stage.setResizable(true);
-            stage.setScene(scene);
-            stage.show();
+                stage.setTitle("Home Window");
+                stage.setResizable(true);
+                stage.setScene(scene);
+                stage.show();
+
+                Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
+                stageMain.close();
+                Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
+                stageMainWelcome.close();
+            }
 
             Stage stage2 = (Stage) addBtn.getScene().getWindow();
             stage2.close();
-            Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
-            stageMain.close();
-            Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
-            stageMainWelcome.close();
-        }
 
+            //HomeWindowController.tabPane.getSelectionModel().select(1);
+        }
     }
 
     public void initialize(URL url, ResourceBundle rb){
-        setOWASPT10TableProperties();
+        try {
+            setOWASPT10TableProperties();
+        } catch (DocumentException e) {
+
+        }
 
         for (int i=0;i<200;i++){
             bugTable.getItems().add(new Bug());
         }
     }
 
-    private void setOWASPT10TableProperties(){
+    private void setOWASPT10TableProperties() throws DocumentException {
         name.setCellValueFactory(new PropertyValueFactory<Bug, String>("name"));
         name.setCellFactory(TextFieldTableCell.<Bug>forTableColumn());
         name.prefWidthProperty().bind(bugTable.widthProperty().divide(5));
@@ -140,17 +151,18 @@ public class BugInputWindowController implements Initializable {
             row.setName(event.getNewValue());
         });
 
+        HashMap<String, BugCategory> OWASP_T10_list = BugCategoriesLoader.getBugCategoryHashMap();
         ObservableList<String> OWASPcategories = FXCollections.observableArrayList(
-                new String("A1: Injection"),
-                new String("A2: Broken Authentication and Session Management"),
-                new String("A3: Cross-Site Scripting (XSS)"),
-                new String("A4: Insecure Direct Object References"),
-                new String("A5: Security Misconfiguration"),
-                new String("A6: Sensitive Data Exposure"),
-                new String("A7: Missing Function Level Access Control"),
-                new String("A8: Cross-Site Request Forgery (CSRF)"),
-                new String("A9: Using Components with Known Vulnerabilities"),
-                new String("A10: Unvalidated Redirects and Forwards")
+                new String("A1: " + OWASP_T10_list.get("A1").getName()),
+                new String("A2: " + OWASP_T10_list.get("A2").getName()),
+                new String("A3: " + OWASP_T10_list.get("A3").getName()),
+                new String("A4: " + OWASP_T10_list.get("A4").getName()),
+                new String("A5: " + OWASP_T10_list.get("A5").getName()),
+                new String("A6: " + OWASP_T10_list.get("A6").getName()),
+                new String("A7: " + OWASP_T10_list.get("A7").getName()),
+                new String("A8: " + OWASP_T10_list.get("A8").getName()),
+                new String("A9: " + OWASP_T10_list.get("A9").getName()),
+                new String("A10: " + OWASP_T10_list.get("A10").getName())
         );
         category.setCellFactory(ComboBoxTableCell.<Bug, String>forTableColumn(new DefaultStringConverter(), OWASPcategories));
         category.prefWidthProperty().bind(bugTable.widthProperty().divide(3.75));

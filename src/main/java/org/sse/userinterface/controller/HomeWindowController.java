@@ -1,5 +1,15 @@
 package org.sse.userinterface.controller;
 
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ResourceBundle;
+import com.jfoenix.controls.JFXButton;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.net.URL;
 import java.io.File;
@@ -13,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +31,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import org.dom4j.DocumentException;
+import org.sse.design.ThreatExtractor;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -44,12 +59,31 @@ import org.sse.outputgenerators.report.model.AssociationReport;
 import org.sse.outputgenerators.report.model.BugReport;
 import org.sse.outputgenerators.report.model.ThreatReport;
 import org.sse.source.model.BugCategory;
+import org.sse.userinterface.MainApp;
 
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 public class HomeWindowController implements Initializable {
+
+    public static boolean isHomeOpened = false;
+    public static String selectedIndex = "NONE";
+
+    @FXML
+    private void settingsSub1Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 0);
+    }
+    
+    @FXML
+    private void settingsSub2Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 1);
+    }
+    
+    @FXML
+    private void settingsSub3Action(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 2);
+    }
 
     // Table to hold source code bugs and details
     @FXML
@@ -100,7 +134,16 @@ public class HomeWindowController implements Initializable {
     }
 
     public void initialize(URL url, ResourceBundle rb) {
+
         setThreatProperties();
+
+        if(selectedIndex.equals("DESIGN")){
+            List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
+            tabs.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
+            homeTabPane.getTabs().clear();
+            homeTabPane.getTabs().setAll(tabs);
+            homeTabPane.getSelectionModel().select(0);
+        }
     }
 
     public HomeWindowController() {
@@ -177,18 +220,17 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void settingsSub1Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 0);
-    }
+    private void sourceNextBtnAction(ActionEvent event) throws Exception {
+        int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
 
-    @FXML
-    private void settingsSub2Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 1);
-    }
-
-    @FXML
-    private void settingsSub3Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 2);
+        if(selectedNum == 0){
+            boolean returned = fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
+            if(returned){
+                homeTabPane.getSelectionModel().select(1);
+            }
+        }else {
+            homeTabPane.getSelectionModel().select(2);
+        }
     }
 
     @FXML
@@ -204,6 +246,80 @@ public class HomeWindowController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void designNextBtnAction(ActionEvent event) throws Exception {
+        int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
+        isHomeOpened = true;
+
+        if(selectedNum == 0){
+            start("/fxml/BugInputWindow.fxml", "Bug Input Window");
+            homeTabPane.getSelectionModel().select(1);
+
+        }else{
+            homeTabPane.getSelectionModel().select(2);
+        }
+    }
+
+    private boolean fileOpen(String title, String displayName, String fileType) {
+
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(displayName, fileType);
+        fileChooser.getExtensionFilters().add(extFilter);
+        Stage stage = new Stage();
+        fileChooser.setTitle(title);
+        File file = fileChooser.showOpenDialog(stage);
+
+        try {
+            if (file != null) {
+
+                ThreatExtractor threatExtractor = ThreatExtractor.getInstance();
+
+                if (threatExtractor.readFile(file)) {
+
+                    threatExtractor.classifyThreats();
+                    return true;
+
+                } else {
+                    Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error", null, "\n Threat report validation fails !");
+
+                    alert.showAndWait();
+                }
+            }
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
+            alert.showAndWait();
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
+            alert.showAndWait();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void start(String path, String title) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
+
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+
+        return alert;
     }
 
     @FXML
@@ -462,5 +578,4 @@ public class HomeWindowController implements Initializable {
 
         return jsonReport;
     }
-
 }

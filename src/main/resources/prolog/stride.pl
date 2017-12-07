@@ -54,20 +54,20 @@ stride_defensive(
 s3,
 name("Configuration Management"),
 "Standard encryption algorithms and correct key sizes are being used . Hashed message authentication codes -LRB- HMACs -RRB- are used to protect data integrity .
-Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport and in storage . Built-in secure storage is used for protecting keys .
+Secrets -LRB- eg:- keys , confidential data -RRB- are cryptographically protected both in transport and in storage . Built-in secure storage is used for protecting keys .
 No credentials and sensitive data are sent in clear text over the wire .").
 
 stride_defensive(
 s4,
 name("Data Protection in Storage and Transit"),
 "Standard encryption algorithms and correct key sizes are being used . Hashed message authentication codes -LRB- HMACs -RRB- are used to protect data integrity .
-Secrets -LRB- e.g. keys , confidential data -RRB- are cryptographically protected both in transport and in storage . Built-in secure storage is used for protecting keys .
+Secrets -LRB- eg:- keys , confidential data -RRB- are cryptographically protected both in transport and in storage . Built-in secure storage is used for protecting keys .
 No credentials and sensitive data are sent in clear text over the wire .").
 
 stride_defensive(
 s5,
 name("Data validation/ Parameter validation"),
-"Data type , format , length , and range checks are enforced . All data sent from the client is validated . No security decision is based upon parameters -LRB- e.g. URL parameters -RRB- that can be manipulated .
+"Data type , format , length , and range checks are enforced . All data sent from the client is validated . No security decision is based upon parameters -LRB- eg:- URL parameters -RRB- that can be manipulated .
 Input filtering via white list validation is used . Output encoding is used .").
 
 stride_defensive(
@@ -86,6 +86,6 @@ User is forced to re-authenticate when performing critical functions . Sessions 
 stride_defensive(
 s8,
 name("Auditing and Logging"),
-"Sensitive information -LRB- e.g. passwords , PII -RRB- is not logged . Access control -LRB- e.g. ACLs -RRB- are enforced on log files to prevent un-authorized access .
-Integrity control -LRB- e.g. signatures -RRB- are enforced on log files to provide non-repudiation . Log files provide for audit trail for sensitive operations and logging of key events .
+"Sensitive information -LRB- eg:- passwords , PII -RRB- is not logged . Access control -LRB- eg:- ACLs -RRB- are enforced on log files to prevent un-authorized access .
+Integrity control -LRB- eg:- signatures -RRB- are enforced on log files to provide non-repudiation . Log files provide for audit trail for sensitive operations and logging of key events .
 Auditing and logging is enabled across the tiers on multiple servers .").

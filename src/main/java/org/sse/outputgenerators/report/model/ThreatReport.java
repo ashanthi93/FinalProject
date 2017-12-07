@@ -8,6 +8,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.sse.design.model.ThreatCategory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JacksonXmlRootElement(localName = "threat-category-report")
 @JsonRootName("threatCategoryReport")
@@ -24,7 +25,7 @@ public class ThreatReport {
     @JacksonXmlElementWrapper(localName = "threat-categories")
     @JacksonXmlProperty(localName = "threat-category")
     @JsonProperty("threatCategories")
-    private ArrayList<ThreatCategory> threatCategories;
+    private List<ThreatCategory> threatCategories;
 
     public ThreatReport(){}
 
@@ -45,12 +46,11 @@ public class ThreatReport {
         this.date = date;
     }
 
-    public ArrayList<ThreatCategory> getThreatCategories() {
+    public List<ThreatCategory> getThreatCategories() {
         return threatCategories;
     }
 
-    public void setThreatCategories(ArrayList<ThreatCategory> threatCategories) {
+    public void setThreatCategories(List<ThreatCategory> threatCategories) {
         this.threatCategories = threatCategories;
     }
-
 }

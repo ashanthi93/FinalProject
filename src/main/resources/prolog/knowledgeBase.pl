@@ -144,13 +144,10 @@ name("Errors and exceptions handling"),
                 try/catch blocks in the code , and to ensure that all unexpected behaviors are correctly handled inside
                 the application .
             , , , Ensure that error messages displayed to users do not leak critical data , but are still verbose
+
                 enough to explain the issue to the user .
             , , , Ensure that exceptions are logged in a way that gives enough information for Q/A , forensics or
                 incident response teams to understand the problem . -RSB- -RSB-
             ").
 
-owasp_top10_proactive(
-c11,
-name("aa"), 
-"asas").
 

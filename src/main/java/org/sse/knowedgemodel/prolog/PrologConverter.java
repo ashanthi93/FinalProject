@@ -2,9 +2,6 @@ package org.sse.knowedgemodel.prolog;
 
 import org.jpl7.Query;
 import org.jpl7.Term;
-import org.sse.source.model.BugControl;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -65,9 +62,9 @@ public class PrologConverter {
         }
         List<String> mitigations = Arrays.asList(solution.split("[.]"));
 
-        for (String x : mitigations) {
+        /*for (String x : mitigations) {
             System.out.println(x);
-        }
+        }*/
 
         return mitigations;
     }
@@ -87,9 +84,9 @@ public class PrologConverter {
         }
         List<String> preventions = Arrays.asList(solution.split("[.]"));
 
-        for (String x : preventions) {
+        /*for (String x : preventions) {
             System.out.println(x);
-        }
+        }*/
         return preventions;
 
     }

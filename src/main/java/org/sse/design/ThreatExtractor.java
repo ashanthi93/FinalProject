@@ -145,8 +145,8 @@ public class ThreatExtractor {
      */
     public void generateThreatReport() throws DocumentException {
 
-        HashMap<String, ThreatCategory> threats =ThreatCategoriesLoader.getThreatCategoryHashMap();
-        System.out.println("Spoofing".toLowerCase());
+        /*HashMap<String, ThreatCategory> threats =ThreatCategoriesLoader.getThreatCategoryHashMap();
+        System.out.println("Spoofing".toLowerCase());*/
 
     }
 }

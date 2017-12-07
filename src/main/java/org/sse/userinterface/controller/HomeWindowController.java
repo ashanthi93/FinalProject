@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -75,11 +73,52 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TableColumn<ThreatMitigation, String> designMitigationColumn;
 
+    @FXML
+    private TabPane homeTabPane;
 
-    HashMap<String, ThreatCategory> threatMap;
-    ObservableList<ThreatMitigation> threatData;
+    private Stage rootStage;
+    private HashMap<String, ThreatCategory> threatMap;
+    private ObservableList<ThreatMitigation> threatData;
 
-    public HomeWindowController() throws DocumentException {
+    public void start(String path, String title, Boolean resizable, int index) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        stage.setTitle(title);
+        stage.setResizable(resizable);
+        stage.setScene(scene);
+        stage.show();
+
+        rootStage = stage;
+
+        TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
+        SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
+        selectionModel.select(index);
+    }
+
+    public void initialize(URL url, ResourceBundle rb) {
+        setThreatProperties();
+    }
+
+    public HomeWindowController() {
+
+        try {
+            initializeDesignTab();
+
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     *
+     * @throws DocumentException
+     */
+    private void initializeDesignTab() throws DocumentException {
+
         threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
         int id = 0;
@@ -87,11 +126,17 @@ public class HomeWindowController implements Initializable {
 
         for (String key : threatMap.keySet()) {
 
-            ThreatCategory categoryList =threatMap.get(key);
+            ThreatCategory categoryList = threatMap.get(key);
             List<Threat> list = categoryList.getThreatList();
 
             for (Threat threat : list){
+
                 List<String> mitigations = categoryList.getMitigationList();
+
+                ThreatCategory threatCategory = threatMap.get(key);
+                threatCategory.setMitigationList(mitigations);
+                threatMap.put(key,threatCategory);
+
                 ThreatMitigation threatmitigation = new ThreatMitigation();
                 threatmitigation.setThreat(threat.getName());
                 threatmitigation.setCategory(threat.getThreatCategoryName());
@@ -114,26 +159,9 @@ public class HomeWindowController implements Initializable {
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
-
-    @FXML
-    private TabPane homeTabPane;
-
-    public void start(String path, String title, Boolean resizable, int index) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-
-        stage.setTitle(title);
-        stage.setResizable(resizable);
-        stage.setScene(scene);
-        stage.show();
-
-        TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
-        SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
-        selectionModel.select(index);
-    }
-
+    /**
+     *
+     */
     private void setThreatProperties() {
 
         designThreatColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("threat"));
@@ -147,12 +175,6 @@ public class HomeWindowController implements Initializable {
 
         designTable.setItems(threatData);
     }
-
-    public void initialize(URL url, ResourceBundle rb) {
-
-        setThreatProperties();
-    }
-
 
     @FXML
     private void settingsSub1Action(ActionEvent event) throws Exception {
@@ -173,8 +195,7 @@ public class HomeWindowController implements Initializable {
     private void designSaveBtnAction(ActionEvent event) {
 
         try {
-            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
-            this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.CNX);
+            this.saveReport(ReportType.THREAT_REPORT, FileFormat.CNX);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -189,8 +210,7 @@ public class HomeWindowController implements Initializable {
     private void sourceSaveBtnAction(ActionEvent event) throws Exception {
 
         try {
-            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
-            this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.CNX);
+            this.saveReport(ReportType.BUG_REPORT, FileFormat.CNX);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -205,8 +225,8 @@ public class HomeWindowController implements Initializable {
     private void analysisSaveBtnAction(ActionEvent event) {
 
         try {
-            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
-            this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.CNX);
+            this.saveReport(ReportType.BUG_REPORT, FileFormat.CNX);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -220,18 +240,16 @@ public class HomeWindowController implements Initializable {
     private void xmlMenuItemAction(ActionEvent event) {
 
         try {
-            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
-
             Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
 
             if (selectedTab.getId().equals("sourceTab")) {
-                this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.XML);
+                this.saveReport(ReportType.BUG_REPORT, FileFormat.XML);
 
             } else if (selectedTab.getId().equals("designTab")) {
-                this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.XML);
+                this.saveReport(ReportType.THREAT_REPORT, FileFormat.XML);
 
             } else {
-                this.saveReport(currentStage, ReportType.ASSOCIATION_REPORT, FileFormat.XML);
+                this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.XML);
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -246,18 +264,16 @@ public class HomeWindowController implements Initializable {
     private void jsonMenuItemAction(ActionEvent event) throws Exception {
 
         try {
-            Window currentStage = ((Node) event.getSource()).getScene().getWindow();
-
             Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
 
             if (selectedTab.getId().equals("sourceTab")) {
-                this.saveReport(currentStage, ReportType.BUG_REPORT, FileFormat.JSON);
+                this.saveReport(ReportType.BUG_REPORT, FileFormat.JSON);
 
             } else if (selectedTab.getId().equals("designTab")) {
-                this.saveReport(currentStage, ReportType.THREAT_REPORT, FileFormat.JSON);
+                this.saveReport(ReportType.THREAT_REPORT, FileFormat.JSON);
 
             } else {
-                this.saveReport(currentStage, ReportType.ASSOCIATION_REPORT, FileFormat.JSON);
+                this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.JSON);
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -269,12 +285,11 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     * @param currentStage
      * @param reportType
      * @param fileFormat
      * @throws JsonProcessingException
      */
-    private void saveReport(Window currentStage, ReportType reportType, FileFormat fileFormat) throws IOException, SAXException, ParserConfigurationException {
+    private void saveReport(ReportType reportType, FileFormat fileFormat) throws IOException, SAXException, ParserConfigurationException {
 
         Object reportObject;
 
@@ -318,7 +333,7 @@ public class HomeWindowController implements Initializable {
                     return;
             }
 
-            boolean isSaveSucceed = this.fileSaveAction(currentStage, outputFileAsString, fileDescription, fileExtension);
+            boolean isSaveSucceed = this.fileSaveAction(outputFileAsString, fileDescription, fileExtension);
 
             if (!isSaveSucceed){
                 /*
@@ -332,23 +347,20 @@ public class HomeWindowController implements Initializable {
 
     /**
      *
-     *
-     * @param currentStage
      * @param outputXMLFile
-     * @param fileExtensionDescription
+     * @param fileDescription
      * @param fileExtensionFormat
      * @return
      */
-    private boolean fileSaveAction(Window currentStage, String outputXMLFile,
-                                   String fileExtensionDescription, String fileExtensionFormat) {
+    private boolean fileSaveAction(String outputXMLFile, String fileDescription, String fileExtensionFormat) {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save As");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter(fileExtensionDescription, fileExtensionFormat)
+                new FileChooser.ExtensionFilter(fileDescription, fileExtensionFormat)
         );
 
-        File file = fileChooser.showSaveDialog(currentStage);
+        File file = fileChooser.showSaveDialog(rootStage);
 
         if (file != null) {
             try (PrintStream ps = new PrintStream(file)) {
@@ -371,9 +383,12 @@ public class HomeWindowController implements Initializable {
 
         HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
 
-        /*for (ThreatCategory threatCategory : designTable.getItems()) {
+        for (ThreatCategory threatCategory : threatMap.values()) {
+
+
+
             threatCategoryHashMap.put(threatCategory.getId(), threatCategory);
-        }*/
+        }
 
         ThreatCategoryReportCreator threatCategoryReportCreator = new ThreatCategoryReportCreator(threatCategoryHashMap);
         ThreatReport threatReport = threatCategoryReportCreator.generateReport("Threats Analysis Report");

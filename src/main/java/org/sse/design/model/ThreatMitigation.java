@@ -1,6 +1,7 @@
 package org.sse.design.model;
 
 public class ThreatMitigation {
+
     private String threat;
     private String category;
     private String mitigation;
@@ -27,5 +28,4 @@ public class ThreatMitigation {
     }
 
     public void setMitigation(String mitigation) { this.mitigation = mitigation; }
-
 }

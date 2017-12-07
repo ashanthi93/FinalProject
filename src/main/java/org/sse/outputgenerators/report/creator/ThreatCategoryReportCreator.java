@@ -35,8 +35,13 @@ public class ThreatCategoryReportCreator {
 
             ThreatCategory threatCategory = threatCategoryHashMap.get(threatCategoryID);
 
-            threatCategoryArrayList.add(threatCategory);
+            if (threatCategory.getThreatList().size() != 0) {
+                threatCategoryArrayList.add(threatCategory);
+            }
         }
+
+        threatReport.setThreatCategories(threatCategoryArrayList);
+
         return threatReport;
     }
 

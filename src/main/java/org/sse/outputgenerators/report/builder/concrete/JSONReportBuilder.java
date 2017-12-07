@@ -18,10 +18,7 @@ public class JSONReportBuilder extends ReportBuilder{
     public String convertReport(Object object) throws JsonProcessingException {
 
         ObjectMapper jsonMapper = new ObjectMapper();
-        String jsonOutput = jsonMapper.writeValueAsString(object);
-
-        jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
-        System.out.println(jsonOutput);
+        String jsonOutput = jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
         return jsonOutput;
     }

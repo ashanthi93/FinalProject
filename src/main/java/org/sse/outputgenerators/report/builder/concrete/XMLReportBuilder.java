@@ -21,10 +21,7 @@ public class XMLReportBuilder extends ReportBuilder {
     public String convertReport(Object object) throws JsonProcessingException {
 
         ObjectMapper xmlMapper = new XmlMapper();
-        String xmlOutput = xmlMapper.writeValueAsString(object);
-
-        xmlOutput = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
-        System.out.println(xmlOutput);
+        String xmlOutput = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
         return xmlOutput;
     }

@@ -53,7 +53,7 @@
                               <TableColumn fx:id="sourcePreventionColumn" prefWidth="208.0" text="Prevention Techniques" />
                           </columns>
                         </TableView>
-                        <JFXButton buttonType="RAISED" layoutX="430.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
+                        <JFXButton fx:id="sourceSaveBtn" onAction="#sourceSaveBtnAction" buttonType="RAISED" layoutX="430.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
                         <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Next" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0" />
                         <JFXButton buttonType="RAISED" layoutX="534.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Cancel" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                      </children>
@@ -71,9 +71,9 @@
                               <TableColumn fx:id="designMitigationColumn" prefWidth="190.0" text="Mitigation Techniques" />
                           </columns>
                         </TableView>
+                         <JFXButton fx:id="designSaveBtn" onAction="#designSaveBtnAction" buttonType="RAISED" layoutX="404.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
                         <JFXButton buttonType="RAISED" layoutX="534.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Cancel" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                         <JFXButton buttonType="RAISED" layoutX="470.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Next" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0" />
-                        <JFXButton buttonType="RAISED" layoutX="404.0" layoutY="270.0" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="129.0" />
                      </children>
                   </AnchorPane>
             </content>

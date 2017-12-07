@@ -11,8 +11,6 @@ import java.io.IOException;
 
 public class XMLReportBuilder extends ReportBuilder {
 
-
-
     /**
      *
      *

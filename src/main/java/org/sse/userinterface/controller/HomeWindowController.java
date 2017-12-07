@@ -204,7 +204,7 @@ public class HomeWindowController implements Initializable {
      */
     private void saveReport(Window currentStage, ReportType reportType, FileFormat fileFormat) throws IOException, SAXException, ParserConfigurationException {
 
-        Object reportObject = null;
+        Object reportObject;
 
         switch (reportType) {
             case THREAT_REPORT:
@@ -248,14 +248,19 @@ public class HomeWindowController implements Initializable {
 
             boolean isSaveSucceed = this.fileSaveAction(currentStage, outputFileAsString, fileDescription, fileExtension);
 
-        /*
-        * error messages*/
+            if (!isSaveSucceed){
+                /*
+                * error message
+                */
+            }
         } else {
             throw new NullPointerException("Report can not be null");
         }
     }
 
     /**
+     *
+     *
      * @param currentStage
      * @param outputXMLFile
      * @param fileExtensionDescription

@@ -42,6 +42,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import org.sse.design.model.ThreatCategory;
+import org.sse.knowedgemodel.prolog.PrologConverter;
 import org.sse.outputgenerators.FileFormat;
 import org.sse.outputgenerators.ReportType;
 
@@ -74,6 +75,7 @@ public class HomeWindowController implements Initializable {
 
     public static boolean isHomeOpened = false;
     public static String selectedIndex = "NONE";
+    static PrologConverter prolog = new PrologConverter();
 
     @FXML
     private JFXButton newProjectBtn;
@@ -107,17 +109,16 @@ public class HomeWindowController implements Initializable {
     private ObservableList<ThreatMitigation> threatData;
 
     @FXML
-    private TableView<BugCountermeasures> sourceTable;
+    private static TableView<BugCountermeasures> sourceTable;
 
     @FXML
-    private TableColumn<BugCountermeasures, String> sourceBugColumn;
+    private static TableColumn<BugCountermeasures, String> sourceBugColumn;
     @FXML
-    private TableColumn<BugCountermeasures, String> sourceCategoryColumn;
+    private static TableColumn<BugCountermeasures, String> sourceCategoryColumn;
     @FXML
-    private TableColumn<BugCountermeasures, String> sourcePreventionColumn;
+    private static TableColumn<BugCountermeasures, String> sourcePreventionColumn;
 
-    private HashMap<String, ThreatCategory> BugMap;
-    private ObservableList<BugCountermeasures> bugData;
+    private static ObservableList<BugCountermeasures> bugData;
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
 
@@ -140,6 +141,7 @@ public class HomeWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         setThreatProperties();
+        setBugProperties();
 
         if (selectedIndex.equals("DESIGN")) {
             List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
@@ -210,13 +212,31 @@ public class HomeWindowController implements Initializable {
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
-    private void bugLoader(){
+    public static void bugLoader(){
 
-        /*List<Bug> bugs =  BugInputWindowController.updetedList;
+        List<Bug> bugs =  BugInputWindowController.updetedList;
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
+        int id = 0;
         for (Bug bug :bugs) {
 
-        }*/
+            String [] category = bug.getCategoryName().split(":");
+            List<String> preventions = prolog.getPreventionTechniques(category[0].toLowerCase());
+
+            BugCountermeasures bugcountermeasure = new BugCountermeasures();
+            bugcountermeasure.setBug(bug.getName());
+            bugcountermeasure.setCategory(bug.getCategoryName());
+            bugcountermeasure.setCountermeasure(preventions.get(0));
+            bugObjects.put(id,bugcountermeasure);
+            id++;
+            for (int i = 1; i <preventions.size() ; i++) {
+                BugCountermeasures bugcountermeasureCopy = new BugCountermeasures();
+                bugcountermeasureCopy.setBug("");
+                bugcountermeasureCopy.setCategory("");
+                bugcountermeasureCopy.setCountermeasure(preventions.get(i));
+                bugObjects.put(id,bugcountermeasureCopy);
+            }
+        }
+        bugData = FXCollections.observableArrayList(bugObjects.values());
 
     }
 
@@ -237,16 +257,16 @@ public class HomeWindowController implements Initializable {
         designTable.setItems(threatData);
     }
 
-    private void setBugProperties() {
+    public static void setBugProperties() {
 
-        sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("threat"));
-        sourceBugColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
+        sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("bug"));
+        sourceBugColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
 
         sourceCategoryColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("category"));
-        sourceCategoryColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
+        sourceCategoryColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
 
-        sourcePreventionColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("mitigation"));
-        sourcePreventionColumn.prefWidthProperty().bind(designTable.widthProperty().divide(1.5));
+        sourcePreventionColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("countermeasure"));
+        sourcePreventionColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(1.5));
 
         sourceTable.setItems(bugData);
     }
@@ -295,6 +315,8 @@ public class HomeWindowController implements Initializable {
         if (selectedNum == 0) {
             start("/fxml/BugInputWindow.fxml", "Bug Input Window");
             homeTabPane.getSelectionModel().select(1);
+            bugLoader();
+            setBugProperties();
 
         } else {
             homeTabPane.getSelectionModel().select(2);

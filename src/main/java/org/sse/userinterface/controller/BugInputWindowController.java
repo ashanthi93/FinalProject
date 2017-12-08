@@ -121,6 +121,7 @@ public class BugInputWindowController implements Initializable {
                 Stage stage2 = (Stage) addBtn.getScene().getWindow();
                 stage2.close();
             }
+
         }catch (IOException e){
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the HomeWindow.");
             alert.showAndWait();

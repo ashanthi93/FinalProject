@@ -2,6 +2,8 @@ package org.sse.knowedgemodel.prolog;
 
 import org.jpl7.Query;
 import org.jpl7.Term;
+import org.sse.settings.DescriptionProcessor;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +85,8 @@ public class PrologConverter {
             solution = solution +" "+ sol;
         }
         System.out.println(solution);
-        List<String> preventions = Arrays.asList(solution.split("[.]"));
+        //List<String> preventions = Arrays.asList(solution.split("[.]"));
+        List<String> preventions = DescriptionProcessor.getSentences(solution);
 
         /*for (String x : preventions) {
             System.out.println(x);

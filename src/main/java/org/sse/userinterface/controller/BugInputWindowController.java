@@ -117,6 +117,7 @@ public class BugInputWindowController implements Initializable {
                 stage.setResizable(true);
                 stage.setScene(scene);
                 stage.show();
+                stage.setMaximized(true);
 
                 Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
                 stageMain.close();

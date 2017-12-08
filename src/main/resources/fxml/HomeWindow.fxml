@@ -20,7 +20,8 @@
             <menus>
                 <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="addBugsMenuItem" mnemonicParsing="false" text="Add Bugs Manually" />
+                        <MenuItem fx:id="newMenuItem" onAction="#newMenuItemAction" mnemonicParsing="false" text="New" />
+                        <MenuItem fx:id="openMenuItem" onAction="#openMenuItemAction" mnemonicParsing="false" text="Open" />
                         <Menu fx:id="exportToMenuItem" mnemonicParsing="false" text="Export to">
                             <items>
                                 <MenuItem mnemonicParsing="false" onAction="#xmlMenuItemAction" text="XML" fx:id="xmlMenuItem" />
@@ -30,11 +31,9 @@
                         <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
-                <Menu fx:id="settingsMenu" mnemonicParsing="false" text="Settings">
+                <Menu fx:id="toolsMenu" mnemonicParsing="false" text="Tools">
                     <items>
-                        <MenuItem fx:id="settingsSub1" mnemonicParsing="false" onAction="#settingsSub1Action" text="OWASP Top 10" />
-                        <MenuItem fx:id="settingsSub2" mnemonicParsing="false" onAction="#settingsSub2Action" text="OWASP Proactives" />
-                        <MenuItem fx:id="settingsSub3" mnemonicParsing="false" onAction="#settingsSub3Action" text="OWASP Top 10 Mapping" />
+                        <MenuItem fx:id="settingsSub" mnemonicParsing="false" onAction="#settingsSubAction" text="Settings" />
                     </items>
                 </Menu>
                 <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
@@ -44,8 +43,8 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <JFXButton fx:id="newProjectBtn" buttonType="RAISED" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: newProjectBtn;" styleClass="newProjectBtn" stylesheets="@../styles/Styles.css" text=" " />
-        <JFXButton fx:id="openProjectBtn" buttonType="RAISED" layoutX="49.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: openProjectBtn;" styleClass="openProjectBtn" stylesheets="@../styles/Styles.css" text="   " />
+        <JFXButton fx:id="newProjectBtn" onAction="#newMenuItemAction" buttonType="RAISED" layoutX="14.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: newProjectBtn;" styleClass="newProjectBtn" stylesheets="@../styles/Styles.css" text="" />
+        <JFXButton fx:id="openProjectBtn" onAction="#openMenuItemAction" buttonType="RAISED" layoutX="49.0" layoutY="31.0" prefHeight="25.0" prefWidth="27.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-image: openProjectBtn;" styleClass="openProjectBtn" stylesheets="@../styles/Styles.css" text="" />
         <TabPane fx:id="homeTabPane" layoutY="62.0" prefHeight="338.0" prefWidth="600.0" style="-fx-background-color: #3D4956;" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="62.0">
             <tabs>
                 <Tab fx:id="sourceTab" text="Source">

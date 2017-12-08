@@ -7,12 +7,6 @@
         </controls>
     </mapping>
     <mapping>
-        <bug-id>A10</bug-id>
-        <controls>
-            <control-id>C11</control-id>
-        </controls>
-    </mapping>
-    <mapping>
         <bug-id>A2</bug-id>
         <controls>
             <control-id>C3</control-id>
@@ -53,12 +47,6 @@
         <bug-id>A8</bug-id>
         <controls>
             <control-id>C10</control-id>
-        </controls>
-    </mapping>
-    <mapping>
-        <bug-id>A9</bug-id>
-        <controls>
-            <control-id>C11</control-id>
         </controls>
     </mapping>
 </bug-controls-for-bug>

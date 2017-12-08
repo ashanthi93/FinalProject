@@ -22,7 +22,6 @@ public class BugControlConfig {
     private static final String idTag = "id";
     private static final String nameTag = "name";
     private static final String descriptionTag = "description";
-    private static final String pointTag = "point";
 
     private static final String fileName = "BugControl.xml";
 
@@ -57,15 +56,7 @@ public class BugControlConfig {
             Element proactive_idElement = configFileCreator.createChildElement(idTag, OWASPProactive.getId());
             Element proactive_nameElement = configFileCreator.createChildElement(nameTag, OWASPProactive.getName());
 
-            Element proactive_descriptionElement = configFileCreator.createChildElement(descriptionTag);
-
-            List<String> sentences = DescriptionProcessor.getSentences(OWASPProactive.getDescription());
-
-            for (String sentence : sentences){
-
-                Element pointElement = configFileCreator.createChildElement(pointTag, sentence);
-                proactive_descriptionElement.add(pointElement);
-            }
+            Element proactive_descriptionElement = configFileCreator.createChildElement(descriptionTag,OWASPProactive.getDescription());
 
             proactiveElement.add(proactive_idElement);
             proactiveElement.add(proactive_nameElement);
@@ -99,16 +90,7 @@ public class BugControlConfig {
 
             bugControl.setId(node.valueOf(idTag));
             bugControl.setName(node.valueOf(nameTag));
-
-            List<Node> pointNodes = node.selectSingleNode(descriptionTag).selectNodes(pointTag);
-
-            List<String> description = new ArrayList<String>();
-
-            for (Node pointNode : pointNodes){
-                description.add(pointNode.getStringValue());
-            }
-
-            bugControl.setDescription(description.toString());
+            bugControl.setDescription(node.valueOf(descriptionTag));
 
             bugControls.add(bugControl);
         }
@@ -133,7 +115,6 @@ public class BugControlConfig {
 
             controlIdsAndNames.put(node.valueOf(idTag),node.valueOf(nameTag));
         }
-
         return controlIdsAndNames;
     }
 

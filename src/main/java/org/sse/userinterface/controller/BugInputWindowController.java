@@ -94,6 +94,7 @@ public class BugInputWindowController implements Initializable {
             }else{
                 updetedList.add(bugObj);
             }
+
         }
 
         //System.out.println(updetedList.size());
@@ -125,6 +126,8 @@ public class BugInputWindowController implements Initializable {
 
             Stage stage2 = (Stage) addBtn.getScene().getWindow();
             stage2.close();
+            /*HomeWindowController.bugLoader();
+            HomeWindowController.setBugProperties();*/
 
             //HomeWindowController.tabPane.getSelectionModel().select(1);
         }

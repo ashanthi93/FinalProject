@@ -79,6 +79,8 @@ public class HomeWindowController implements Initializable {
 
     @FXML
     private JFXButton newProjectBtn;
+    @FXML
+    private JFXButton sourceCancelBtn;
 
     // Table to hold source code bugs and details
     @FXML
@@ -323,12 +325,46 @@ public class HomeWindowController implements Initializable {
         }
     }
 
+    private void cancelBtnMethod(){
+        Alert alert = this.createAlert(Alert.AlertType.CONFIRMATION, "Confirm!", null, "\n Are you sure you want to exit?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == ButtonType.YES) {
+                Stage homeStage = (Stage) this.sourceCancelBtn.getScene().getWindow();
+                homeStage.close();
+            } else if (type == ButtonType.NO) {
+                alert.close();
+            }
+        });
+    }
+
     @FXML
     private void sourceCancelBtnAction(ActionEvent event){
         try{
-            
+            cancelBtnMethod();
         }catch(Exception e){
-
+            Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    private void designCancelBtnAction(ActionEvent event){
+        try{
+            cancelBtnMethod();
+        }catch(Exception e){
+            Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    private void associationCancelBtnAction(ActionEvent event){
+        try{
+            cancelBtnMethod();
+        }catch(Exception e){
+            Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
+            alert.showAndWait();
         }
     }
 

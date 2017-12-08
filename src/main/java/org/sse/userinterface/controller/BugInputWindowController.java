@@ -36,7 +36,7 @@ import static org.sse.userinterface.controller.HomeWindowController.isHomeOpened
 
 public class BugInputWindowController implements Initializable {
 
-    List<Bug> updetedList = new ArrayList<>();
+    static List<Bug> updetedList = new ArrayList<>();
     List<Bug> bugList;
 
     @FXML

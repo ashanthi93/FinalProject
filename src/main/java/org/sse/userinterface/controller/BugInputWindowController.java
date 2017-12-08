@@ -25,6 +25,7 @@ import org.sse.source.BugExtractor;
 import org.sse.source.model.Bug;
 import org.sse.source.model.BugCategory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -56,129 +57,129 @@ public class BugInputWindowController implements Initializable {
     private TableColumn<Bug, String> description;
 
     @FXML
-    private void cancelBtnAction(ActionEvent event) throws Exception {
-        Stage stage = (Stage) cancelBtn.getScene().getWindow();
-        stage.close();
+    private void cancelBtnAction(ActionEvent event) {
+        try{
+            Stage stage = (Stage) cancelBtn.getScene().getWindow();
+            stage.close();
+        }catch (Exception e){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  An error occurred while cancelling.");
+            alert.showAndWait();
+        }
+
     }
 
     @FXML
-    private void addBtnAction(ActionEvent event) throws Exception {
-        bugList = bugTable.getItems();
+    private void addBtnAction(ActionEvent event) {
+        try{
+            bugList = bugTable.getItems();
 
-        for(Bug bugObj: bugList){
-            if(bugObj.getName() == null && bugObj.getCategoryName() == null && bugObj.getDescription() == null){
-                //Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  You haven't entered any details!");
-                //alert.showAndWait();
-                bugObj = null;
-            }else if(bugObj.getName() != null && (bugObj.getCategoryName() == null || bugObj.getDescription() == null)){
-                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
-                alert.showAndWait();
-                return;
-                /*if(!updetedList.contains(bugObj)){
+            for(Bug bugObj: bugList){
+                if(bugObj.getName() == null && bugObj.getCategoryName() == null && bugObj.getDescription() == null){
+                    bugObj = null;
+                }else if(bugObj.getName() != null && (bugObj.getCategoryName() == null || bugObj.getDescription() == null)){
+                    Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
+                    alert.showAndWait();
+                    return;
+                }else if(bugObj.getCategoryName() != null && (bugObj.getName() == null || bugObj.getDescription() == null)){
+                    Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
+                    alert.showAndWait();
+                    return;
+                }else if(bugObj.getDescription() != null && (bugObj.getName() == null || bugObj.getCategoryName() == null)){
+                    Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
+                    alert.showAndWait();
+                    return;
+                }else{
                     updetedList.add(bugObj);
-                }*/
-            }else if(bugObj.getCategoryName() != null && (bugObj.getName() == null || bugObj.getDescription() == null)){
-                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
+                }
+            }
+
+            if(updetedList.size() == 0){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  You haven't entered any details!");
                 alert.showAndWait();
-                return;
-                /*if(!updetedList.contains(bugObj)){
-                    updetedList.add(bugObj);
-                }*/
-            }else if(bugObj.getDescription() != null && (bugObj.getName() == null || bugObj.getCategoryName() == null)){
-                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  Please fill all the details for each entered rows!");
-                alert.showAndWait();
-                return;
-                /*if(!updetedList.contains(bugObj)){
-                    updetedList.add(bugObj);
-                }*/
             }else{
-                updetedList.add(bugObj);
+                BugCollection collectedBugs = new BugCollection();
+                collectedBugs.setBugList(updetedList);
+
+                if(!isHomeOpened){
+                    Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add("/styles/Styles.css");
+
+                    stage.setTitle("Home Window");
+                    stage.setResizable(true);
+                    stage.setScene(scene);
+                    stage.show();
+                    stage.setMaximized(true);
+
+                    Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
+                    stageMain.close();
+                    Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
+                    stageMainWelcome.close();
+                }
+
+                Stage stage2 = (Stage) addBtn.getScene().getWindow();
+                stage2.close();
             }
-        }
-
-        //System.out.println(updetedList.size());
-
-        if(updetedList.size() == 0){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.WARNING, "Warning", null, "\n  You haven't entered any details!");
+        }catch (IOException e){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the HomeWindow.");
             alert.showAndWait();
-        }else{
-            BugCollection collectedBugs = new BugCollection();
-            collectedBugs.setBugList(updetedList);
-
-            //NewProjectWindowController.selectedIndex = "SOURCE";
-            if(!isHomeOpened){
-                Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
-                Stage stage = new Stage();
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add("/styles/Styles.css");
-
-                stage.setTitle("Home Window");
-                stage.setResizable(true);
-                stage.setScene(scene);
-                stage.show();
-                stage.setMaximized(true);
-
-                Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
-                stageMain.close();
-                Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
-                stageMainWelcome.close();
-            }
-
-            Stage stage2 = (Stage) addBtn.getScene().getWindow();
-            stage2.close();
-
-            //HomeWindowController.tabPane.getSelectionModel().select(1);
+        }catch (Exception ex){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while adding bugs.");
+            alert.showAndWait();
         }
     }
 
     public void initialize(URL url, ResourceBundle rb){
-        try {
-            setOWASPT10TableProperties();
-        } catch (DocumentException e) {
-
-        }
+        setOWASPT10TableProperties();
 
         for (int i=0;i<200;i++){
             bugTable.getItems().add(new Bug());
         }
     }
 
-    private void setOWASPT10TableProperties() throws DocumentException {
-        name.setCellValueFactory(new PropertyValueFactory<Bug, String>("name"));
-        name.setCellFactory(TextFieldTableCell.<Bug>forTableColumn());
-        name.prefWidthProperty().bind(bugTable.widthProperty().divide(5));
-        name.setOnEditCommit(event -> {
-            Bug row = event.getRowValue();
-            row.setName(event.getNewValue());
-        });
+    private void setOWASPT10TableProperties(){
+        try{
+            name.setCellValueFactory(new PropertyValueFactory<Bug, String>("name"));
+            name.setCellFactory(TextFieldTableCell.<Bug>forTableColumn());
+            name.prefWidthProperty().bind(bugTable.widthProperty().divide(5));
+            name.setOnEditCommit(event -> {
+                Bug row = event.getRowValue();
+                row.setName(event.getNewValue());
+            });
 
-        HashMap<String, BugCategory> OWASP_T10_list = BugCategoriesLoader.getBugCategoryHashMap();
-        ObservableList<String> OWASPcategories = FXCollections.observableArrayList(
-                new String("A1: " + OWASP_T10_list.get("A1").getName()),
-                new String("A2: " + OWASP_T10_list.get("A2").getName()),
-                new String("A3: " + OWASP_T10_list.get("A3").getName()),
-                new String("A4: " + OWASP_T10_list.get("A4").getName()),
-                new String("A5: " + OWASP_T10_list.get("A5").getName()),
-                new String("A6: " + OWASP_T10_list.get("A6").getName()),
-                new String("A7: " + OWASP_T10_list.get("A7").getName()),
-                new String("A8: " + OWASP_T10_list.get("A8").getName()),
-                new String("A9: " + OWASP_T10_list.get("A9").getName()),
-                new String("A10: " + OWASP_T10_list.get("A10").getName())
-        );
-        category.setCellFactory(ComboBoxTableCell.<Bug, String>forTableColumn(new DefaultStringConverter(), OWASPcategories));
-        category.prefWidthProperty().bind(bugTable.widthProperty().divide(3.75));
-        category.setOnEditCommit(event -> {
-            Bug row = event.getRowValue();
-            row.setCategoryName(event.getNewValue());
-        });
+            HashMap<String, BugCategory> OWASP_T10_list = BugCategoriesLoader.getBugCategoryHashMap();
+            ObservableList<String> OWASPcategories = FXCollections.observableArrayList(
+                    new String("A1: " + OWASP_T10_list.get("A1").getName()),
+                    new String("A2: " + OWASP_T10_list.get("A2").getName()),
+                    new String("A3: " + OWASP_T10_list.get("A3").getName()),
+                    new String("A4: " + OWASP_T10_list.get("A4").getName()),
+                    new String("A5: " + OWASP_T10_list.get("A5").getName()),
+                    new String("A6: " + OWASP_T10_list.get("A6").getName()),
+                    new String("A7: " + OWASP_T10_list.get("A7").getName()),
+                    new String("A8: " + OWASP_T10_list.get("A8").getName()),
+                    new String("A9: " + OWASP_T10_list.get("A9").getName()),
+                    new String("A10: " + OWASP_T10_list.get("A10").getName())
+            );
+            category.setCellFactory(ComboBoxTableCell.<Bug, String>forTableColumn(new DefaultStringConverter(), OWASPcategories));
+            category.prefWidthProperty().bind(bugTable.widthProperty().divide(3.75));
+            category.setOnEditCommit(event -> {
+                Bug row = event.getRowValue();
+                row.setCategoryName(event.getNewValue());
+            });
 
-        description.setCellValueFactory(new PropertyValueFactory<Bug, String>("description"));
-        description.setCellFactory(TextFieldTableCell.<Bug>forTableColumn());
-        description.prefWidthProperty().bind(bugTable.widthProperty().divide(1.9));
-        description.setOnEditCommit(event -> {
-            Bug row = event.getRowValue();
-            row.setDescription(event.getNewValue());
-        });
+            description.setCellValueFactory(new PropertyValueFactory<Bug, String>("description"));
+            description.setCellFactory(TextFieldTableCell.<Bug>forTableColumn());
+            description.prefWidthProperty().bind(bugTable.widthProperty().divide(1.9));
+            description.setOnEditCommit(event -> {
+                Bug row = event.getRowValue();
+                row.setDescription(event.getNewValue());
+            });
+
+        }catch(DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while setting the table properties in the window.");
+            alert.showAndWait();
+        }
 
     }
 }

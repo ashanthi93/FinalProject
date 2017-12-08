@@ -301,6 +301,15 @@ public class HomeWindowController implements Initializable {
         }
     }
 
+    @FXML
+    private void sourceCancelBtnAction(ActionEvent event){
+        try{
+            
+        }catch(Exception e){
+
+        }
+    }
+
     private boolean fileOpen(String title, String displayName, String fileType) {
 
         FileChooser fileChooser = new FileChooser();

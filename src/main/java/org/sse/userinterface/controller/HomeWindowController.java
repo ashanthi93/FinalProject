@@ -109,16 +109,16 @@ public class HomeWindowController implements Initializable {
     private ObservableList<ThreatMitigation> threatData;
 
     @FXML
-    private static TableView<BugCountermeasures> sourceTable;
+    private TableView<BugCountermeasures> sourceTable;
 
     @FXML
-    private static TableColumn<BugCountermeasures, String> sourceBugColumn;
+    private TableColumn<BugCountermeasures, String> sourceBugColumn;
     @FXML
-    private static TableColumn<BugCountermeasures, String> sourceCategoryColumn;
+    private TableColumn<BugCountermeasures, String> sourceCategoryColumn;
     @FXML
-    private static TableColumn<BugCountermeasures, String> sourcePreventionColumn;
+    private TableColumn<BugCountermeasures, String> sourcePreventionColumn;
 
-    private static ObservableList<BugCountermeasures> bugData;
+    private ObservableList<BugCountermeasures> bugData;
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
 
@@ -212,7 +212,7 @@ public class HomeWindowController implements Initializable {
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
-    public static void bugLoader(){
+    public void bugLoader(){
 
         List<Bug> bugs =  BugInputWindowController.updetedList;
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
@@ -257,7 +257,7 @@ public class HomeWindowController implements Initializable {
         designTable.setItems(threatData);
     }
 
-    public static void setBugProperties() {
+    public void setBugProperties() {
 
         sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("bug"));
         sourceBugColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));

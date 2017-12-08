@@ -36,7 +36,7 @@ import static org.sse.userinterface.controller.HomeWindowController.isHomeOpened
 
 public class BugInputWindowController implements Initializable {
 
-    List<Bug> updetedList = new ArrayList<>();
+    static List<Bug> updetedList = new ArrayList<>();
     List<Bug> bugList;
 
     @FXML
@@ -116,6 +116,7 @@ public class BugInputWindowController implements Initializable {
                 stage.setResizable(true);
                 stage.setScene(scene);
                 stage.show();
+                stage.setMaximized(true);
 
                 Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
                 stageMain.close();

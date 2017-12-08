@@ -23,7 +23,12 @@ public class XMLReportBuilder extends ReportBuilder {
         ObjectMapper xmlMapper = new XmlMapper();
         String xmlOutput = xmlMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
 
-        return xmlOutput;
+        String xmlVersion = "<?xml version='1.0' encoding='UTF-8'?>";
+        String dtdSchema = "<!DOCTYPE threat-category-report SYSTEM \"threatreport.dtd\">";
+
+        String newXmlOutput = xmlVersion + "\n" + dtdSchema + "\n" + xmlOutput;
+
+        return newXmlOutput;
     }
 
     /**

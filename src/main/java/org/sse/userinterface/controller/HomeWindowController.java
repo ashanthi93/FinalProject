@@ -1,6 +1,5 @@
 package org.sse.userinterface.controller;
 
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,12 +59,16 @@ import org.sse.outputgenerators.report.creator.ThreatCategoryReportCreator;
 import org.sse.outputgenerators.report.model.AssociationReport;
 import org.sse.outputgenerators.report.model.BugReport;
 import org.sse.outputgenerators.report.model.ThreatReport;
+import org.sse.source.model.Bug;
 import org.sse.source.model.BugCategory;
+import org.sse.source.model.BugCountermeasures;
 
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.Node;
+
+import static org.sse.userinterface.controller.BugInputWindowController.updetedList;
 
 public class HomeWindowController implements Initializable {
 
@@ -74,21 +77,6 @@ public class HomeWindowController implements Initializable {
 
     @FXML
     private JFXButton newProjectBtn;
-
-    @FXML
-    private void settingsSub1Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 0);
-    }
-
-    @FXML
-    private void settingsSub2Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 1);
-    }
-
-    @FXML
-    private void settingsSub3Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 2);
-    }
 
     // Table to hold source code bugs and details
     @FXML
@@ -118,6 +106,19 @@ public class HomeWindowController implements Initializable {
     private HashMap<String, ThreatCategory> threatMap;
     private ObservableList<ThreatMitigation> threatData;
 
+    @FXML
+    private TableView<BugCountermeasures> sourceTable;
+
+    @FXML
+    private TableColumn<BugCountermeasures, String> sourceBugColumn;
+    @FXML
+    private TableColumn<BugCountermeasures, String> sourceCategoryColumn;
+    @FXML
+    private TableColumn<BugCountermeasures, String> sourcePreventionColumn;
+
+    private HashMap<String, ThreatCategory> BugMap;
+    private ObservableList<BugCountermeasures> bugData;
+
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource(path));
@@ -133,6 +134,7 @@ public class HomeWindowController implements Initializable {
         TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
         SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
         selectionModel.select(index);
+
     }
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -151,6 +153,7 @@ public class HomeWindowController implements Initializable {
     public HomeWindowController() throws DocumentException {
 
         threatLoader();
+        bugLoader();
         try {
             initializeDesignTab();
 
@@ -207,6 +210,16 @@ public class HomeWindowController implements Initializable {
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
+    private void bugLoader(){
+
+        /*List<Bug> bugs =  BugInputWindowController.updetedList;
+        HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
+        for (Bug bug :bugs) {
+
+        }*/
+
+    }
+
     /**
      *
      */
@@ -222,6 +235,25 @@ public class HomeWindowController implements Initializable {
         designMitigationColumn.prefWidthProperty().bind(designTable.widthProperty().divide(1.5));
 
         designTable.setItems(threatData);
+    }
+
+    private void setBugProperties() {
+
+        sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("threat"));
+        sourceBugColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
+
+        sourceCategoryColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("category"));
+        sourceCategoryColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
+
+        sourcePreventionColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("mitigation"));
+        sourcePreventionColumn.prefWidthProperty().bind(designTable.widthProperty().divide(1.5));
+
+        sourceTable.setItems(bugData);
+    }
+
+    @FXML
+    private void settingsSubAction(ActionEvent event) throws Exception {
+        start("/fxml/Settings.fxml", "Settings", true, 0);
     }
 
     @FXML

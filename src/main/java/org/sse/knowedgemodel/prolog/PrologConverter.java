@@ -79,9 +79,10 @@ public class PrologConverter {
         String solution = "";
         while (q.hasMoreSolutions()){
             String sol = q.nextSolution().toString();
-            sol=sol.replace("{X='","").replace("'}","").replace("\n", "");
+            sol=sol.trim().replace("{X='","").replace("'}","").replace("\n", "");
             solution = solution +" "+ sol;
         }
+        System.out.println(solution);
         List<String> preventions = Arrays.asList(solution.split("[.]"));
 
         /*for (String x : preventions) {

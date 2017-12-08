@@ -1,7 +1,9 @@
 package org.sse.userinterface.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.sse.source.BugCategoriesLoader;
@@ -31,15 +34,15 @@ public class MainController implements Initializable {
         double width = screenBounds.getWidth();
         double height = screenBounds.getHeight();
 
-        Scene scene = new Scene(parent, (width*0.8) , (height*0.8));
+        Scene scene = new Scene(parent, (width * 0.8), (height * 0.8));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
 
-        stage.setX((width - stage.getWidth()) /2 );
+        stage.setX((width - stage.getWidth()) / 2);
         stage.setY((height - stage.getHeight()) / 2);
     }
-    
+
     @FXML
     private void startAnlzButtonAction(ActionEvent event) throws Exception {
         start("/fxml/NewProjectWindow.fxml", "Start New Project", false);
@@ -57,8 +60,29 @@ public class MainController implements Initializable {
         stage.setScene(newProjectWindow);
         stage.show();
     }
-    
+
     public void initialize(URL url, ResourceBundle rb) {
-        
+
+    }
+
+    @FXML
+    private void openMenuItemAction(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CNX File (*.cnx)", "*.cnx")
+        );
+
+        Stage stage = new Stage();
+        fileChooser.setTitle("Open Project");
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null) {
+            System.out.println("File open");
+        }else{
+            /**
+             * Error messgae - Invalid file
+             */
+        }
     }
 }

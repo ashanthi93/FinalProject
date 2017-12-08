@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import java.io.IOException;
 import java.net.URL;
 import java.io.File;
@@ -59,11 +61,11 @@ import org.sse.outputgenerators.report.model.AssociationReport;
 import org.sse.outputgenerators.report.model.BugReport;
 import org.sse.outputgenerators.report.model.ThreatReport;
 import org.sse.source.model.BugCategory;
-import org.sse.userinterface.MainApp;
 
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.Node;
 
 public class HomeWindowController implements Initializable {
 
@@ -71,15 +73,18 @@ public class HomeWindowController implements Initializable {
     public static String selectedIndex = "NONE";
 
     @FXML
+    private JFXButton newProjectBtn;
+
+    @FXML
     private void settingsSub1Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 0);
     }
-    
+
     @FXML
     private void settingsSub2Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 1);
     }
-    
+
     @FXML
     private void settingsSub3Action(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 2);
@@ -110,7 +115,6 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TabPane homeTabPane;
 
-    private Stage rootStage;
     private HashMap<String, ThreatCategory> threatMap;
     private ObservableList<ThreatMitigation> threatData;
 
@@ -126,8 +130,6 @@ public class HomeWindowController implements Initializable {
         stage.setScene(scene);
         stage.show();
 
-        rootStage = stage;
-
         TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
         SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
         selectionModel.select(index);
@@ -137,7 +139,7 @@ public class HomeWindowController implements Initializable {
 
         setThreatProperties();
 
-        if(selectedIndex.equals("DESIGN")){
+        if (selectedIndex.equals("DESIGN")) {
             List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
             tabs.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
             homeTabPane.getTabs().clear();
@@ -158,14 +160,13 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     *
      * @throws DocumentException
      */
     private void initializeDesignTab() throws DocumentException {
 
     }
 
-    private void threatLoader () throws DocumentException {
+    private void threatLoader() throws DocumentException {
         threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
         int id = 0;
@@ -176,20 +177,20 @@ public class HomeWindowController implements Initializable {
             ThreatCategory categoryList = threatMap.get(key);
             List<Threat> list = categoryList.getThreatList();
 
-            for (Threat threat : list){
+            for (Threat threat : list) {
 
                 List<String> mitigations = categoryList.getMitigationList();
 
                 ThreatCategory threatCategory = threatMap.get(key);
                 threatCategory.setMitigationList(mitigations);
-                threatMap.put(key,threatCategory);
+                threatMap.put(key, threatCategory);
 
                 ThreatMitigation threatmitigation = new ThreatMitigation();
                 threatmitigation.setThreat(threat.getName());
                 threatmitigation.setCategory(threat.getThreatCategoryName());
                 threatmitigation.setMitigation(mitigations.get(0));
 
-                threatObjects.put(id,threatmitigation);
+                threatObjects.put(id, threatmitigation);
                 id++;
 
                 for (int i = 1; i < mitigations.size(); i++) {
@@ -198,13 +199,14 @@ public class HomeWindowController implements Initializable {
                     threatmitigationCopy.setCategory("");
                     threatmitigationCopy.setMitigation(mitigations.get(i));
 
-                    threatObjects.put(id,threatmitigationCopy);
+                    threatObjects.put(id, threatmitigationCopy);
                     id++;
                 }
             }
         }
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
+
     /**
      *
      */
@@ -226,14 +228,14 @@ public class HomeWindowController implements Initializable {
     private void sourceNextBtnAction(ActionEvent event) throws Exception {
         int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
 
-        if(selectedNum == 0){
+        if (selectedNum == 0) {
             boolean returned = fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
-            if(returned){
+            if (returned) {
                 homeTabPane.getSelectionModel().select(1);
                 threatLoader();
                 setThreatProperties();
             }
-        }else {
+        } else {
             homeTabPane.getSelectionModel().select(2);
         }
     }
@@ -258,11 +260,11 @@ public class HomeWindowController implements Initializable {
         int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
         isHomeOpened = true;
 
-        if(selectedNum == 0){
+        if (selectedNum == 0) {
             start("/fxml/BugInputWindow.fxml", "Bug Input Window");
             homeTabPane.getSelectionModel().select(1);
 
-        }else{
+        } else {
             homeTabPane.getSelectionModel().select(2);
         }
     }
@@ -294,11 +296,11 @@ public class HomeWindowController implements Initializable {
             }
         } catch (RuntimeException e) {
             e.printStackTrace();
-            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid Threat Model" , "\n Threat Category model does not maatch with STRIDE !");
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid Threat Model", "\n Threat Category model does not maatch with STRIDE !");
             alert.showAndWait();
         } catch (DocumentException e) {
             e.printStackTrace();
-            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid File" , "\n Threat Report is invalid !");
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Invalid File", "\n Threat Report is invalid !");
             alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
@@ -317,7 +319,7 @@ public class HomeWindowController implements Initializable {
         stage.show();
     }
 
-    public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){
+    public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
 
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -382,7 +384,7 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void jsonMenuItemAction(ActionEvent event) throws Exception {
+    private void jsonMenuItemAction(ActionEvent event) {
 
         try {
             Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
@@ -402,6 +404,44 @@ public class HomeWindowController implements Initializable {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void newMenuItemAction(ActionEvent event) {
+
+        Stage previousStage = (Stage) this.newProjectBtn.getScene().getWindow();
+        previousStage.close();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewProjectWindow.fxml"));
+            Stage stage = new Stage();
+            MainController.newProjectWindow = new Scene(root);
+            MainController.newProjectWindow.getStylesheets().add("/styles/Styles.css");
+
+            stage.setTitle("Start New Project");
+            stage.setResizable(false);
+            stage.setScene(MainController.newProjectWindow);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void openMenuItemAction(ActionEvent event) {
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("CNX File", ".cnx")
+        );
+        Stage stage = new Stage();
+        fileChooser.setTitle("Open Project");
+        File file = fileChooser.showOpenDialog(stage);
+
+        if (file != null){
+            System.out.println("File open");
         }
     }
 
@@ -456,7 +496,7 @@ public class HomeWindowController implements Initializable {
 
             boolean isSaveSucceed = this.fileSaveAction(outputFileAsString, fileDescription, fileExtension);
 
-            if (!isSaveSucceed){
+            if (!isSaveSucceed) {
                 /*
                 * error message
                 */
@@ -467,7 +507,6 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     *
      * @param outputXMLFile
      * @param fileDescription
      * @param fileExtensionFormat
@@ -481,7 +520,7 @@ public class HomeWindowController implements Initializable {
                 new FileChooser.ExtensionFilter(fileDescription, fileExtensionFormat)
         );
 
-        File file = fileChooser.showSaveDialog(rootStage);
+        File file = fileChooser.showSaveDialog(this.newProjectBtn.getScene().getWindow());
 
         if (file != null) {
             try (PrintStream ps = new PrintStream(file)) {
@@ -505,7 +544,6 @@ public class HomeWindowController implements Initializable {
         HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
 
         for (ThreatCategory threatCategory : threatMap.values()) {
-
 
 
             threatCategoryHashMap.put(threatCategory.getId(), threatCategory);
@@ -535,7 +573,6 @@ public class HomeWindowController implements Initializable {
     }
 
     /**
-     *
      * @return
      * @throws ParserConfigurationException
      * @throws SAXException

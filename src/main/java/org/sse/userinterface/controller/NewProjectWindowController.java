@@ -126,6 +126,10 @@ public class NewProjectWindowController implements Initializable {
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+
+        if(title.equals("Home Window")){
+            stage.setMaximized(true);
+        }
     }
 
     public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText){

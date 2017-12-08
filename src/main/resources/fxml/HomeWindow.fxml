@@ -30,11 +30,9 @@
                         <MenuItem fx:id="closeMenuItem" mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
-                <Menu fx:id="settingsMenu" mnemonicParsing="false" text="Settings">
+                <Menu fx:id="toolsMenu" mnemonicParsing="false" text="Tools">
                     <items>
-                        <MenuItem fx:id="settingsSub1" mnemonicParsing="false" onAction="#settingsSub1Action" text="OWASP Top 10" />
-                        <MenuItem fx:id="settingsSub2" mnemonicParsing="false" onAction="#settingsSub2Action" text="OWASP Proactives" />
-                        <MenuItem fx:id="settingsSub3" mnemonicParsing="false" onAction="#settingsSub3Action" text="OWASP Top 10 Mapping" />
+                        <MenuItem fx:id="settingsSub" mnemonicParsing="false" onAction="#settingsSubAction" text="Settings" />
                     </items>
                 </Menu>
                 <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">

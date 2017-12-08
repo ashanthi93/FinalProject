@@ -71,18 +71,8 @@ public class HomeWindowController implements Initializable {
     public static String selectedIndex = "NONE";
 
     @FXML
-    private void settingsSub1Action(ActionEvent event) throws Exception {
+    private void settingsSubAction(ActionEvent event) throws Exception {
         start("/fxml/Settings.fxml", "Settings", true, 0);
-    }
-    
-    @FXML
-    private void settingsSub2Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 1);
-    }
-    
-    @FXML
-    private void settingsSub3Action(ActionEvent event) throws Exception {
-        start("/fxml/Settings.fxml", "Settings", true, 2);
     }
 
     // Table to hold source code bugs and details
@@ -131,6 +121,7 @@ public class HomeWindowController implements Initializable {
         TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
         SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
         selectionModel.select(index);
+
     }
 
     public void initialize(URL url, ResourceBundle rb) {

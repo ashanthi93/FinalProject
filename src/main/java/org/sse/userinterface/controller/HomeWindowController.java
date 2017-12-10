@@ -3,7 +3,6 @@ package org.sse.userinterface.controller;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,18 +11,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
-import java.net.URL;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ResourceBundle;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,11 +27,8 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.dom4j.DocumentException;
+import org.sse.association.model.AssociationContainer;
 import org.sse.design.ThreatExtractor;
-
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import org.sse.design.model.ThreatCategory;
 import org.sse.knowedgemodel.prolog.PrologConverter;
@@ -47,7 +36,6 @@ import org.sse.outputgenerators.FileFormat;
 import org.sse.outputgenerators.ReportType;
 
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.dom4j.DocumentException;
 import org.sse.design.ThreatCategoriesLoader;
 import org.sse.design.model.Threat;
 import org.sse.design.model.ThreatMitigation;
@@ -67,9 +55,7 @@ import org.sse.source.model.BugCountermeasures;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.soap.Node;
 
-import static org.sse.userinterface.controller.BugInputWindowController.updetedList;
 
 public class HomeWindowController implements Initializable {
 
@@ -110,6 +96,8 @@ public class HomeWindowController implements Initializable {
     private HashMap<String, ThreatCategory> threatMap;
     private ObservableList<ThreatMitigation> threatData;
 
+
+    // create source table
     @FXML
     private TableView<BugCountermeasures> sourceTable;
 
@@ -120,7 +108,25 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TableColumn<BugCountermeasures, String> sourcePreventionColumn;
 
-    private ObservableList<BugCountermeasures> bugData;
+    private static ObservableList<BugCountermeasures> bugData;
+
+
+    // create association table
+
+    @FXML
+    private TableView<AssociationContainer> associationTable;
+
+    @FXML
+    private TableColumn<AssociationContainer, String> associationthreatcolumn;
+    @FXML
+    private TableColumn<AssociationContainer, String> associationthreatcategorycolumn;
+    @FXML
+    private TableColumn<AssociationContainer, String> associationbugcolumn;
+    @FXML
+    private TableColumn<AssociationContainer, String> associationbugcategorycolumn;
+
+    private static ObservableList<AssociationContainer> AssociationData;
+
 
     public void start(String path, String title, Boolean resizable, int index) throws Exception {
 
@@ -214,13 +220,13 @@ public class HomeWindowController implements Initializable {
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
-    public void bugLoader(){
+    public static void bugLoader(){
 
         List<Bug> bugs =  BugInputWindowController.updetedList;
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
         int id = 0;
         for (Bug bug :bugs) {
-
+            //System.out.println("////////////"+bug.getCategoryName());
             String [] category = bug.getCategoryName().split(":");
             List<String> preventions = prolog.getPreventionTechniques(category[0].toLowerCase());
 
@@ -239,12 +245,13 @@ public class HomeWindowController implements Initializable {
             }
         }
         bugData = FXCollections.observableArrayList(bugObjects.values());
+    }
+
+    private void associationLoader(){
 
     }
 
-    /**
-     *
-     */
+
     private void setThreatProperties() {
 
         designThreatColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("threat"));
@@ -259,7 +266,7 @@ public class HomeWindowController implements Initializable {
         designTable.setItems(threatData);
     }
 
-    public void setBugProperties() {
+    private void setBugProperties() {
 
         sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("bug"));
         sourceBugColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
@@ -271,6 +278,22 @@ public class HomeWindowController implements Initializable {
         sourcePreventionColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(1.5));
 
         sourceTable.setItems(bugData);
+    }
+
+    private void setAssociationProperties(){
+        associationthreatcolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
+        associationthreatcolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+
+        associationthreatcategorycolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threatCategory"));
+        associationthreatcategorycolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+
+        associationbugcolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bug"));
+        associationbugcolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+
+        associationbugcategorycolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
+        associationbugcategorycolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+
+        associationTable.setItems(AssociationData);
     }
 
     @FXML

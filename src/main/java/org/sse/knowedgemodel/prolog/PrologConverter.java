@@ -19,7 +19,7 @@ public class PrologConverter {
         System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
         String s2 = "owasp(X,'" + x + "').";
         String s3 = "get_mitigation_for_bug(X,'" + x + "').";
-        System.out.println(s2);
+        //System.out.println(s2);
         Query q2 = new Query(s2);
         Query q3 = new Query(s3);
 
@@ -32,10 +32,10 @@ public class PrologConverter {
 
             Term varX []= ((Term) map.get("X")).toTermArray();
 
-            for (int i = 0; i <varX.length ; i++) {
+            /*for (int i = 0; i <varX.length ; i++) {
                 System.out.print(varX[i] + " ");
                 System.out.println();
-            }
+            }*/
 
         }
 
@@ -51,10 +51,10 @@ public class PrologConverter {
 
     public List<String> getMitigationTechniques(String threat){
 
-        System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
+        q1.hasSolution();
+        //System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
         String rule = "get_mitigation_techniques(X,'" + threat + "').";
         Query q = new Query(rule);
-        System.out.println(q);
         q.open();
         String solution = "";
         while (q.hasMoreSolutions()){
@@ -64,19 +64,15 @@ public class PrologConverter {
         }
         List<String> mitigations = Arrays.asList(solution.split("[.]"));
 
-        /*for (String x : mitigations) {
-            System.out.println(x);
-        }*/
-
         return mitigations;
     }
 
     public List<String> getPreventionTechniques(String bug) {
 
-        System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
+        q1.hasSolution();
+        //System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
         String rule = "get_prevention_techniques(X,'" + bug + "').";
         Query q = new Query(rule);
-        System.out.println(q);
         q.open();
         String solution = "";
         while (q.hasMoreSolutions()){
@@ -84,13 +80,10 @@ public class PrologConverter {
             sol=sol.trim().replace("{X='","").replace("'}","").replace("\n", "");
             solution = solution +" "+ sol;
         }
-        System.out.println(solution);
         //List<String> preventions = Arrays.asList(solution.split("[.]"));
         List<String> preventions = DescriptionProcessor.getSentences(solution);
 
-        /*for (String x : preventions) {
-            System.out.println(x);
-        }*/
+
         return preventions;
 
     }

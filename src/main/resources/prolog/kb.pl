@@ -1,4 +1,3 @@
-:- [owasp].
 :- [stride].
 :- [similaritymatch].
 

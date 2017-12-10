@@ -87,6 +87,14 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
+                                <TableView fx:id="associationTable" layoutX="14.0" prefHeight="260.0" prefWidth="600.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+                                    <columns>
+                                        <TableColumn fx:id="associationthreat" prefWidth="75.0" text="Threat" />
+                                        <TableColumn fx:id="associationthreatcategory" prefWidth="75.0" text="Threat" />
+                                        <TableColumn fx:id="assosiationbug" prefWidth="75.0" text="Bug" />
+                                        <TableColumn fx:id="associationbugcategory" prefWidth="190.0" text="Assosiation" />
+                                    </columns>
+                                </TableView>
                                 <JFXButton fx:id="analysisSaveBtn" buttonType="RAISED" layoutX="470.0" layoutY="270.0" onAction="#analysisSaveBtnAction" style="-fx-background-color: #48d1cc;" text="Save" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="77.0" />
                                 <JFXButton fx:id="associationCancelBtn" buttonType="RAISED" layoutX="534.0" layoutY="270.0" onAction="#associationCancelBtnAction" style="-fx-background-color: #48d1cc;" text="Cancel" textFill="#3d4956" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
                             </children>

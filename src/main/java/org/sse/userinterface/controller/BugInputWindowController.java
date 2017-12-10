@@ -120,6 +120,7 @@ public class BugInputWindowController implements Initializable {
 
                 Stage stage2 = (Stage) addBtn.getScene().getWindow();
                 stage2.close();
+                HomeWindowController.bugLoader();
             }
 
         }catch (IOException e){
@@ -180,6 +181,7 @@ public class BugInputWindowController implements Initializable {
         }catch(DocumentException de){
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while setting the table properties in the window.");
             alert.showAndWait();
+
         }
 
     }

@@ -1,6 +1,6 @@
 :- [rules].
 :- [stride].
-
+:- [kb].
 
 owasp_top10(
 a1,

@@ -1,0 +1,16 @@
+<!DOCTYPE threat-category-report[
+<!ELEMENT threat-category-report (report-name,time-generated,threat-categories)>
+<!ELEMENT report-name (#PCDATA)>
+<!ELEMENT time-generated (#PCDATA)>
+<!ELEMENT threat-categories (threat-category)>
+<!ELEMENT threat-category (id,name,threats,mitigations)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT threats (threat)>
+<!ELEMENT threat (name,description,priority)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT priority (#PCDATA)>
+<!ELEMENT mitigations (mitigation)>
+<!ELEMENT mitigation (#PCDATA)>
+]>

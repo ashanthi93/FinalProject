@@ -38,9 +38,6 @@ public class PrologConverter {
             }*/
 
         }
-
-
-
         /*while(q2.hasMoreSolutions()){
             Map solution = q2.nextSolution();
 
@@ -83,11 +80,27 @@ public class PrologConverter {
         //List<String> preventions = Arrays.asList(solution.split("[.]"));
         List<String> preventions = DescriptionProcessor.getSentences(solution);
 
-
+        for (String x :preventions){
+            System.out.println(x);
+        }
         return preventions;
 
     }
 
+    public String[] getThreatCategoriesForBugCategory (String bug){
 
+        q1.hasSolution();
+        String rule = "isCausedByThreatCategory('" + bug + "',X).";
+        Query q = new Query(rule);
+        String solution = "!!!!";
+        if (q.hasSolution()) {
+            q.open();
+            solution = q.getSolution().toString();
+        }
+        solution = solution.replace("{X=","").replace("}","");
+        String[] threats = solution.split(",");
+        System.out.println(solution);
+        return threats;
+    }
 
 }

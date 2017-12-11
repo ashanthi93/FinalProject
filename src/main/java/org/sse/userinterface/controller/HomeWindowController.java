@@ -2,9 +2,7 @@ package org.sse.userinterface.controller;
 
 import java.io.File;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
@@ -13,7 +11,6 @@ import javafx.collections.ObservableList;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -188,9 +185,79 @@ public class HomeWindowController implements Initializable {
         for (String key : threatMap.keySet()) {
 
             ThreatCategory categoryList = threatMap.get(key);
-            List<Threat> list = categoryList.getThreatList();
+            List<Threat> Tlist = categoryList.getThreatList();
+            List<String> Mlist = categoryList.getMitigationList();
 
-            for (Threat threat : list) {
+            int TlistLen = Tlist.size();
+            int MlistLen = Mlist.size();
+
+            // When number of threats are higher than num of mitigations
+
+            if (TlistLen>MlistLen){
+                if (MlistLen!=0){
+                    Threat t = Tlist.get(0);
+
+                    ThreatMitigation threatmitigation = new ThreatMitigation();
+                    threatmitigation.setCategory(t.getThreatCategoryName());
+                    threatmitigation.setThreat(t.getName());
+                    threatmitigation.setMitigation(Mlist.get(0));
+                    threatObjects.put(id,threatmitigation);
+                    id++;
+                }
+                for (int j=1;j<TlistLen;j++){
+                    Threat t1 = Tlist.get(j);
+                    ThreatMitigation threatmitigationCopy = new ThreatMitigation();
+
+                    threatmitigationCopy.setCategory("");
+                    threatmitigationCopy.setThreat(t1.getName());
+                    if (j<MlistLen){
+                        threatmitigationCopy.setMitigation(Mlist.get(j));
+                    }
+                    else{
+                        threatmitigationCopy.setMitigation("");
+                    }
+
+                    threatObjects.put(id,threatmitigationCopy);
+                    id++;
+                }
+            }
+
+            // When number of mitigations are higher than or equal to num of threats
+
+            if (MlistLen>=TlistLen){
+                if (TlistLen!=0){
+                    Threat t = Tlist.get(0);
+
+                    ThreatMitigation threatmitigation = new ThreatMitigation();
+                    threatmitigation.setCategory(t.getThreatCategoryName());
+                    threatmitigation.setThreat(t.getName());
+                    threatmitigation.setMitigation(Mlist.get(0));
+                    threatObjects.put(id,threatmitigation);
+                    id++;
+                }
+                for (int j=1;j<MlistLen;j++){
+
+                    ThreatMitigation threatmitigationCopy = new ThreatMitigation();
+
+                    if (j<TlistLen){
+                        Threat t1 = Tlist.get(j);
+                        threatmitigationCopy.setCategory("");
+                        threatmitigationCopy.setThreat(t1.getName());
+                        threatmitigationCopy.setMitigation(Mlist.get(j));
+                        threatObjects.put(id,threatmitigationCopy);
+                        id++;
+                    }
+                    else {
+                        threatmitigationCopy.setCategory("");
+                        threatmitigationCopy.setThreat("");
+                        threatmitigationCopy.setMitigation(Mlist.get(j));
+                        threatObjects.put(id,threatmitigationCopy);
+                        id++;
+                    }
+                }
+            }
+
+            /*for (Threat threat : list) {
 
                 List<String> mitigations = categoryList.getMitigationList();
 
@@ -202,6 +269,7 @@ public class HomeWindowController implements Initializable {
                 threatmitigation.setThreat(threat.getName());
                 threatmitigation.setCategory(threat.getThreatCategoryName());
                 threatmitigation.setMitigation(mitigations.get(0));
+                threatmitigation.setType(key.toLowerCase());
 
                 threatObjects.put(id, threatmitigation);
                 id++;
@@ -215,7 +283,7 @@ public class HomeWindowController implements Initializable {
                     threatObjects.put(id, threatmitigationCopy);
                     id++;
                 }
-            }
+            }*/
         }
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
@@ -223,9 +291,102 @@ public class HomeWindowController implements Initializable {
     public static void bugLoader(){
 
         List<Bug> bugs =  BugInputWindowController.updetedList;
+        HashMap <String,List<String>> categorisedMap = new HashMap<String, List<String>>();
+
+        //List<String> list = new ArrayList<String>();
+
+        categorisedMap.put("a1",new ArrayList<String>());
+        categorisedMap.put("a2",new ArrayList<String>());
+        categorisedMap.put("a3",new ArrayList<String>());
+        categorisedMap.put("a4",new ArrayList<String>());
+        categorisedMap.put("a5",new ArrayList<String>());
+        categorisedMap.put("a6",new ArrayList<String>());
+        categorisedMap.put("a7",new ArrayList<String>());
+        categorisedMap.put("a8",new ArrayList<String>());
+        categorisedMap.put("a9",new ArrayList<String>());
+        categorisedMap.put("a10",new ArrayList<String>());
+
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
         int id = 0;
-        for (Bug bug :bugs) {
+
+        for (Bug bug :bugs){
+            String [] category = bug.getCategoryName().toLowerCase().split(":");
+            List <String> list1 = categorisedMap.get(category[0]);
+            list1.add(bug.getName());
+            System.out.println("");
+            categorisedMap.put(category[0],list1);
+            System.out.println("asdfghjkl");
+        }
+
+        for (String key : categorisedMap.keySet()){
+
+            List<String> Blist = categorisedMap.get(key);
+            List<String> Plist = prolog.getPreventionTechniques(key);
+
+            int BlistLen = Blist.size();
+            int PlistLen = Plist.size();
+            if (BlistLen>0) {
+                if (BlistLen > PlistLen) {
+                    if (PlistLen != 0) {
+
+                        BugCountermeasures bugcountermeasure = new BugCountermeasures();
+                        bugcountermeasure.setCategory(key);
+
+                        bugcountermeasure.setBug(Blist.get(0));
+                        bugcountermeasure.setCountermeasure(Plist.get(0));
+                        bugObjects.put(id, bugcountermeasure);
+                        id++;
+                    }
+                    for (int j = 1; j < BlistLen; j++) {
+                        BugCountermeasures bugCountermeasuresCopy = new BugCountermeasures();
+
+                        bugCountermeasuresCopy.setCategory("");
+                        bugCountermeasuresCopy.setBug(Blist.get(j));
+                        if (j < PlistLen) {
+                            bugCountermeasuresCopy.setCountermeasure(Plist.get(j));
+                        } else {
+                            bugCountermeasuresCopy.setCountermeasure("");
+                        }
+
+                        bugObjects.put(id, bugCountermeasuresCopy);
+                        id++;
+                    }
+                }
+
+                if (PlistLen >= BlistLen) {
+                    if (BlistLen != 0) {
+
+                        BugCountermeasures bugCountermeasures = new BugCountermeasures();
+                        bugCountermeasures.setCategory(key);
+                        bugCountermeasures.setBug(Blist.get(0));
+                        bugCountermeasures.setCountermeasure(Plist.get(0));
+                        bugObjects.put(id, bugCountermeasures);
+                        id++;
+                    }
+                    for (int j = 1; j < PlistLen; j++) {
+
+                        BugCountermeasures bugCountermeasuresCopy = new BugCountermeasures();
+
+                        if (j < BlistLen) {
+                            bugCountermeasuresCopy.setCategory("");
+                            bugCountermeasuresCopy.setBug(Blist.get(j));
+                            bugCountermeasuresCopy.setCountermeasure(Plist.get(j));
+                            bugObjects.put(id, bugCountermeasuresCopy);
+                            id++;
+                        } else {
+                            bugCountermeasuresCopy.setCategory("");
+                            bugCountermeasuresCopy.setBug("");
+                            bugCountermeasuresCopy.setCountermeasure(Plist.get(j));
+                            bugObjects.put(id, bugCountermeasuresCopy);
+                            id++;
+                        }
+                    }
+                }
+            }
+
+        }
+
+        /*for (Bug bug :bugs) {
             //System.out.println("////////////"+bug.getCategoryName());
             String [] category = bug.getCategoryName().split(":");
             List<String> preventions = prolog.getPreventionTechniques(category[0].toLowerCase());
@@ -243,11 +404,32 @@ public class HomeWindowController implements Initializable {
                 bugcountermeasureCopy.setCountermeasure(preventions.get(i));
                 bugObjects.put(id,bugcountermeasureCopy);
             }
-        }
+        }*/
         bugData = FXCollections.observableArrayList(bugObjects.values());
     }
 
     private void associationLoader(){
+
+        HashMap<Integer, AssociationContainer> bugObjects = new HashMap<>();
+        int id=0;
+
+        for (BugCountermeasures bug :bugData){
+            AssociationContainer associationcontainer = new AssociationContainer();
+            associationcontainer.setBug(bug.getBug());
+            String bugcategory = bug.getCategory();
+            associationcontainer.setBugCategory(bugcategory);
+
+            String [] threatCategorisForBugs = prolog.getThreatCategoriesForBugCategory(bugcategory);
+            for (String category : threatCategorisForBugs){
+                for (ThreatMitigation t : threatData){
+                    String type= t.getType();
+                    if (type!= null && category == type){
+                        associationcontainer.setThreat(t.getThreat());
+                        associationcontainer.setThreatCategory(t.getCategory());
+                    }
+                }
+            }
+        }
 
     }
 

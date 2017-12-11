@@ -5,6 +5,7 @@ public class ThreatMitigation {
     private String threat;
     private String category;
     private String mitigation;
+    private String type;
 
     /* getters & setters */
     public String getThreat() {
@@ -28,4 +29,10 @@ public class ThreatMitigation {
     }
 
     public void setMitigation(String mitigation) { this.mitigation = mitigation; }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) { this.type = type; }
 }

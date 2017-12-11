@@ -120,7 +120,7 @@ public class BugInputWindowController implements Initializable {
 
                 Stage stage2 = (Stage) addBtn.getScene().getWindow();
                 stage2.close();
-                HomeWindowController.bugLoader();
+                //HomeWindowController.bugLoader();
             }
 
         }catch (IOException e){

@@ -80,9 +80,6 @@ public class PrologConverter {
         //List<String> preventions = Arrays.asList(solution.split("[.]"));
         List<String> preventions = DescriptionProcessor.getSentences(solution);
 
-        for (String x :preventions){
-            System.out.println(x);
-        }
         return preventions;
 
     }
@@ -92,7 +89,7 @@ public class PrologConverter {
         q1.hasSolution();
         String rule = "isCausedByThreatCategory('" + bug + "',X).";
         Query q = new Query(rule);
-        String solution = "!!!!";
+        String solution = "";
         if (q.hasSolution()) {
             q.open();
             solution = q.getSolution().toString();

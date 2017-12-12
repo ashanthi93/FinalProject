@@ -20,7 +20,7 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        new PrologConverter().getPreventionTechniques("a3");
+        new PrologConverter().getThreatCategoriesForBugCategory("a3");
 
         //KbBuilder.write();
 

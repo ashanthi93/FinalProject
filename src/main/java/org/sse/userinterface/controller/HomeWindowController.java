@@ -114,13 +114,13 @@ public class HomeWindowController implements Initializable {
     private TableView<AssociationContainer> associationTable;
 
     @FXML
-    private TableColumn<AssociationContainer, String> associationthreatcolumn;
+    private TableColumn<AssociationContainer, String> associationbugcategory;
     @FXML
-    private TableColumn<AssociationContainer, String> associationthreatcategorycolumn;
+    private TableColumn<AssociationContainer, String> assosiationbug;
     @FXML
-    private TableColumn<AssociationContainer, String> associationbugcolumn;
+    private TableColumn<AssociationContainer, String> associationthreatcategory;
     @FXML
-    private TableColumn<AssociationContainer, String> associationbugcategorycolumn;
+    private TableColumn<AssociationContainer, String> associationthreat;
 
     private static ObservableList<AssociationContainer> AssociationData;
 
@@ -313,9 +313,7 @@ public class HomeWindowController implements Initializable {
             String [] category = bug.getCategoryName().toLowerCase().split(":");
             List <String> list1 = categorisedMap.get(category[0]);
             list1.add(bug.getName());
-            System.out.println("");
             categorisedMap.put(category[0],list1);
-            System.out.println("asdfghjkl");
         }
 
         for (String key : categorisedMap.keySet()){
@@ -410,27 +408,48 @@ public class HomeWindowController implements Initializable {
 
     private void associationLoader(){
 
-        HashMap<Integer, AssociationContainer> bugObjects = new HashMap<>();
+        HashMap<Integer, AssociationContainer> associationObjects = new HashMap<>();
         int id=0;
 
         for (BugCountermeasures bug :bugData){
             AssociationContainer associationcontainer = new AssociationContainer();
-            associationcontainer.setBug(bug.getBug());
-            String bugcategory = bug.getCategory();
-            associationcontainer.setBugCategory(bugcategory);
+            String category = bug.getCategory();
+            if (category != "" || category!= null){
+                String [] threatsForBug = prolog.getThreatCategoriesForBugCategory(category);
+                associationcontainer.setBugCategory(category);
+                associationcontainer.setBug(bug.getBug());
+                if (threatsForBug[0] != ""){
+                    for (String threat : threatsForBug){
+                        associationcontainer.setThreatCategory(threat);
+                        //associationcontainer.setThreat("");
+                        List <Threat> t = threatMap.get(threat.toUpperCase()).getThreatList();
+                        for (Threat details : t){
+                            if (associationcontainer.getThreat() == null){
+                                associationcontainer.setThreat(details.getId() + " " + details.getName() );
+                            }
+                            else{
+                                associationcontainer.setThreat(associationcontainer.getThreat() + "\n" + details.getId() + " " +details.getName()+ " " + details.getId());
+                            }
 
-            String [] threatCategorisForBugs = prolog.getThreatCategoriesForBugCategory(bugcategory);
-            for (String category : threatCategorisForBugs){
-                for (ThreatMitigation t : threatData){
-                    String type= t.getType();
-                    if (type!= null && category == type){
-                        associationcontainer.setThreat(t.getThreat());
-                        associationcontainer.setThreatCategory(t.getCategory());
+                        }
                     }
                 }
-            }
-        }
+                else {
+                    associationcontainer.setThreatCategory("");
+                    associationcontainer.setThreat("");
+                }
 
+            }
+            else if (bug.getBug() != "" || bug.getBug()!= null){
+                associationcontainer.setBugCategory("");
+                associationcontainer.setBug(associationcontainer.getBug() + "\n" + bug.getBug());
+            }
+
+            associationObjects.put(id,associationcontainer);
+            id++;
+
+        }
+        AssociationData = FXCollections.observableArrayList(associationObjects.values());
     }
 
 
@@ -463,17 +482,19 @@ public class HomeWindowController implements Initializable {
     }
 
     private void setAssociationProperties(){
-        associationthreatcolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
-        associationthreatcolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+        //System.out.println(AssociationData.get(0).getBug() + AssociationData.get(0).getBugCategory());
 
-        associationthreatcategorycolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threatCategory"));
-        associationthreatcategorycolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+        associationthreat.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
+        associationthreat.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
-        associationbugcolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bug"));
-        associationbugcolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+        associationthreatcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threatCategory"));
+        associationthreatcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
-        associationbugcategorycolumn.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
-        associationbugcategorycolumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
+        assosiationbug.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bug"));
+        assosiationbug.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
+
+        associationbugcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
+        associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         associationTable.setItems(AssociationData);
     }
@@ -527,6 +548,8 @@ public class HomeWindowController implements Initializable {
 
         } else {
             homeTabPane.getSelectionModel().select(2);
+            associationLoader();
+            setAssociationProperties();
         }
     }
 

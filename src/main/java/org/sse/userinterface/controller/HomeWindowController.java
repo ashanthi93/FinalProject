@@ -741,7 +741,7 @@ public class HomeWindowController implements Initializable {
     private void analysisSaveBtnAction(ActionEvent event) {
 
         try {
-            this.saveReport(ReportType.BUG_REPORT, FileFormat.CNX);
+            this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.CNX);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

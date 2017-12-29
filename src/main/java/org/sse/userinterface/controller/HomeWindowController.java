@@ -61,8 +61,6 @@ public class HomeWindowController implements Initializable {
     static PrologConverter prolog = new PrologConverter();
 
 
-
-
     @FXML
     private JFXButton newProjectBtn;
     @FXML
@@ -93,8 +91,8 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TabPane homeTabPane;
 
-    private HashMap<String, ThreatCategory> threatMap;
-    private ObservableList<ThreatMitigation> threatData;
+    private static HashMap<String, ThreatCategory> threatMap;
+    private static ObservableList<ThreatMitigation> threatData;
 
 
     // create source table
@@ -194,11 +192,29 @@ public class HomeWindowController implements Initializable {
             List<String> Mlist = categoryList.getMitigationList();
 
             int TlistLen = Tlist.size();
-            int MlistLen = Mlist.size();
+
+            ThreatMitigation threatmitigation = new ThreatMitigation();
+
+            if (TlistLen > 0) {
+                threatmitigation.setCategory(categoryList.getName());
+                String threatList = "";
+                String allMitigations = "";
+                for (Threat threat : Tlist) {
+                    threatList = threatList + threat.getId() + ": " + threat.getName() + "\n\n";
+                }
+                threatmitigation.setThreat(threatList.trim());
+                for (String mitigation : Mlist) {
+                    allMitigations = allMitigations + mitigation + "\n\n";
+                }
+                threatmitigation.setMitigation(allMitigations);
+            }
+
+            threatObjects.put(id, threatmitigation);
+            id++;
 
             // When number of threats are higher than num of mitigations
 
-            if (TlistLen>MlistLen){
+            /*if (TlistLen>MlistLen){
                 if (MlistLen!=0){
                     Threat t = Tlist.get(0);
 
@@ -260,103 +276,67 @@ public class HomeWindowController implements Initializable {
                         id++;
                     }
                 }
-            }
-
-            /*for (Threat threat : list) {
-
-                List<String> mitigations = categoryList.getMitigationList();
-
-                ThreatCategory threatCategory = threatMap.get(key);
-                threatCategory.setMitigationList(mitigations);
-                threatMap.put(key, threatCategory);
-
-                ThreatMitigation threatmitigation = new ThreatMitigation();
-                threatmitigation.setThreat(threat.getName());
-                threatmitigation.setCategory(threat.getThreatCategoryName());
-                threatmitigation.setMitigation(mitigations.get(0));
-                threatmitigation.setType(key.toLowerCase());
-
-                threatObjects.put(id, threatmitigation);
-                id++;
-
-                for (int i = 1; i < mitigations.size(); i++) {
-                    ThreatMitigation threatmitigationCopy = new ThreatMitigation();
-                    threatmitigationCopy.setThreat("");
-                    threatmitigationCopy.setCategory("");
-                    threatmitigationCopy.setMitigation(mitigations.get(i));
-
-                    threatObjects.put(id, threatmitigationCopy);
-                    id++;
-                }
             }*/
+
+
         }
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
-    public static void bugLoader(){
+    public static void bugLoader() {
 
-        List<Bug> bugs =  BugInputWindowController.updetedList;
-        HashMap <String,List<String>> categorisedMap = new HashMap<String, List<String>>();
+        List<Bug> bugs = BugInputWindowController.updetedList;
+        HashMap<String, List<String>> categorisedMap = new HashMap<String, List<String>>();
 
         //List<String> list = new ArrayList<String>();
 
-        categorisedMap.put("a1",new ArrayList<String>());
-        categorisedMap.put("a2",new ArrayList<String>());
-        categorisedMap.put("a3",new ArrayList<String>());
-        categorisedMap.put("a4",new ArrayList<String>());
-        categorisedMap.put("a5",new ArrayList<String>());
-        categorisedMap.put("a6",new ArrayList<String>());
-        categorisedMap.put("a7",new ArrayList<String>());
-        categorisedMap.put("a8",new ArrayList<String>());
-        categorisedMap.put("a9",new ArrayList<String>());
-        categorisedMap.put("a10",new ArrayList<String>());
+        categorisedMap.put("a1", new ArrayList<String>());
+        categorisedMap.put("a2", new ArrayList<String>());
+        categorisedMap.put("a3", new ArrayList<String>());
+        categorisedMap.put("a4", new ArrayList<String>());
+        categorisedMap.put("a5", new ArrayList<String>());
+        categorisedMap.put("a6", new ArrayList<String>());
+        categorisedMap.put("a7", new ArrayList<String>());
+        categorisedMap.put("a8", new ArrayList<String>());
+        categorisedMap.put("a9", new ArrayList<String>());
+        categorisedMap.put("a10", new ArrayList<String>());
 
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
         int id = 0;
 
-        for (Bug bug :bugs){
-            String [] category = bug.getCategoryName().toLowerCase().split(":");
-            List <String> list1 = categorisedMap.get(category[0]);
+        for (Bug bug : bugs) {
+            String[] category = bug.getCategoryName().toLowerCase().split(":");
+            List<String> list1 = categorisedMap.get(category[0]);
             list1.add(bug.getName());
-            categorisedMap.put(category[0],list1);
+            categorisedMap.put(category[0], list1);
         }
 
-        for (String key : categorisedMap.keySet()){
+        for (String key : categorisedMap.keySet()) {
 
             List<String> Blist = categorisedMap.get(key);
             List<String> Plist = prolog.getPreventionTechniques(key);
 
             int BlistLen = Blist.size();
             int PlistLen = Plist.size();
-            if (BlistLen>0) {
-                if (BlistLen > PlistLen) {
-                    if (PlistLen != 0) {
+            if (BlistLen > 0) {
 
-                        BugCountermeasures bugcountermeasure = new BugCountermeasures();
-                        bugcountermeasure.setCategory(key);
-
-                        bugcountermeasure.setBug(Blist.get(0));
-                        bugcountermeasure.setCountermeasure(Plist.get(0));
-                        bugObjects.put(id, bugcountermeasure);
-                        id++;
-                    }
-                    for (int j = 1; j < BlistLen; j++) {
-                        BugCountermeasures bugCountermeasuresCopy = new BugCountermeasures();
-
-                        bugCountermeasuresCopy.setCategory("");
-                        bugCountermeasuresCopy.setBug(Blist.get(j));
-                        if (j < PlistLen) {
-                            bugCountermeasuresCopy.setCountermeasure(Plist.get(j));
-                        } else {
-                            bugCountermeasuresCopy.setCountermeasure("");
-                        }
-
-                        bugObjects.put(id, bugCountermeasuresCopy);
-                        id++;
-                    }
+                BugCountermeasures bugcountermeasure = new BugCountermeasures();
+                bugcountermeasure.setCategory(key);
+                String allBugs = "";
+                String allCountermeasures = "";
+                for (String bug : Blist) {
+                    allBugs = allBugs + bug + "\n\n";
                 }
+                for (String mitigation : Plist){
+                    allCountermeasures = allCountermeasures + mitigation + "\n\n";
+                }
+                bugcountermeasure.setBug(allBugs);
+                bugcountermeasure.setCountermeasure(allCountermeasures);
+                bugObjects.put(id,bugcountermeasure);
+                id++;
+            }
 
-                if (PlistLen >= BlistLen) {
+                /*if (PlistLen >= BlistLen) {
                     if (BlistLen != 0) {
 
                         BugCountermeasures bugCountermeasures = new BugCountermeasures();
@@ -384,8 +364,8 @@ public class HomeWindowController implements Initializable {
                             id++;
                         }
                     }
-                }
-            }
+                }*/
+
 
         }
 
@@ -411,23 +391,58 @@ public class HomeWindowController implements Initializable {
         bugData = FXCollections.observableArrayList(bugObjects.values());
     }
 
-    private void associationLoader(){
-        List<Bug> bugs =  BugInputWindowController.updetedList;
+    private void associationLoader() {
+        if (bugData == null){
+            bugLoader();
+        }
+
+
+        List<Bug> bugs = BugInputWindowController.updetedList;
         HashMap<Integer, AssociationContainer> associationObjects = new HashMap<>();
-        int id=0;
+
+        int id = 0;
+        for (BugCountermeasures bug : bugData){
+            String category = bug.getCategory();
+
+            String[] threatsForBug = prolog.getThreatCategoriesForBugCategory(category);
+
+            for (String s : threatsForBug){
+
+                AssociationContainer associationcontainer = new AssociationContainer();
+                associationcontainer.setBugCategory(bug.getCategory());
+                associationcontainer.setBug(bug.getBug());
+
+                associationcontainer.setThreatCategory(ThreatCategoriesLoader.tCategories.get(s));
+                List<Threat> t = threatMap.get(s.toUpperCase()).getThreatList();
+                if (t.size() > 0) {
+                    String all = "";
+                    for (Threat details : t) {
+                        all = all + details.getId() + ": " + details.getName() +"\n\n";
+                    }
+                    associationcontainer.setThreat(all);
+                } else {
+                    associationcontainer.setThreat("");
+                }
+                associationObjects.put(id,associationcontainer);
+                id++;
+            }
+
+        }
+
+        /*int id = 0;
         int hasBugNameId = 0;
-        for (BugCountermeasures bug :bugData){
+        for (BugCountermeasures bug : bugData) {
             AssociationContainer associationcontainer = new AssociationContainer();
             String category = bug.getCategory();
-            if (category != "" && bug.getBug() != ""){
-                String [] threatsForBug = prolog.getThreatCategoriesForBugCategory(category);
+            if (category != "" && bug.getBug() != "") {
+                String[] threatsForBug = prolog.getThreatCategoriesForBugCategory(category);
                 associationcontainer.setBugCategory(category);
                 associationcontainer.setBug(bug.getBug());
 
                 // put a flag to track where the last bug name was found relevant to a category
                 hasBugNameId = id;
 
-                if (threatsForBug[0] != ""){
+                if (threatsForBug[0] != "") {
 
                     // for the first threat
 
@@ -440,8 +455,8 @@ public class HomeWindowController implements Initializable {
                     associationcontainer1.setThreatCategory(ThreatCategoriesLoader.tCategories.get(threatsForBug[0]));
                     //associationcontainer.setThreat("");
 
-                    List <Threat> t = threatMap.get(threatsForBug[0].toUpperCase()).getThreatList();
-                    if (t.size()>0) {
+                    List<Threat> t = threatMap.get(threatsForBug[0].toUpperCase()).getThreatList();
+                    if (t.size() > 0) {
                         for (Threat details : t) {
                             if (associationcontainer1.getThreat() == null) {
                                 associationcontainer1.setThreat(details.getId() + " " + details.getName());
@@ -450,23 +465,23 @@ public class HomeWindowController implements Initializable {
                             }
 
                         }
-                    }
-                    else {
+                    } else {
                         associationcontainer1.setThreat("");
                     }
-                    associationObjects.put(id,associationcontainer1);
+                    associationObjects.put(id, associationcontainer1);
                     id++;
 
                     // if there are more than one threat
 
-                    if (size>1) {
+                    if (size > 1) {
                         for (int i = 1; i < size; i++) {
 
                             AssociationContainer associationcontainer2 = new AssociationContainer();
                             associationcontainer2.setThreatCategory(ThreatCategoriesLoader.tCategories.get(threatsForBug[i]));
                             //associationcontainer.setThreat("");
-                            List<Threat> t1 = threatMap.get(threatsForBug[i].toUpperCase()).getThreatList();;
-                            if (t1.size()>0) {
+                            List<Threat> t1 = threatMap.get(threatsForBug[i].toUpperCase()).getThreatList();
+                            ;
+                            if (t1.size() > 0) {
                                 for (Threat details : t1) {
                                     if (associationcontainer2.getThreat() == null) {
                                         associationcontainer2.setThreat(details.getId() + " " + details.getName());
@@ -475,39 +490,35 @@ public class HomeWindowController implements Initializable {
                                     }
 
                                 }
-                            }
-                            else {
+                            } else {
                                 associationcontainer2.setThreat("");
                             }
-                            associationObjects.put(id,associationcontainer2);
+                            associationObjects.put(id, associationcontainer2);
                             id++;
                         }
 
                     }
-                }
-                else {
+                } else {
                     associationcontainer.setThreatCategory("");
                     associationcontainer.setThreat("");
-                    associationObjects.put(id,associationcontainer);
+                    associationObjects.put(id, associationcontainer);
                     hasBugNameId = id;
                     id++;
                 }
 
-            }
-            else if (bug.getBug() != "" && bug.getCategory() == ""){
+            } else if (bug.getBug() != "" && bug.getCategory() == "") {
                 AssociationContainer container = associationObjects.get(hasBugNameId);
                 container.setBug(container.getBug() + "\n" + bug.getBug());
-                associationObjects.put(hasBugNameId,container);
+                associationObjects.put(hasBugNameId, container);
                 //id++;
 
-                /*associationcontainer.setBugCategory("");
+                *//*associationcontainer.setBugCategory("");
                 associationcontainer.setBug(bug.getBug());
-                associationObjects.put(id,associationcontainer);*/
+                associationObjects.put(id,associationcontainer);*//*
             }
 
 
-
-        }
+        }*/
         AssociationData = FXCollections.observableArrayList(associationObjects.values());
     }
 
@@ -538,14 +549,14 @@ public class HomeWindowController implements Initializable {
         sourcePreventionColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(1.5));
     }
 
-    public void populateBugs (ObservableList<BugCountermeasures> inputList){
+    public void populateBugs(ObservableList<BugCountermeasures> inputList) {
         sourceTable.getItems().removeAll();
         //System.out.println("before " + sourceTable.getItems().size());
         sourceTable.setItems(inputList);
         //System.out.println(sourceTable.getItems().get(0).getBug());
     }
 
-    private void setAssociationProperties(){
+    private void setAssociationProperties() {
         //System.out.println(AssociationData.get(0).getBug() + AssociationData.get(0).getBugCategory());
 
         associationthreat.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
@@ -619,7 +630,7 @@ public class HomeWindowController implements Initializable {
         }
     }
 
-    private void cancelBtnMethod(){
+    private void cancelBtnMethod() {
         Alert alert = this.createAlert(Alert.AlertType.CONFIRMATION, "Confirm!", null, "\n Are you sure you want to exit?");
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
@@ -635,28 +646,30 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void sourceCancelBtnAction(ActionEvent event){
-        try{
+    private void sourceCancelBtnAction(ActionEvent event) {
+        try {
             cancelBtnMethod();
-        }catch(Exception e){
+        } catch (Exception e) {
             Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
             alert.showAndWait();
         }
     }
+
     @FXML
-    private void designCancelBtnAction(ActionEvent event){
-        try{
+    private void designCancelBtnAction(ActionEvent event) {
+        try {
             cancelBtnMethod();
-        }catch(Exception e){
+        } catch (Exception e) {
             Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
             alert.showAndWait();
         }
     }
+
     @FXML
-    private void associationCancelBtnAction(ActionEvent event){
-        try{
+    private void associationCancelBtnAction(ActionEvent event) {
+        try {
             cancelBtnMethod();
-        }catch(Exception e){
+        } catch (Exception e) {
             Alert alert = this.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n Error occurred while closing the window.");
             alert.showAndWait();
         }
@@ -833,7 +846,7 @@ public class HomeWindowController implements Initializable {
         fileChooser.setTitle("Open Project");
         File file = fileChooser.showOpenDialog(stage);
 
-        if (file != null){
+        if (file != null) {
             System.out.println("File open");
         }
     }

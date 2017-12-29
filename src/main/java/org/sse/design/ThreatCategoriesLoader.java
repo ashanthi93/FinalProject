@@ -14,7 +14,7 @@ public class ThreatCategoriesLoader {
 
     static {
         threatCategoryHashMap = new HashMap<String, ThreatCategory>();
-        tCategories.put("s","Stride");
+        tCategories.put("s","Spoofing");
         tCategories.put("t","Tampering");
         tCategories.put("r","Repudiation");
         tCategories.put("i","Information disclosure");

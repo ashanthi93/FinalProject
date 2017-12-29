@@ -4,25 +4,25 @@ stride(
 spoofing,
 s,
 security_control("Authentication"),
-[s1]).
+[s1,s7]).
 
 stride(
 tampering,
 t,
 security_control("Integrity"),
-[s4]).
+[s4,s5]).
 
 stride(
 repudiation,
 r,
 security_control("Non-repudiation"),
-[s8]).
+[s3,s8]).
 
 stride(
 information_disclosure,
 i,
 security_control("Confidentiality"),
-[]).
+[s4]).
 
 stride(
 denial_of_service,

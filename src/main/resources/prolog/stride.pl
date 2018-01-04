@@ -10,7 +10,7 @@ stride(
 tampering,
 t,
 security_control("Integrity"),
-[s4,s5]).
+[s4,s5,s2]).
 
 stride(
 repudiation,
@@ -22,7 +22,7 @@ stride(
 information_disclosure,
 i,
 security_control("Confidentiality"),
-[s4]).
+[s4,s6,s2]).
 
 stride(
 denial_of_service,

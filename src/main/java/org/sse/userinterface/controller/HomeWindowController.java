@@ -180,6 +180,7 @@ public class HomeWindowController implements Initializable {
 
 
     private void threatLoader() throws DocumentException {
+
         threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
         int id = 0;
@@ -280,6 +281,7 @@ public class HomeWindowController implements Initializable {
 
 
         }
+
         threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
@@ -290,31 +292,31 @@ public class HomeWindowController implements Initializable {
 
         //List<String> list = new ArrayList<String>();
 
-        categorisedMap.put("a1", new ArrayList<String>());
-        categorisedMap.put("a2", new ArrayList<String>());
-        categorisedMap.put("a3", new ArrayList<String>());
-        categorisedMap.put("a4", new ArrayList<String>());
-        categorisedMap.put("a5", new ArrayList<String>());
-        categorisedMap.put("a6", new ArrayList<String>());
-        categorisedMap.put("a7", new ArrayList<String>());
-        categorisedMap.put("a8", new ArrayList<String>());
-        categorisedMap.put("a9", new ArrayList<String>());
-        categorisedMap.put("a10", new ArrayList<String>());
+        categorisedMap.put("A1: Injection", new ArrayList<String>());
+        categorisedMap.put("A2: Broken Authentication and Session Management", new ArrayList<String>());
+        categorisedMap.put("A3: Cross-Site Scripting (XSS)", new ArrayList<String>());
+        categorisedMap.put("A4: Insecure Direct Object References", new ArrayList<String>());
+        categorisedMap.put("A5: Security Misconfiguration", new ArrayList<String>());
+        categorisedMap.put("A6: Sensitive Data Exposure", new ArrayList<String>());
+        categorisedMap.put("A7: Missing Function Level Access Control", new ArrayList<String>());
+        categorisedMap.put("A8: Cross-Site Request Forgery (CSRF)", new ArrayList<String>());
+        categorisedMap.put("A9: Using Components with Known Vulnerabilities", new ArrayList<String>());
+        categorisedMap.put("A10: Unvalidated Redirects and Forwards", new ArrayList<String>());
 
         HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
         int id = 0;
 
         for (Bug bug : bugs) {
-            String[] category = bug.getCategoryName().toLowerCase().split(":");
-            List<String> list1 = categorisedMap.get(category[0]);
+            String category = bug.getCategoryName();
+            List<String> list1 = categorisedMap.get(category);
             list1.add(bug.getName());
-            categorisedMap.put(category[0], list1);
+            categorisedMap.put(category, list1);
         }
 
         for (String key : categorisedMap.keySet()) {
 
             List<String> Blist = categorisedMap.get(key);
-            List<String> Plist = prolog.getPreventionTechniques(key);
+            List<String> Plist = prolog.getPreventionTechniques(key.toLowerCase().split(":")[0].toLowerCase());
 
             int BlistLen = Blist.size();
             int PlistLen = Plist.size();
@@ -404,7 +406,7 @@ public class HomeWindowController implements Initializable {
         for (BugCountermeasures bug : bugData){
             String category = bug.getCategory();
 
-            String[] threatsForBug = prolog.getThreatCategoriesForBugCategory(category);
+            String[] threatsForBug = prolog.getThreatCategoriesForBugCategory(category.split(":")[0].toLowerCase());
 
             for (String s : threatsForBug){
 
@@ -563,13 +565,13 @@ public class HomeWindowController implements Initializable {
         associationthreat.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         associationthreatcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threatCategory"));
-        associationthreatcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
+        associationthreatcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(3));
 
         assosiationbug.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bug"));
         assosiationbug.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         associationbugcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
-        associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
+        associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(3));
 
         associationTable.setItems(AssociationData);
     }

@@ -1,6 +1,7 @@
 package org.sse.association.semantic;
 
 import org.sse.association.semantic.model.SemanticAssociation;
+import org.sse.knowedgemodel.prolog.KbBuilder;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class SemanticAssociationsLoaderTest {
 
             System.out.println(sa);
         }
+        //KbBuilder.writeSimilarity();
     }
 
 }

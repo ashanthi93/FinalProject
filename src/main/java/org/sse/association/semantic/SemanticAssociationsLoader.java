@@ -35,6 +35,9 @@ public class SemanticAssociationsLoader {
         UmbcSemanticAssociationCaller semanticAssociationsBuilder = new UmbcSemanticAssociationCaller();
         List<SemanticAssociation> semanticAssociationList = new ArrayList<SemanticAssociation>();
 
+        DecimalFormat df = new DecimalFormat("#.###");
+        df.setRoundingMode(RoundingMode.CEILING);
+
         for (ThreatControl threatControl : threatControlList) {
 
             for (BugControl bugControl : bugControlList) {
@@ -51,9 +54,6 @@ public class SemanticAssociationsLoader {
 
                 int count = (descriptionPoints.size() * threatControl.getDescription().size());
 
-                DecimalFormat df = new DecimalFormat("#.###");
-                df.setRoundingMode(RoundingMode.CEILING);
-
                 Double similarityValue = (similaritySum / count);
 
                 Double roundedValue = Double.valueOf(df.format(similarityValue));
@@ -62,6 +62,7 @@ public class SemanticAssociationsLoader {
 
                 semanticAssociation.setThreatControl(threatControl);
                 semanticAssociation.setBugControl(bugControl);
+
                 semanticAssociation.setSemanticSimilarity(roundedValue);
 
                 semanticAssociationList.add(semanticAssociation);

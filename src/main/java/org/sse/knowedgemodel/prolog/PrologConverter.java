@@ -4,14 +4,15 @@ import org.jpl7.Query;
 import org.jpl7.Term;
 import org.sse.settings.DescriptionProcessor;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PrologConverter {
 
     String s1 = String.format("consult('src/main/resources/prolog/knowledgeBase.pl').");
     Query q1 = new Query(s1);
+    HashMap <String, String> tCategories = new HashMap<String, String>(){
+
+    };
 
 
     public void prologCaller(String x) {
@@ -90,14 +91,31 @@ public class PrologConverter {
         String rule = "isCausedByThreatCategory('" + bug + "',X).";
         Query q = new Query(rule);
         String solution = "";
-        if (q.hasSolution()) {
+        q.open();
+        while (q.hasMoreSolutions()){
+            String sol = "";
+            sol = q.nextSolution().toString();
+            if (solution != ""){
+                solution = solution + "," + sol;
+            } else {
+                solution = solution + sol;
+            }
+
+        }
+        /*if (q.hasSolution()) {
             q.open();
             solution = q.getSolution().toString();
-        }
+        }*/
+        /*solution = solution.replace("{X=","").replace("'[|]'","").replace("(","").replace(")","");
+        solution = solution.replace("'[]'","").replace("}","");*/
+
         solution = solution.replace("{X=","").replace("}","");
-        String[] threats = solution.split(",");
-        System.out.println(solution);
-        return threats;
+        String[] threats = solution.trim().split(",");
+
+        Set<String> temp = new HashSet<String>(Arrays.asList(threats));
+        String[] distinct = temp.toArray(new String[temp.size()]);
+
+        return distinct;
     }
 
 }

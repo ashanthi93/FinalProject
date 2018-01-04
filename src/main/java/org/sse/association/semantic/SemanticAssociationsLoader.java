@@ -8,6 +8,8 @@ import org.sse.settings.config.design.control.ThreatControlConfig;
 import org.sse.settings.config.source.control.BugControlConfig;
 import org.sse.source.model.BugControl;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,11 +51,18 @@ public class SemanticAssociationsLoader {
 
                 int count = (descriptionPoints.size() * threatControl.getDescription().size());
 
+                DecimalFormat df = new DecimalFormat("#.###");
+                df.setRoundingMode(RoundingMode.CEILING);
+
+                Double similarityValue = (similaritySum / count);
+
+                Double roundedValue = Double.valueOf(df.format(similarityValue));
+
                 SemanticAssociation semanticAssociation = new SemanticAssociation();
 
                 semanticAssociation.setThreatControl(threatControl);
                 semanticAssociation.setBugControl(bugControl);
-                semanticAssociation.setSemanticSimilarity((similaritySum / count));
+                semanticAssociation.setSemanticSimilarity(roundedValue);
 
                 semanticAssociationList.add(semanticAssociation);
             }

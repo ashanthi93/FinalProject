@@ -3,25 +3,57 @@
     <threat-type>
         <id>S</id>
         <name>Spoofing</name>
+        <mitigations>
+            Appropriate authentication.
+            Protect secret data.
+            Don't store secrets.
+        </mitigations>
     </threat-type>
     <threat-type>
         <id>T</id>
         <name>Tampering</name>
+        <mitigations>
+            Appropriate authorization.
+            Hashes.
+            MACs.
+            Digital signatures.
+            Tamper resistant protocols.
+        </mitigations>
     </threat-type>
     <threat-type>
         <id>R</id>
         <name>Repudiation</name>
+        <mitigations>
+            Digital signatures.
+            Timestamps.
+            Audit trails.
+        </mitigations>
     </threat-type>
     <threat-type>
         <id>I</id>
         <name>Information Disclosure</name>
+        <mitigations>
+            Authorization.
+            Privacy-enhanced protocols.
+            Encryption.
+            Protect secrets.
+            Don't store secrets.
+        </mitigations>
     </threat-type>
     <threat-type>
         <id>D</id>
         <name>Denial Of Service</name>
+        <mitigations>
+            Appropriate authentication.Appropriate authorization.Filtering.
+            Throttling.
+            Quality of service.
+        </mitigations>
     </threat-type>
     <threat-type>
         <id>E</id>
         <name>Elevation Of Privilege</name>
+        <mitigations>
+            Run with least privilege.
+        </mitigations>
     </threat-type>
 </threat-model>

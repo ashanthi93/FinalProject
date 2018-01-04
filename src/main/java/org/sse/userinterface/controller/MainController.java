@@ -102,6 +102,11 @@ public class MainController implements Initializable {
         }
     }
 
+    /**
+     *
+     * @param xmlFile
+     * @return
+     */
     private boolean xmlValidation(File xmlFile) {
 
         try {
@@ -113,17 +118,20 @@ public class MainController implements Initializable {
 
                 //To handle Fatal Errors
                 public void fatalError(SAXParseException exception) throws SAXException {
-                    System.out.println("Line: " + exception.getLineNumber() + "\nFatal Error: " + exception.getMessage());
+                    System.err.println("Line: " + exception.getLineNumber() + "\nFatal Error: " + exception.getMessage());
+                    return;
                 }
 
                 //To handle Errors
                 public void error(SAXParseException e) throws SAXParseException {
-                    System.out.println("Line: " + e.getLineNumber() + "\nError: " + e.getMessage());
+                    System.err.println("Line: " + e.getLineNumber() + "\nError: " + e.getMessage());
+                    return;
                 }
 
                 //To Handle warnings
                 public void warning(SAXParseException err) throws SAXParseException {
-                    System.out.println("Line: " + err.getLineNumber() + "\nWarning: " + err.getMessage());
+                    System.err.println("Line: " + err.getLineNumber() + "\nWarning: " + err.getMessage());
+                    return;
                 }
             });
 
@@ -133,25 +141,31 @@ public class MainController implements Initializable {
             StreamResult result = new StreamResult(System.out);
 
             TransformerFactory tf = TransformerFactory.newInstance();
+
             Transformer transformer = tf.newTransformer();
             transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "/dtds/threatreport.dtd");
             transformer.transform(source, result);
 
-            return true;
-
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
+            return false;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+            return false;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         } catch (TransformerConfigurationException e) {
             e.printStackTrace();
+            return false;
         } catch (SAXException e) {
             e.printStackTrace();
+            return false;
         } catch (TransformerException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
+
+        return true;
     }
 }

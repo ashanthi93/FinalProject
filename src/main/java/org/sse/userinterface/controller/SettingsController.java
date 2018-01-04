@@ -6,6 +6,7 @@
 package org.sse.userinterface.controller;
 
 import java.beans.beancontext.BeanContextChildComponentProxy;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -26,7 +27,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 
-import javax.print.Doc;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
@@ -156,6 +156,7 @@ public class SettingsController implements Initializable {
     BugCategoryToControlMappingHandler owaspMappingModel = new BugCategoryToControlMappingHandler();
 
     public SettingsController() {
+
         try{
             //For OWASP Top 10 table
             OWASP_T10_list = BugCategoriesLoader.getBugCategoryWithDescriptionHashMap();
@@ -170,7 +171,7 @@ public class SettingsController implements Initializable {
                 copyOf_owasp_data.add(copy);
             }
         }catch (DocumentException de){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Bug Categories.");
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while loading Bug Categories.");
             alert.showAndWait();
         }
 
@@ -217,6 +218,7 @@ public class SettingsController implements Initializable {
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Proactives mapping data.");
             alert.showAndWait();
         }
+
     }
 
     /**
@@ -588,7 +590,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void btnSaveAction(ActionEvent event) {
+    private void btnSaveAction(ActionEvent event){
 
         updatedOWASP_proactives_mapping = new ArrayList<BugCategoryToControlMapping>();
 
@@ -630,62 +632,42 @@ public class SettingsController implements Initializable {
             updateOWASP_proactives_mapping();
         }
 
-<<<<<<< HEAD
-        try{
-            if (isT10Edited || isProactivesEdited || isMappingEdited) {
-                KbBuilder.write();
-            }
+        List<SemanticAssociation> semanticAssociations = null;
 
-        }catch (DocumentException de){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
-            alert.showAndWait();
-        }catch (IOException de){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
-            alert.showAndWait();
-        }catch (ParserConfigurationException de){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
-            alert.showAndWait();
-        }catch (SAXException de){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
-            alert.showAndWait();
-        }catch (Exception e){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+        try{
+            /* load semantic similarity values */
+            semanticAssociations = SemanticAssociationsLoader.createSemanticAssociations();
+        }catch(DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while loading semantic similarity values.");
             alert.showAndWait();
         }
-    }
-
-    private void updateOWASPT10() {
-        try{
-            BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
-        }catch (IOException ie){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASP Top 10 List.");
-            alert.showAndWait();
-        }catch(Exception e){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASP Top 10 List.");
-            alert.showAndWait();
-        }
-    }
-
-    private void updateProactives() {
-        try{
-            BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
-        }catch (IOException ie){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating Proactives List.");
-            alert.showAndWait();
-        }catch (Exception e){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating Proactives List.");
-            alert.showAndWait();
-        }
-    }
-
-    private void updateOWASP_proactives_mapping() {
-=======
-        /* load semantic similarity values */
-        List<SemanticAssociation> semanticAssociations = SemanticAssociationsLoader.createSemanticAssociations();
 
         if (isT10Edited || isProactivesEdited || isMappingEdited) {
-            KbBuilder.write();
-            KbBuilder.writeSimilarity(semanticAssociations);
+            try{
+                KbBuilder.write();
+            }catch (DocumentException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (IOException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (ParserConfigurationException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (SAXException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (Exception e){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }
+
+            try{
+                KbBuilder.writeSimilarity(semanticAssociations);
+            }catch(FileNotFoundException fe){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }
         }
     }
 
@@ -693,24 +675,34 @@ public class SettingsController implements Initializable {
      * Updates owasp t10 config file
      * @throws IOException
      */
-    private void updateOWASPT10() throws IOException {
-        BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
+    private void updateOWASPT10() {
+        try{
+            BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASPT10 data.");
+            alert.showAndWait();
+        }
     }
 
     /**
      * * Updates proactive config file
      * @throws IOException
      */
-    private void updateProactives() throws IOException {
-        BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
+    private void updateProactives(){
+        try{
+            BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating Proactives data.");
+            alert.showAndWait();
+        }
+
     }
 
     /**
      * Updates mapping
      * @throws IOException
      */
-    private void updateOWASP_proactives_mapping() throws IOException {
->>>>>>> 2c294e70f81962a0a49f3c3f7d794970654f40b7
+    private void updateOWASP_proactives_mapping() {
 
         HashMap<String, List<String>> mappingHashMap = new HashMap<>();
 
@@ -775,11 +767,8 @@ public class SettingsController implements Initializable {
 
         try{
             MappingConfig.createFile(mappingHashMap);
-        }catch (IOException ie){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Mapping List.");
-            alert.showAndWait();
-        }catch (Exception e){
-            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Mapping List.");
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASPT10_Proactives Mapping data.");
             alert.showAndWait();
         }
     }

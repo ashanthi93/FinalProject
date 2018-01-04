@@ -26,20 +26,19 @@ import javafx.collections.ObservableList;
 
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.stage.*;
 import org.dom4j.DocumentException;
 import org.sse.design.ThreatExtractor;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import org.sse.design.model.ThreatCategory;
 import org.sse.knowedgemodel.prolog.PrologConverter;
@@ -122,22 +121,26 @@ public class HomeWindowController implements Initializable {
 
     private ObservableList<BugCountermeasures> bugData;
 
-    public void start(String path, String title, Boolean resizable, int index) throws Exception {
+    public void start(String path, String title, Boolean resizable, int index) {
 
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource(path));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle(title);
-        stage.setResizable(resizable);
-        stage.setScene(scene);
-        stage.show();
+            stage.setTitle(title);
+            stage.setResizable(resizable);
+            stage.setScene(scene);
+            stage.show();
 
-        TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
-        SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
-        selectionModel.select(index);
-
+            TabPane tabs = (TabPane) scene.lookup("#settingsTabPane");
+            SingleSelectionModel<Tab> selectionModel = tabs.getSelectionModel();
+            selectionModel.select(index);
+        }catch(Exception e){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the Settings Window.");
+            alert.showAndWait();
+        }
     }
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -154,8 +157,7 @@ public class HomeWindowController implements Initializable {
         }
     }
 
-    public HomeWindowController() throws DocumentException {
-
+    public HomeWindowController() {
         threatLoader();
         bugLoader();
         try {
@@ -173,45 +175,55 @@ public class HomeWindowController implements Initializable {
 
     }
 
-    private void threatLoader() throws DocumentException {
-        threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
+    private void threatLoader() {
 
-        int id = 0;
-        HashMap<Integer, ThreatMitigation> threatObjects = new HashMap<>();
+        try{
+            threatMap = ThreatCategoriesLoader.getThreatCategoryHashMap();
 
-        for (String key : threatMap.keySet()) {
+            int id = 0;
+            HashMap<Integer, ThreatMitigation> threatObjects = new HashMap<>();
 
-            ThreatCategory categoryList = threatMap.get(key);
-            List<Threat> list = categoryList.getThreatList();
+            for (String key : threatMap.keySet()) {
 
-            for (Threat threat : list) {
+                ThreatCategory categoryList = threatMap.get(key);
+                List<Threat> list = categoryList.getThreatList();
 
-                List<String> mitigations = categoryList.getMitigationList();
+                for (Threat threat : list) {
 
-                ThreatCategory threatCategory = threatMap.get(key);
-                threatCategory.setMitigationList(mitigations);
-                threatMap.put(key, threatCategory);
+                    List<String> mitigations = categoryList.getMitigationList();
 
-                ThreatMitigation threatmitigation = new ThreatMitigation();
-                threatmitigation.setThreat(threat.getName());
-                threatmitigation.setCategory(threat.getThreatCategoryName());
-                threatmitigation.setMitigation(mitigations.get(0));
+                    ThreatCategory threatCategory = threatMap.get(key);
+                    threatCategory.setMitigationList(mitigations);
+                    threatMap.put(key, threatCategory);
 
-                threatObjects.put(id, threatmitigation);
-                id++;
+                    ThreatMitigation threatmitigation = new ThreatMitigation();
+                    threatmitigation.setThreat(threat.getName());
+                    threatmitigation.setCategory(threat.getThreatCategoryName());
+                    threatmitigation.setMitigation(mitigations.get(0));
 
-                for (int i = 1; i < mitigations.size(); i++) {
-                    ThreatMitigation threatmitigationCopy = new ThreatMitigation();
-                    threatmitigationCopy.setThreat("");
-                    threatmitigationCopy.setCategory("");
-                    threatmitigationCopy.setMitigation(mitigations.get(i));
-
-                    threatObjects.put(id, threatmitigationCopy);
+                    threatObjects.put(id, threatmitigation);
                     id++;
+
+                    for (int i = 1; i < mitigations.size(); i++) {
+                        ThreatMitigation threatmitigationCopy = new ThreatMitigation();
+                        threatmitigationCopy.setThreat("");
+                        threatmitigationCopy.setCategory("");
+                        threatmitigationCopy.setMitigation(mitigations.get(i));
+
+                        threatObjects.put(id, threatmitigationCopy);
+                        id++;
+                    }
                 }
             }
+            threatData = FXCollections.observableArrayList(threatObjects.values());
+
+        }catch(DocumentException ex){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Threats.");
+            alert.showAndWait();
+        }catch(Exception e){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Threats.");
+            alert.showAndWait();
         }
-        threatData = FXCollections.observableArrayList(threatObjects.values());
     }
 
     public void bugLoader(){
@@ -274,12 +286,12 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void settingsSubAction(ActionEvent event) throws Exception {
+    private void settingsSubAction(ActionEvent event) {
         start("/fxml/Settings.fxml", "Settings", true, 0);
     }
 
     @FXML
-    private void sourceNextBtnAction(ActionEvent event) throws Exception {
+    private void sourceNextBtnAction(ActionEvent event) {
         int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
 
         if (selectedNum == 0) {
@@ -310,7 +322,7 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void designNextBtnAction(ActionEvent event) throws Exception {
+    private void designNextBtnAction(ActionEvent event) {
         int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
         isHomeOpened = true;
 
@@ -330,14 +342,11 @@ public class HomeWindowController implements Initializable {
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
-        alert.showAndWait().ifPresent(type -> {
-            if (type == ButtonType.YES) {
-                Stage homeStage = (Stage) this.sourceCancelBtn.getScene().getWindow();
-                homeStage.close();
-            } else if (type == ButtonType.NO) {
-                alert.close();
-            }
-        });
+        alert.showAndWait();
+        if(!alert.getResult().getButtonData().isCancelButton()){
+            Stage homeStage = (Stage) this.sourceCancelBtn.getScene().getWindow();
+            homeStage.close();
+        }
     }
 
     @FXML
@@ -407,15 +416,20 @@ public class HomeWindowController implements Initializable {
         return false;
     }
 
-    public void start(String path, String title) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+    public void start(String path, String title) {
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource(path));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e){
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Error occured while opeing the window.");
+            alert.showAndWait();
+        }
     }
 
     public static Alert createAlert(Alert.AlertType alertType, String title, String headerText, String contentText) {
@@ -429,17 +443,22 @@ public class HomeWindowController implements Initializable {
     }
 
     @FXML
-    private void sourceSaveBtnAction(ActionEvent event) throws Exception {
+    private void sourceSaveBtnAction(ActionEvent event) {
 
         try {
             this.saveReport(ReportType.BUG_REPORT, FileFormat.CNX);
 
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (NullPointerException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         }
     }
 
@@ -451,10 +470,16 @@ public class HomeWindowController implements Initializable {
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (NullPointerException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         }
     }
 
@@ -474,11 +499,14 @@ public class HomeWindowController implements Initializable {
                 this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.XML);
             }
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (NullPointerException e) {
-            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (Exception e) {
-            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         }
     }
 
@@ -499,10 +527,16 @@ public class HomeWindowController implements Initializable {
             }
         } catch (JsonProcessingException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (NullPointerException e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to save the file.!");
+            alert.showAndWait();
         }
     }
 
@@ -524,7 +558,8 @@ public class HomeWindowController implements Initializable {
             stage.show();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to open the window.");
+            alert.showAndWait();
         }
     }
 
@@ -677,20 +712,30 @@ public class HomeWindowController implements Initializable {
      * @throws SAXException
      * @throws IOException
      */
-    private AssociationReport convertToAssociationReport() throws ParserConfigurationException, SAXException, IOException {
+    private AssociationReport convertToAssociationReport() {
+        AssociationReport associationReport = null;
+        try {
+            HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping = new HashMap<>();
+            HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
 
-        HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping = new HashMap<>();
-        HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
+            AssociationReportCreator associationReportCreator =
+                    new AssociationReportCreator(bugCategoryToThreatCategoryMapping, threatCategoryHashMap);
+            associationReport = associationReportCreator.generateReport("Association Analysis Report");
 
-        /*
-        * Implement the code here
-        *
-        */
-
-        AssociationReportCreator associationReportCreator =
-                new AssociationReportCreator(bugCategoryToThreatCategoryMapping, threatCategoryHashMap);
-        AssociationReport associationReport = associationReportCreator.generateReport("Association Analysis Report");
-
+            return associationReport;
+        } catch (ParserConfigurationException pce) {
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert the report.");
+            alert.showAndWait();
+        } catch (SAXException se) {
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert the report.");
+            alert.showAndWait();
+        } catch (IOException ioe) {
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert the report.");
+            alert.showAndWait();
+        }catch(Exception e){
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert the report.");
+            alert.showAndWait();
+        }
         return associationReport;
     }
 
@@ -699,11 +744,20 @@ public class HomeWindowController implements Initializable {
      * @return
      * @throws JsonProcessingException
      */
-    private String convertToXML(Object object) throws JsonProcessingException {
+    private String convertToXML(Object object) {
+        String xmlReport = null;
+        try {
+            XMLReportBuilder xmlReportBuilder = new XMLReportBuilder();
+            xmlReport = xmlReportBuilder.convertReport(object);
 
-        XMLReportBuilder xmlReportBuilder = new XMLReportBuilder();
-        String xmlReport = xmlReportBuilder.convertReport(object);
-
+            return xmlReport;
+        } catch (JsonProcessingException je) {
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert to XML.");
+            alert.showAndWait();
+        }catch (Exception e){
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert to XML.");
+            alert.showAndWait();
+        }
         return xmlReport;
     }
 
@@ -712,11 +766,20 @@ public class HomeWindowController implements Initializable {
      * @return
      * @throws JsonProcessingException
      */
-    private String convertToJSON(Object object) throws JsonProcessingException {
+    private String convertToJSON(Object object) {
+        String jsonReport = null;
+        try {
+            JSONReportBuilder jsonReportBuilder = new JSONReportBuilder();
+            jsonReport = jsonReportBuilder.convertReport(object);
 
-        JSONReportBuilder jsonReportBuilder = new JSONReportBuilder();
-        String jsonReport = jsonReportBuilder.convertReport(object);
-
+            return jsonReport;
+        } catch (JsonProcessingException je) {
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert to JSON.");
+            alert.showAndWait();
+        }catch(Exception e){
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!", "\n Unable to convert to JSON.");
+            alert.showAndWait();
+        }
         return jsonReport;
     }
 }

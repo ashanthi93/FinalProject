@@ -18,19 +18,10 @@ public class SemanticAssociationsLoader {
     private static List<ThreatControl> threatControlList;
     private static List<BugControl> bugControlList;
 
-    static {
-        try {
-            threatControlList = ThreatControlConfig.loadConfigFile();
-            bugControlList = BugControlConfig.loadConfigFile();
+    public static List<SemanticAssociation> createSemanticAssociations() throws DocumentException {
 
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private SemanticAssociationsLoader() {}
-
-    public static List<SemanticAssociation> createSemanticAssociations() {
+        threatControlList = ThreatControlConfig.loadConfigFile();
+        bugControlList = BugControlConfig.loadConfigFile();
 
         UmbcSemanticAssociationCaller semanticAssociationsBuilder = new UmbcSemanticAssociationCaller();
         List<SemanticAssociation> semanticAssociationList = new ArrayList<SemanticAssociation>();

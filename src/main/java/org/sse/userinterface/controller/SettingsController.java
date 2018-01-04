@@ -30,6 +30,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Text;
+import org.sse.association.semantic.SemanticAssociationsLoader;
+import org.sse.association.semantic.model.SemanticAssociation;
 import org.sse.knowedgemodel.prolog.KbBuilder;
 import org.sse.settings.config.source.BugModelConfig;
 import org.sse.settings.config.source.control.BugControlConfig;
@@ -613,19 +615,35 @@ public class SettingsController implements Initializable {
             updateOWASP_proactives_mapping();
         }
 
+        /* load semantic similarity values */
+        List<SemanticAssociation> semanticAssociations = SemanticAssociationsLoader.createSemanticAssociations();
+
         if (isT10Edited || isProactivesEdited || isMappingEdited) {
             KbBuilder.write();
+            KbBuilder.writeSimilarity(semanticAssociations);
         }
     }
 
+    /**
+     * Updates owasp t10 config file
+     * @throws IOException
+     */
     private void updateOWASPT10() throws IOException {
         BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
     }
 
+    /**
+     * * Updates proactive config file
+     * @throws IOException
+     */
     private void updateProactives() throws IOException {
         BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
     }
 
+    /**
+     * Updates mapping
+     * @throws IOException
+     */
     private void updateOWASP_proactives_mapping() throws IOException {
 
         HashMap<String, List<String>> mappingHashMap = new HashMap<>();

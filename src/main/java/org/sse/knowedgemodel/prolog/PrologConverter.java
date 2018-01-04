@@ -50,7 +50,7 @@ public class PrologConverter {
     public List<String> getMitigationTechniques(String threat){
 
         q1.hasSolution();
-        //System.out.println("Query Loaded " + (q1.hasSolution() ? "Success" : "Failed"));
+
         String rule = "get_mitigation_techniques(X,'" + threat + "').";
         Query q = new Query(rule);
         q.open();
@@ -60,6 +60,7 @@ public class PrologConverter {
             sol=sol.replace("{X='","").replace("'}","").replace("\n", "");
             solution = solution +" "+ sol;
         }
+
         List<String> mitigations = Arrays.asList(solution.split("[.]"));
 
         return mitigations;

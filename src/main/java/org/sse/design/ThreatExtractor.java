@@ -111,13 +111,11 @@ public class ThreatExtractor {
 
                 String defaultThreatCategoryName = threatCategory.getName();
 
-
                 if (defaultThreatCategoryName.equals(threat.getThreatCategoryName())) {
 
                     List<Threat> threatListForCategory = threatCategory.getThreatList();
                     threatListForCategory.add(threat);
                     threatCategory.setThreatList(threatListForCategory);
-                    //System.out.println(defaultThreatCategoryName.toLowerCase());
 
                     // add mitigation techniques to threat object
                     String category = defaultThreatCategoryName.toLowerCase().replace(" ", "_");

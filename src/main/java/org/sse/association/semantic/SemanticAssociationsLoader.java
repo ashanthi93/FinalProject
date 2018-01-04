@@ -18,19 +18,10 @@ public class SemanticAssociationsLoader {
     private static List<ThreatControl> threatControlList;
     private static List<BugControl> bugControlList;
 
-    static {
-        try {
-            threatControlList = ThreatControlConfig.loadConfigFile();
-            bugControlList = BugControlConfig.loadConfigFile();
+    public static List<SemanticAssociation> createSemanticAssociations() throws DocumentException {
 
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private SemanticAssociationsLoader() {}
-
-    public static List<SemanticAssociation> createSemanticAssociations() {
+        threatControlList = ThreatControlConfig.loadConfigFile();
+        bugControlList = BugControlConfig.loadConfigFile();
 
         UmbcSemanticAssociationCaller semanticAssociationsBuilder = new UmbcSemanticAssociationCaller();
         List<SemanticAssociation> semanticAssociationList = new ArrayList<SemanticAssociation>();
@@ -54,14 +45,16 @@ public class SemanticAssociationsLoader {
 
                 int count = (descriptionPoints.size() * threatControl.getDescription().size());
 
-                // round to third decimal point
-                double similarity = Double.parseDouble(df.format((similaritySum / count)));
+                Double similarityValue = (similaritySum / count);
+
+                Double roundedValue = Double.valueOf(df.format(similarityValue));
 
                 SemanticAssociation semanticAssociation = new SemanticAssociation();
 
                 semanticAssociation.setThreatControl(threatControl);
                 semanticAssociation.setBugControl(bugControl);
-                semanticAssociation.setSemanticSimilarity(similarity);
+
+                semanticAssociation.setSemanticSimilarity(roundedValue);
 
                 semanticAssociationList.add(semanticAssociation);
             }

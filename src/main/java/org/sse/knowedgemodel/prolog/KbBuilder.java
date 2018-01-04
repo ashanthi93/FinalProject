@@ -113,11 +113,10 @@ public class KbBuilder {
 
     }
 
-    public static void writeSimilarity () throws FileNotFoundException {
+    public static void writeSimilarity (List<SemanticAssociation> similarity) throws FileNotFoundException {
 
         PrintWriter writer = new PrintWriter("src/main/resources/prolog/similaritymatch.pl");
 
-        List<SemanticAssociation> similarity = SemanticAssociationsLoader.createSemanticAssociations();
         for (SemanticAssociation object : similarity) {
             String s = "semanticAssociation(\n" + object.getBugControl().getId().toLowerCase() + ",\n" + object.getThreatControl().getId().toLowerCase() +
                     ",\n" + object.getSemanticSimilarity() + "\n).";

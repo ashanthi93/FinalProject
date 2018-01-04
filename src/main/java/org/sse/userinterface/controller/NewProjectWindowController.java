@@ -5,16 +5,20 @@ import com.jfoenix.controls.JFXRadioButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javafx.stage.WindowEvent;
 import org.dom4j.DocumentException;
 import org.sse.design.ThreatExtractor;
 import org.sse.userinterface.MainApp;
@@ -22,10 +26,7 @@ import org.sse.userinterface.MainApp;
 import java.io.File;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class NewProjectWindowController implements Initializable {
 
@@ -53,7 +54,7 @@ public class NewProjectWindowController implements Initializable {
     }
 
     @FXML
-    private void addBtnAction(ActionEvent event) throws Exception {
+    private void addBtnAction(ActionEvent event) {
         if (threatCheck.isSelected()) {
             fileOpen("Select Threat Report", "TMT Files (*.tm7)", "*.tm7");
         } else if (bugCheck.isSelected()) {
@@ -117,18 +118,34 @@ public class NewProjectWindowController implements Initializable {
         }
     }
 
-    public void start(String path, String title) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(path));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
+    public void start(String path, String title) {
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource(path));
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add("/styles/Styles.css");
 
-        stage.setTitle(title);
-        stage.setScene(scene);
-        stage.show();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
 
-        if(title.equals("Home Window")){
-            stage.setMaximized(true);
+            if(title.equals("Home Window")){
+                stage.setMaximized(true);
+                stage.setOnCloseRequest(ev -> {
+                    ev.consume();
+                    Alert alert = createAlert(Alert.AlertType.CONFIRMATION, "Confirm!", null, "\n Are you sure you want to exit?");
+                    ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+                    ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+                    alert.getButtonTypes().setAll(okButton, noButton);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if(result.get() == okButton){
+                        stage.close();
+                    }
+                });
+            }
+        }catch (Exception e){
+            Alert alert = createAlert(Alert.AlertType.ERROR, "Error", "Error!" , "\n Error occurred while opening the window.");
+            alert.showAndWait();
         }
     }
 

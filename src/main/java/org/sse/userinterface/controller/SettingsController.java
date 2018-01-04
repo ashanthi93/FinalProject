@@ -6,6 +6,7 @@
 package org.sse.userinterface.controller;
 
 import java.beans.beancontext.BeanContextChildComponentProxy;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -30,6 +31,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.dom4j.DocumentException;
 import org.dom4j.Text;
+import org.sse.association.semantic.SemanticAssociationsLoader;
+import org.sse.association.semantic.model.SemanticAssociation;
 import org.sse.knowedgemodel.prolog.KbBuilder;
 import org.sse.settings.config.source.BugModelConfig;
 import org.sse.settings.config.source.control.BugControlConfig;
@@ -152,54 +155,70 @@ public class SettingsController implements Initializable {
     ArrayList<BugCategoryToControlMapping> copyOf_mapping_data = new ArrayList<BugCategoryToControlMapping>();
     BugCategoryToControlMappingHandler owaspMappingModel = new BugCategoryToControlMappingHandler();
 
-    public SettingsController() throws DocumentException, ParserConfigurationException, SAXException, IOException {
+    public SettingsController() {
 
-        //For OWASP Top 10 table
-        OWASP_T10_list = BugCategoriesLoader.getBugCategoryWithDescriptionHashMap();
-        TreeMap<Integer, BugCategory> owaspTreeMap = new TreeMap<Integer, BugCategory>(OWASP_T10_list);
-        owasp_data = FXCollections.observableArrayList(owaspTreeMap.values());
+        try{
+            //For OWASP Top 10 table
+            OWASP_T10_list = BugCategoriesLoader.getBugCategoryWithDescriptionHashMap();
+            TreeMap<Integer, BugCategory> owaspTreeMap = new TreeMap<Integer, BugCategory>(OWASP_T10_list);
+            owasp_data = FXCollections.observableArrayList(owaspTreeMap.values());
 
-        for (BugCategory obj : owasp_data) {
-            BugCategory copy = new BugCategory();
-            copy.setId(obj.getId());
-            copy.setName(obj.getName());
-            copy.setDescription(obj.getDescription());
-            copyOf_owasp_data.add(copy);
+            for (BugCategory obj : owasp_data) {
+                BugCategory copy = new BugCategory();
+                copy.setId(obj.getId());
+                copy.setName(obj.getName());
+                copy.setDescription(obj.getDescription());
+                copyOf_owasp_data.add(copy);
+            }
+        }catch (DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while loading Bug Categories.");
+            alert.showAndWait();
         }
 
-        //for OWASP proactives table
-        proactives_list = BugControlsLoader.getBugControlsWithDescription();
-        TreeMap<Integer, BugControl> proactivesTreeMap = new TreeMap<Integer, BugControl>(proactives_list);
-        proactive_data = FXCollections.observableArrayList(proactivesTreeMap.values());
+        try{
+            //for OWASP proactives table
+            proactives_list = BugControlsLoader.getBugControlsWithDescription();
+            TreeMap<Integer, BugControl> proactivesTreeMap = new TreeMap<Integer, BugControl>(proactives_list);
+            proactive_data = FXCollections.observableArrayList(proactivesTreeMap.values());
 
-        for (BugControl obj : proactive_data) {
-            BugControl copy = new BugControl();
-            copy.setId(obj.getId());
-            copy.setName(obj.getName());
-            copy.setDescription(obj.getDescription());
-            copyOf_proactive_data.add(copy);
+            for (BugControl obj : proactive_data) {
+                BugControl copy = new BugControl();
+                copy.setId(obj.getId());
+                copy.setName(obj.getName());
+                copy.setDescription(obj.getDescription());
+                copyOf_proactive_data.add(copy);
+            }
+        }catch (DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Proactives.");
+            alert.showAndWait();
         }
 
-        //for OWASP_proactives mapping table 
-        OWASP_proactives_mapping = owaspMappingModel.getMapping();
-        TreeMap<Integer, BugCategoryToControlMapping> proactiveMappingTreeMap = new TreeMap<Integer, BugCategoryToControlMapping>(OWASP_proactives_mapping);
-        OWASP_proactive_MappingData = FXCollections.observableArrayList(proactiveMappingTreeMap.values());
+        try{
+            //for OWASP_proactives mapping table
+            OWASP_proactives_mapping = owaspMappingModel.getMapping();
+            TreeMap<Integer, BugCategoryToControlMapping> proactiveMappingTreeMap = new TreeMap<Integer, BugCategoryToControlMapping>(OWASP_proactives_mapping);
+            OWASP_proactive_MappingData = FXCollections.observableArrayList(proactiveMappingTreeMap.values());
 
-        for (BugCategoryToControlMapping obj : OWASP_proactive_MappingData) {
-            BugCategoryToControlMapping copy = new BugCategoryToControlMapping();
-            copy.setControl(obj.getControl());
-            copy.setA1(obj.getA1());
-            copy.setA2(obj.getA2());
-            copy.setA3(obj.getA3());
-            copy.setA4(obj.getA4());
-            copy.setA5(obj.getA5());
-            copy.setA6(obj.getA6());
-            copy.setA7(obj.getA7());
-            copy.setA8(obj.getA8());
-            copy.setA9(obj.getA9());
-            copy.setA10(obj.getA10());
-            copyOf_mapping_data.add(copy);
+            for (BugCategoryToControlMapping obj : OWASP_proactive_MappingData) {
+                BugCategoryToControlMapping copy = new BugCategoryToControlMapping();
+                copy.setControl(obj.getControl());
+                copy.setA1(obj.getA1());
+                copy.setA2(obj.getA2());
+                copy.setA3(obj.getA3());
+                copy.setA4(obj.getA4());
+                copy.setA5(obj.getA5());
+                copy.setA6(obj.getA6());
+                copy.setA7(obj.getA7());
+                copy.setA8(obj.getA8());
+                copy.setA9(obj.getA9());
+                copy.setA10(obj.getA10());
+                copyOf_mapping_data.add(copy);
+            }
+        }catch (DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while loading Proactives mapping data.");
+            alert.showAndWait();
         }
+
     }
 
     /**
@@ -468,7 +487,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void owaspNextBtnAction(ActionEvent event) throws Exception {
+    private void owaspNextBtnAction(ActionEvent event) {
 
         updatedOWASP_T10_list = new ArrayList<BugCategory>();
 
@@ -499,7 +518,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void proactAddBtnAction(ActionEvent event) throws Exception {
+    private void proactAddBtnAction(ActionEvent event) {
         BugControl newRow = new BugControl();
         newRow.setId("");
         newRow.setName("");
@@ -508,12 +527,12 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void proactDeleteBtnAction(ActionEvent event) throws Exception {
+    private void proactDeleteBtnAction(ActionEvent event) {
         proactive_table.getItems().removeAll(proactive_table.getSelectionModel().getSelectedItems());
     }
 
     @FXML
-    private void proactiveNextBtnAction(ActionEvent event) throws Exception {
+    private void proactiveNextBtnAction(ActionEvent event) {
 
         t10Version.setText(owaspTop10Version.getText());
         proVersion.setText(proactiveVersion.getText());
@@ -571,7 +590,7 @@ public class SettingsController implements Initializable {
     }
 
     @FXML
-    private void btnSaveAction(ActionEvent event) throws Exception {
+    private void btnSaveAction(ActionEvent event){
 
         updatedOWASP_proactives_mapping = new ArrayList<BugCategoryToControlMapping>();
 
@@ -613,20 +632,77 @@ public class SettingsController implements Initializable {
             updateOWASP_proactives_mapping();
         }
 
+        List<SemanticAssociation> semanticAssociations = null;
+
+        try{
+            /* load semantic similarity values */
+            semanticAssociations = SemanticAssociationsLoader.createSemanticAssociations();
+        }catch(DocumentException de){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while loading semantic similarity values.");
+            alert.showAndWait();
+        }
+
         if (isT10Edited || isProactivesEdited || isMappingEdited) {
-            KbBuilder.write();
+            try{
+                KbBuilder.write();
+            }catch (DocumentException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (IOException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (ParserConfigurationException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (SAXException de){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }catch (Exception e){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }
+
+            try{
+                KbBuilder.writeSimilarity(semanticAssociations);
+            }catch(FileNotFoundException fe){
+                Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating the Knowledge Base.");
+                alert.showAndWait();
+            }
         }
     }
 
-    private void updateOWASPT10() throws IOException {
-        BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
+    /**
+     * Updates owasp t10 config file
+     * @throws IOException
+     */
+    private void updateOWASPT10() {
+        try{
+            BugModelConfig.createConfigFile(updatedOWASP_T10_list, "OWASP-Top-10", owaspTop10Version.getText());
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASPT10 data.");
+            alert.showAndWait();
+        }
     }
 
-    private void updateProactives() throws IOException {
-        BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
+    /**
+     * * Updates proactive config file
+     * @throws IOException
+     */
+    private void updateProactives(){
+        try{
+            BugControlConfig.createConfigFile(updatedProactives_list, "OWASP-Proactives", proactiveVersion.getText());
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating Proactives data.");
+            alert.showAndWait();
+        }
+
     }
 
-    private void updateOWASP_proactives_mapping() throws IOException {
+    /**
+     * Updates mapping
+     * @throws IOException
+     */
+    private void updateOWASP_proactives_mapping() {
 
         HashMap<String, List<String>> mappingHashMap = new HashMap<>();
 
@@ -689,6 +765,11 @@ public class SettingsController implements Initializable {
             }
         }
 
-        MappingConfig.createFile(mappingHashMap);
+        try{
+            MappingConfig.createFile(mappingHashMap);
+        }catch(IOException ie){
+            Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while updating OWASPT10_Proactives Mapping data.");
+            alert.showAndWait();
+        }
     }
 }

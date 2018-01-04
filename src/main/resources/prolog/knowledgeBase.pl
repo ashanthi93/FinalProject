@@ -1,47 +1,47 @@
 :- [rules].
 :- [stride].
-
+:- [kb].
 
 owasp_top10(
 a1,
 name("Injection"),
-[c2]).
+[c2,c3,c4,c8,c9,c10]).
 owasp_top10(
 a2,
 name("Broken Authentication and Session Management"),
-[c3]).
+[c5,c8,c9,c10]).
 owasp_top10(
 a3,
 name("Cross-Site Scripting (XSS)"),
-[c4]).
+[c3,c4,c8,c9,c10]).
 owasp_top10(
 a4,
 name("Insecure Direct Object References"),
-[c5]).
+[c6,c8,c9,c10]).
 owasp_top10(
 a5,
 name("Security Misconfiguration"),
-[c6,c7]).
+[c8,c9,c10]).
 owasp_top10(
 a6,
 name("Sensitive Data Exposure"),
-[c8]).
+[c7,c8,c9,c10]).
 owasp_top10(
 a7,
 name("Missing Function Level Access Control"),
-[c9]).
+[c6,c8,c9,c10]).
 owasp_top10(
 a8,
 name("Cross-Site Request Forgery (CSRF)"),
-[c10]).
+[c8,c9,c10]).
 owasp_top10(
 a9,
 name("Using Components with Known Vulnerabilities"),
-[c11]).
+[c8,c9,c10]).
 owasp_top10(
 a10,
 name("Unvalidated Redirects and Forwards"),
-[c11]).
+[c4,c8,c9,c10]).
 
 
 owasp_top10_proactive(

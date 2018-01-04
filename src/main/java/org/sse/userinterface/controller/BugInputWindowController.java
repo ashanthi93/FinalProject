@@ -1,6 +1,8 @@
 package org.sse.userinterface.controller;
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.deploy.panel.ControlPanel;
+import com.sun.javafx.scene.control.skin.resources.ControlResources;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -30,15 +32,18 @@ import java.net.URL;
 import java.util.*;
 
 import org.sse.source.model.BugCollection;
+import org.sse.source.model.BugCountermeasures;
 import org.sse.userinterface.MainApp;
 import org.sse.userinterface.controller.NewProjectWindowController;
 
+import static org.sse.userinterface.controller.HomeWindowController.bugLoader;
 import static org.sse.userinterface.controller.HomeWindowController.isHomeOpened;
 
 public class BugInputWindowController implements Initializable {
 
     static List<Bug> updetedList = new ArrayList<>();
     List<Bug> bugList;
+
 
     @FXML
     private JFXButton cancelBtn;
@@ -70,6 +75,7 @@ public class BugInputWindowController implements Initializable {
 
     @FXML
     private void addBtnAction(ActionEvent event) {
+        FXMLLoader nLoader = null;
         try{
             bugList = bugTable.getItems();
 
@@ -120,14 +126,27 @@ public class BugInputWindowController implements Initializable {
 
                 Stage stage2 = (Stage) addBtn.getScene().getWindow();
                 stage2.close();
+
+                //nLoader = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+                nLoader = new FXMLLoader(getClass().getResource("/fxml/HomeWindow.fxml"));
+                HomeWindowController controller = nLoader.getController();
+                controller.bugLoader();
+                controller.populateBugs(HomeWindowController.bugData);
             }
 
         }catch (IOException e){
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the HomeWindow.");
             alert.showAndWait();
-        }catch (Exception ex){
+        }catch (ClassCastException exx){
+
+        }
+        catch (Exception ex){
+            System.out.println(ex);
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while adding bugs.");
-            alert.showAndWait();
+            //alert.showAndWait();
+        }
+        finally {
+
         }
     }
 
@@ -180,6 +199,7 @@ public class BugInputWindowController implements Initializable {
         }catch(DocumentException de){
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while setting the table properties in the window.");
             alert.showAndWait();
+
         }
 
     }

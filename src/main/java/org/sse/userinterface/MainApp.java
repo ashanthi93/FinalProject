@@ -20,7 +20,7 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        new PrologConverter().getPreventionTechniques("a1");
+        //new KbBuilder().writeSimilarity();
 
         //KbBuilder.write();
 

@@ -9,9 +9,17 @@ import java.util.HashMap;
 public class ThreatCategoriesLoader {
 
     private static HashMap<String, ThreatCategory> threatCategoryHashMap;
+    public static final   HashMap <String, String> tCategories = new HashMap<String, String>();
+
 
     static {
         threatCategoryHashMap = new HashMap<String, ThreatCategory>();
+        tCategories.put("s","Spoofing");
+        tCategories.put("t","Tampering");
+        tCategories.put("r","Repudiation");
+        tCategories.put("i","Information disclosure");
+        tCategories.put("d","Denial of service");
+        tCategories.put("e","Elevation of privilege");
     }
 
     private ThreatCategoriesLoader(){

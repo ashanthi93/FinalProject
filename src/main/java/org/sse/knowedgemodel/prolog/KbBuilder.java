@@ -1,6 +1,9 @@
 package org.sse.knowedgemodel.prolog;
 
 import org.dom4j.DocumentException;
+import org.sse.association.semantic.SemanticAssociationCaller;
+import org.sse.association.semantic.SemanticAssociationsLoader;
+import org.sse.association.semantic.model.SemanticAssociation;
 import org.sse.settings.config.source.control.BugControlConfig;
 import org.sse.settings.config.source.BugModelConfig;
 import org.sse.settings.config.source.mapping.MappingConfig;
@@ -9,6 +12,7 @@ import org.sse.source.model.BugControl;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
@@ -107,5 +111,18 @@ public class KbBuilder {
             System.out.println(solution.get("A"));
         }*/
 
+    }
+
+    public static void writeSimilarity (List<SemanticAssociation> similarity) throws FileNotFoundException {
+
+        PrintWriter writer = new PrintWriter("src/main/resources/prolog/similaritymatch.pl");
+
+        for (SemanticAssociation object : similarity) {
+            String s = "semanticAssociation(\n" + object.getBugControl().getId().toLowerCase() + ",\n" + object.getThreatControl().getId().toLowerCase() +
+                    ",\n" + object.getSemanticSimilarity() + "\n).";
+            writer.println(s);
+            writer.println();
+        }
+        writer.close();
     }
 }

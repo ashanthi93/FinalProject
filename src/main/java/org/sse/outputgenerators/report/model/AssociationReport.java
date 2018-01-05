@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JacksonXmlRootElement(localName = "association-report")
 @JsonRootName("associationReport")
@@ -25,7 +26,7 @@ public class AssociationReport {
     @JacksonXmlElementWrapper(localName = "associations")
     @JacksonXmlProperty(localName = "association")
     @JsonProperty("associations")
-    private ArrayList<Association> associationArrayList;
+    private List<Association> associationList;
 
     public AssociationReport() {
     }
@@ -47,11 +48,11 @@ public class AssociationReport {
         this.date = date;
     }
 
-    public ArrayList<Association> getAssociationArrayList() {
-        return associationArrayList;
+    public List<Association> getAssociationList() {
+        return associationList;
     }
 
-    public void setAssociationArrayList(ArrayList<Association> associations) {
-        this.associationArrayList = associations;
+    public void setAssociationList(List<Association> associations) {
+        this.associationList = associations;
     }
 }

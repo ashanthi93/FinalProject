@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class BugCategoryReportCreator {
 
@@ -18,7 +19,6 @@ public class BugCategoryReportCreator {
     }
 
     /**
-     * ******** Countermeasures are already loaded to the bugcategory object???**********
      *
      * @return
      */
@@ -29,7 +29,7 @@ public class BugCategoryReportCreator {
         bugReport.setName(reportName);
         bugReport.setDate(this.getDate());
 
-        ArrayList<BugCategory> bugCategoryArrayList = new ArrayList<BugCategory>();
+        List<BugCategory> bugCategoryArrayList = new ArrayList<BugCategory>();
 
         for (String bugCategoryID : bugCategoryHashMap.keySet()){
 

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.sse.source.model.Bug;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JacksonXmlRootElement(localName = "bug-category")
 @JsonRootName("bug-category")
@@ -28,12 +29,12 @@ public class BugCategory {
     @JacksonXmlElementWrapper(localName = "bugs")
     @JacksonXmlProperty(localName = "bug")
     @JsonProperty("bugs")
-    private ArrayList<Bug> bugArrayList;
+    private List<Bug> bugArrayList;
 
     @JacksonXmlElementWrapper(localName = "countermeasures")
     @JacksonXmlProperty(localName = "countermeasure")
     @JsonProperty("countermeasures")
-    private ArrayList<String> countermeasures;
+    private List<String> countermeasures;
 
     public BugCategory(){
         bugArrayList = new ArrayList<Bug>();
@@ -57,19 +58,19 @@ public class BugCategory {
         this.name = name;
     }
 
-    public ArrayList<Bug> getBugArrayList() {
+    public List<Bug> getBugList() {
         return bugArrayList;
     }
 
-    public void setBugArrayList(ArrayList<Bug> bugArrayList) {
-        this.bugArrayList = bugArrayList;
+    public void setBugList(List<Bug> bugList) {
+        this.bugArrayList = bugList;
     }
 
-    public ArrayList<String> getCountermeasures() {
+    public List<String> getCountermeasures() {
         return countermeasures;
     }
 
-    public void setCountermeasures(ArrayList<String> countermeasures) {
+    public void setCountermeasures(List<String> countermeasures) {
         this.countermeasures = countermeasures;
     }
 

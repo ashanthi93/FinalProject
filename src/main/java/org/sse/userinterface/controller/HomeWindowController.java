@@ -24,6 +24,7 @@ import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.dom4j.DocumentException;
+import org.sse.association.model.Association;
 import org.sse.association.model.AssociationContainer;
 import org.sse.design.ThreatExtractor;
 
@@ -60,7 +61,6 @@ public class HomeWindowController implements Initializable {
     public static String selectedIndex = "NONE";
     static PrologConverter prolog = new PrologConverter();
 
-
     @FXML
     private JFXButton newProjectBtn;
     @FXML
@@ -93,7 +93,6 @@ public class HomeWindowController implements Initializable {
 
     private static HashMap<String, ThreatCategory> threatMap;
     private static ObservableList<ThreatMitigation> threatData;
-
 
     // create source table
     @FXML
@@ -566,6 +565,7 @@ public class HomeWindowController implements Initializable {
     }
 
     private void setAssociationProperties() {
+
         //System.out.println(AssociationData.get(0).getBug() + AssociationData.get(0).getBugCategory());
 
         associationthreat.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
@@ -938,7 +938,6 @@ public class HomeWindowController implements Initializable {
 
         for (ThreatCategory threatCategory : threatMap.values()) {
 
-
             threatCategoryHashMap.put(threatCategory.getId(), threatCategory);
         }
 
@@ -953,16 +952,55 @@ public class HomeWindowController implements Initializable {
      */
     private BugReport convertToBugReport() {
 
-        HashMap<String, BugCategory> bugCategoryHashMap = new HashMap<>();
-
-        for (BugCategory bugCategory : OWASPT10_Table.getItems()) {
-            bugCategoryHashMap.put(bugCategory.getId(), bugCategory);
-        }
+        HashMap<String, BugCategory> bugCategoryHashMap = this.initializeBugCategories();
 
         BugCategoryReportCreator bugCategoryReportCreator = new BugCategoryReportCreator(bugCategoryHashMap);
+
         BugReport bugReport = bugCategoryReportCreator.generateReport("Bug Analysis Report");
 
         return bugReport;
+    }
+
+    /*
+    * */
+    private HashMap<String,BugCategory> initializeBugCategories(){
+
+        HashMap<String,BugCategory> bugCategoryHashMap = new HashMap<>();
+
+        for (BugCountermeasures b : sourceTable.getItems()){
+
+            String[] bugCategoryDetails = b.getCategory().split(":");
+
+            String bugCategoryId = bugCategoryDetails[0];
+            String bugCategoryName = bugCategoryDetails[1];
+
+            BugCategory bugCategory = bugCategoryHashMap.get(bugCategoryId);
+
+            if (bugCategory == null) {
+
+                bugCategory = new BugCategory();
+
+                bugCategory.setId(bugCategoryId);
+                bugCategory.setName(bugCategoryName);
+
+                List<Bug> fullBugList = BugInputWindowController.updetedList;
+
+                List<Bug> bugList = new ArrayList<>();
+
+                for (Bug bug : fullBugList){
+                    if (bug.getCategoryName().split(":")[0].equals(bugCategoryId)){
+                        bugList.add(bug);
+                    }
+                }
+
+                bugCategory.setBugList(bugList);
+
+                bugCategory.setCountermeasures(prolog.getPreventionTechniques(bugCategoryId.toLowerCase()));
+
+                bugCategoryHashMap.put(bugCategoryId, bugCategory);
+            }
+        }
+        return bugCategoryHashMap;
     }
 
     /**
@@ -975,12 +1013,14 @@ public class HomeWindowController implements Initializable {
 
         AssociationReport associationReport = null;
 
+        List<Association> associationList = this.initializeAssociations();
+
         try{
-            HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping = new HashMap<>();
-            HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
+            //HashMap<BugCategory, String[]> bugCategoryToThreatCategoryMapping = new HashMap<>();
+            //HashMap<String, ThreatCategory> threatCategoryHashMap = new HashMap<>();
 
             AssociationReportCreator associationReportCreator =
-                    new AssociationReportCreator(bugCategoryToThreatCategoryMapping, threatCategoryHashMap);
+                    new AssociationReportCreator(associationList);
             associationReport = associationReportCreator.generateReport("Association Analysis Report");
 
         }catch(ParserConfigurationException pe){
@@ -994,6 +1034,54 @@ public class HomeWindowController implements Initializable {
             alert.showAndWait();
         }
         return associationReport;
+    }
+
+    private List<Association> initializeAssociations(){
+
+        List<Association> associationList = new ArrayList<>();
+
+        for (AssociationContainer asc : associationTable.getItems()){
+
+            Association association = new Association();
+
+            association.setBugCategoryName(asc.getBugCategory());
+            association.setThreatCategoryName(asc.getThreatCategory());
+
+            HashMap<String, BugCategory> bugCategoryList = this.initializeBugCategories();
+
+            association.setBugList(bugCategoryList.get(asc.getBugCategory().split(":")[0]).getBugList());
+
+            String threatCategoryId = null;
+
+            System.out.println(asc.getThreatCategory());
+
+            switch (asc.getThreatCategory()){
+                case "Elevation of privilege":
+                    threatCategoryId = "E";
+                    break;
+                case "Information disclosure":
+                    threatCategoryId = "I";
+                    break;
+                case "Repudiation":
+                    threatCategoryId = "R";
+                    break;
+                case "Spoofing":
+                    threatCategoryId = "S";
+                    break;
+                case "Tampering":
+                    threatCategoryId = "T";
+                    break;
+                case "Denial of service":
+                    threatCategoryId = "D";
+                    break;
+            }
+            
+            association.setThreatList(threatMap.get(threatCategoryId).getThreatList());
+
+            associationList.add(association);
+        }
+
+        return associationList;
     }
 
     /**

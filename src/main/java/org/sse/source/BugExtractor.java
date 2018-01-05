@@ -83,9 +83,9 @@ public class BugExtractor {
 
                 if (defaultBugCategoryName.equals(bug.getName())){
 
-                    ArrayList<Bug> bugArrayList = bugCategory.getBugArrayList();
+                    List<Bug> bugArrayList = bugCategory.getBugList();
                     bugArrayList.add(bug);
-                    bugCategory.setBugArrayList(bugArrayList);
+                    bugCategory.setBugList(bugArrayList);
 
                     bugCategoryHashMap.put(defaultBugCategoryId, bugCategory);
 

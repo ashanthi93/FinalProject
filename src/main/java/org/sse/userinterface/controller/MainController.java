@@ -18,18 +18,15 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
-import org.sse.design.ThreatExtractor;
+import org.sse.association.model.AssociationContainer;
 import org.sse.design.model.ThreatMitigation;
-import org.sse.reportparser.design.concrete.CnxThreatReportPaser;
-import org.sse.source.BugCategoriesLoader;
-import org.sse.source.BugExtractor;
+import org.sse.reportparser.CnxThreatReportPaser;
+import org.sse.source.model.BugCountermeasures;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -42,12 +39,12 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import static org.sse.reportparser.ReportParserFactory.getThreatReportParser;
-
 public class MainController implements Initializable {
 
     public static Scene newProjectWindow;
     public static ObservableList<ThreatMitigation> loadedThreatData;
+    public static ObservableList<BugCountermeasures> loadedBugData;
+    public static ObservableList<AssociationContainer> loadedAssociationData;
     public static boolean hasThreat = false;
     public static boolean hasBug = false;
     public static boolean hasAssociation = false;
@@ -148,7 +145,26 @@ public class MainController implements Initializable {
 
             }
             // if it is a bug report
-            else if (root == ""){
+            else if (root == "bug-category-report"){
+
+                HashMap<Integer, BugCountermeasures> bugObjects = CnxThreatReportPaser.extractBugs(file);
+                loadedBugData = FXCollections.observableArrayList(bugObjects.values());
+                hasBug = true;
+                Parent homeWindowRoot = null;
+                HomeWindowController.selectedIndex = "Source";
+                try {
+                    homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+                } catch (IOException e) {
+
+                }
+                Stage homewindowStage = new Stage();
+                Scene scene = new Scene(homeWindowRoot);
+                scene.getStylesheets().add("/styles/Styles.css");
+
+                homewindowStage.setTitle("Home Window");
+                homewindowStage.setScene(scene);
+                homewindowStage.setMaximized(true);
+                homewindowStage.show();
 
             }
             // if it is a association report

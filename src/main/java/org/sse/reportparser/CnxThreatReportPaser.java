@@ -1,4 +1,4 @@
-package org.sse.reportparser.design.concrete;
+package org.sse.reportparser;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -7,6 +7,7 @@ import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.sse.design.model.Threat;
 import org.sse.design.model.ThreatMitigation;
+import org.sse.source.model.BugCountermeasures;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,8 +16,6 @@ import java.util.Iterator;
 
 public class CnxThreatReportPaser {
     public static HashMap<Integer, ThreatMitigation> extractThreats(File file) throws DocumentException {
-
-        ArrayList<Threat> threatList = new ArrayList<Threat>();
 
         SAXReader saxReader = new SAXReader();
         Document document = saxReader.read(file);
@@ -40,15 +39,16 @@ public class CnxThreatReportPaser {
             ThreatMitigation threatmitigation = new ThreatMitigation();
             threatmitigation.setCategory(category.getStringValue());
 
-
+            String allThreats = "";
             for (Iterator<Element> keyValueIterator = propertyElement.elementIterator("threat"); keyValueIterator.hasNext(); ) {
 
                 Element keyValueElement = keyValueIterator.next();
 
                 Element threat = keyValueElement.element("name");
-                threatmitigation.setThreat(threat.getStringValue());
+                allThreats = allThreats + "\n" + threat.getStringValue();
 
             }
+            threatmitigation.setThreat(allThreats.trim());
             Element propertyElement2 = threatElement.element("mitigations");
             String mitigations = "";
 
@@ -68,30 +68,56 @@ public class CnxThreatReportPaser {
         return threatObjects;
     }
 
-    private Threat setThreatValues(HashMap<String, String> keyValueHashMap) {
+    public static HashMap<Integer, BugCountermeasures> extractBugs(File file) throws DocumentException {
 
-        Threat threat = new Threat();
+        SAXReader saxReader = new SAXReader();
+        Document document = saxReader.read(file);
 
-        for (String key : keyValueHashMap.keySet()) {
+        String xPath = "/*[name()='bug-category-report']/*[name()='bug-categories']";
 
-            String value = keyValueHashMap.get(key);
+        Node bugInstancesNode = document.selectNodes(xPath).get(0);
 
-            if (key.equals("ThreatID")) {
-                threat.setId(value);
-            }else if (key.equals("Title")) {
-                threat.setName(value);
-            } else if (key.equals("UserThreatCategory")) {
-                threat.setThreatCategoryName(value);
-            } else if (key.equals("UserThreatShortDescription")) {
-                threat.setShortDescription(value);
-            } else if (key.equals("UserThreatDescription")) {
-                threat.setDescription(value);
-            } else if (key.equals("InteractionString")) {
-                threat.setInteractionName(value);
-            } else if (key.equals("Priority")) {
-                threat.setPriority(value);
+        Element bugInstanceElement = (Element) bugInstancesNode;
+
+        int id = 1;
+        HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
+
+        for (Iterator<Element> bugsIterator = bugInstanceElement.elementIterator("bug-category"); bugsIterator.hasNext(); ) {
+
+            Element bugElement = bugsIterator.next();
+
+            Element category = bugElement.element("name");
+            Element propertyElement = bugElement.element("bugs");
+
+            BugCountermeasures bugCountermeasures = new BugCountermeasures();
+            bugCountermeasures.setCategory(category.getStringValue());
+
+            String allBugs = "";
+            for (Iterator<Element> keyValueIterator = propertyElement.elementIterator("bug"); keyValueIterator.hasNext(); ) {
+
+                Element keyValueElement = keyValueIterator.next();
+
+                Element bug = keyValueElement.element("name");
+                allBugs = allBugs + "\n" + bug.getStringValue();
+
             }
+            bugCountermeasures.setBug(allBugs.trim());
+            Element propertyElement2 = bugElement.element("countermeasures");
+            String countermeasures = "";
+
+            for (Iterator<Element> keyValueIterator = propertyElement2.elementIterator("countermeasure"); keyValueIterator.hasNext(); ) {
+
+                Element keyValueElement = keyValueIterator.next();
+
+                String countermeasure = keyValueElement.getStringValue();
+                countermeasures = countermeasures + "\n" + countermeasure;
+
+            }
+            bugCountermeasures.setCountermeasure(countermeasures.trim());
+            bugObjects.put(id,bugCountermeasures);
+            id++;
         }
-        return threat;
+
+        return bugObjects;
     }
 }

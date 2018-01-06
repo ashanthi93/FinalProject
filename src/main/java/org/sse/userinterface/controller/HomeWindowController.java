@@ -153,10 +153,16 @@ public class HomeWindowController implements Initializable {
         if (MainController.hasThreat){
             this.threatData = MainController.loadedThreatData;
             setThreatProperties(threatData);
+            MainController.hasThreat = false;
+        }
+        else if (MainController.hasBug){
+            bugData = MainController.loadedBugData;
+            setBugProperties(bugData);
+            MainController.hasThreat = false;
         }
         else {
             setThreatProperties(threatData);
-            setBugProperties();
+            setBugProperties(bugData);
             populateBugs(bugData);
         }
 
@@ -556,7 +562,7 @@ public class HomeWindowController implements Initializable {
         designTable.setItems(data);
     }
 
-    public void setBugProperties() {
+    public void setBugProperties(ObservableList<BugCountermeasures> data) {
         sourceBugColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("bug"));
         sourceBugColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(5));
 
@@ -565,6 +571,8 @@ public class HomeWindowController implements Initializable {
 
         sourcePreventionColumn.setCellValueFactory(new PropertyValueFactory<BugCountermeasures, String>("countermeasure"));
         sourcePreventionColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(1.5));
+
+        sourceTable.setItems(data);
     }
 
     public void populateBugs(ObservableList<BugCountermeasures> inputList) {
@@ -638,7 +646,7 @@ public class HomeWindowController implements Initializable {
 
             homeTabPane.getSelectionModel().select(1);
             bugLoader();
-            setBugProperties();
+            setBugProperties(bugData);
 
         } else {
             homeTabPane.getSelectionModel().select(2);

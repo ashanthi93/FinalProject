@@ -5,8 +5,11 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,10 +19,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
+import org.sse.design.ThreatExtractor;
+import org.sse.design.model.ThreatMitigation;
+import org.sse.reportparser.design.concrete.CnxThreatReportPaser;
 import org.sse.source.BugCategoriesLoader;
+import org.sse.source.BugExtractor;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;
@@ -32,13 +42,19 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import static org.sse.reportparser.ReportParserFactory.getThreatReportParser;
+
 public class MainController implements Initializable {
 
     public static Scene newProjectWindow;
+    public static ObservableList<ThreatMitigation> loadedThreatData;
+    public static boolean hasThreat = false;
+    public static boolean hasBug = false;
+    public static boolean hasAssociation = false;
 
     @FXML
     private void settingsButtonAction(ActionEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Settings.fxml"));
             Parent parent = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
@@ -56,7 +72,7 @@ public class MainController implements Initializable {
 
             stage.setX((width - stage.getWidth()) / 2);
             stage.setY((height - stage.getHeight()) / 2);
-        }catch (Exception e){
+        } catch (Exception e) {
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the Settings Window.");
             alert.showAndWait();
         }
@@ -64,9 +80,9 @@ public class MainController implements Initializable {
 
     @FXML
     private void startAnlzButtonAction(ActionEvent event) {
-        try{
+        try {
             start("/fxml/NewProjectWindow.fxml", "Start New Project", false);
-        }catch(Exception e){
+        } catch (Exception e) {
             Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occured while opening the New Project Window.");
             alert.showAndWait();
         }
@@ -90,7 +106,7 @@ public class MainController implements Initializable {
     }
 
     @FXML
-    private void openMenuItemAction(ActionEvent event) {
+    private void openMenuItemAction(ActionEvent event) throws DocumentException {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(
@@ -103,7 +119,44 @@ public class MainController implements Initializable {
 
         if (file != null) {
 
-            System.out.println("XML VALidation : " + xmlValidation(file));
+            File inputFile = new File("input.txt");
+            SAXReader reader = new SAXReader();
+            org.dom4j.Document document = reader.read(file);
+            String root = document.getRootElement().getName();
+
+            // if it is a threat report
+            if (root == "threat-category-report"){
+
+                HashMap<Integer, ThreatMitigation> threatObjects = CnxThreatReportPaser.extractThreats(file);
+                loadedThreatData = FXCollections.observableArrayList(threatObjects.values());
+                hasThreat = true;
+                Parent homeWindowRoot = null;
+                HomeWindowController.selectedIndex = "DESIGN";
+                try {
+                    homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+                } catch (IOException e) {
+
+                }
+                Stage homewindowStage = new Stage();
+                Scene scene = new Scene(homeWindowRoot);
+                scene.getStylesheets().add("/styles/Styles.css");
+
+                homewindowStage.setTitle("Home Window");
+                homewindowStage.setScene(scene);
+                homewindowStage.setMaximized(true);
+                homewindowStage.show();
+
+            }
+            // if it is a bug report
+            else if (root == ""){
+
+            }
+            // if it is a association report
+            else {
+
+            }
+
+            //System.out.println("XML VALidation : " + xmlValidation(file));
 
         } else {
             /**
@@ -113,7 +166,6 @@ public class MainController implements Initializable {
     }
 
     /**
-     *
      * @param xmlFile
      * @return
      */

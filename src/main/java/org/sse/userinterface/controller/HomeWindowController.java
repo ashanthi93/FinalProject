@@ -130,7 +130,7 @@ public class HomeWindowController implements Initializable {
 
         try{
         	Parent root = FXMLLoader.load(getClass().getResource(path));
-	        Stage stage = new Stage();
+        	Stage stage = new Stage();
 	        Scene scene = new Scene(root);
 	        scene.getStylesheets().add("/styles/Styles.css");
 
@@ -151,9 +151,15 @@ public class HomeWindowController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
 
-        setThreatProperties();
-        setBugProperties();
-        populateBugs(bugData);
+        if (MainController.hasThreat){
+            this.threatData = MainController.loadedThreatData;
+            setThreatProperties(threatData);
+        }
+        else {
+            setThreatProperties(threatData);
+            setBugProperties();
+            populateBugs(bugData);
+        }
 
         if (selectedIndex.equals("DESIGN")) {
             List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
@@ -168,6 +174,10 @@ public class HomeWindowController implements Initializable {
         threatLoader();
         bugLoader();
         initializeDesignTab();
+    }
+
+    public HomeWindowController(ObservableList<ThreatMitigation> s) {
+
     }
 
     /**
@@ -532,7 +542,7 @@ public class HomeWindowController implements Initializable {
     }
 
 
-    private void setThreatProperties() {
+    public void setThreatProperties(ObservableList<ThreatMitigation> data) {
 
         designThreatColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("threat"));
         designThreatColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
@@ -544,7 +554,7 @@ public class HomeWindowController implements Initializable {
         designMitigationColumn.prefWidthProperty().bind(designTable.widthProperty().divide(1.5));
 
 
-        designTable.setItems(threatData);
+        designTable.setItems(data);
     }
 
     public void setBugProperties() {
@@ -597,7 +607,7 @@ public class HomeWindowController implements Initializable {
             if (returned) {
                 homeTabPane.getSelectionModel().select(1);
                 threatLoader();
-                setThreatProperties();
+                setThreatProperties(threatData);
             }
         } else {
             homeTabPane.getSelectionModel().select(2);

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import org.sse.source.model.BugCategory;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @JacksonXmlRootElement(localName = "bug-category-report")
 @JsonRootName("bugCategoryReport")
@@ -25,7 +26,7 @@ public class BugReport {
     @JacksonXmlElementWrapper(localName = "bug-categories")
     @JacksonXmlProperty(localName = "bug-category")
     @JsonProperty("bugCategories")
-    ArrayList<BugCategory> bugCategories;
+    List<BugCategory> bugCategories;
 
     public BugReport() {}
 
@@ -46,11 +47,11 @@ public class BugReport {
         this.date = date;
     }
 
-    public ArrayList<BugCategory> getBugCategories() {
+    public List<BugCategory> getBugCategories() {
         return bugCategories;
     }
 
-    public void setBugCategories(ArrayList<BugCategory> bugCategories) {
+    public void setBugCategories(List<BugCategory> bugCategories) {
         this.bugCategories = bugCategories;
     }
 }

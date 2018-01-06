@@ -16,6 +16,15 @@ import java.util.List;
 @JsonRootName("association")
 public class Association{
 
+    @JacksonXmlProperty(localName = "bug-category-name")
+    @JsonProperty("bugCategoryName")
+    private String bugCategoryName;
+
+    @JacksonXmlElementWrapper(localName = "bugs")
+    @JacksonXmlProperty(localName = "bug")
+    @JsonProperty("bugs")
+    private List<Bug> bugList;
+
     @JacksonXmlProperty(localName = "threat-category-name")
     @JsonProperty("threatCategoryName")
     private String threatCategoryName;
@@ -25,17 +34,20 @@ public class Association{
     @JsonProperty("threats")
     private List<Threat> threatList;
 
-    @JacksonXmlElementWrapper(localName = "bugs")
-    @JacksonXmlProperty(localName = "bug")
-    @JsonProperty("bugs")
-    private List<Bug> bugList;
-
     public Association() {
         threatList = new ArrayList<Threat>();
         bugList = new ArrayList<Bug>();
     }
 
     /* getter and setters */
+    public String getBugCategoryName() {
+        return bugCategoryName;
+    }
+
+    public void setBugCategoryName(String bugCategoryName) {
+        this.bugCategoryName = bugCategoryName;
+    }
+
     public String getThreatCategoryName() {
         return threatCategoryName;
     }

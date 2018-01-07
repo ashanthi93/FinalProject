@@ -18,10 +18,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.dom4j.DocumentException;
 import org.sse.association.model.Association;
@@ -65,17 +67,20 @@ public class HomeWindowController implements Initializable {
     private JFXButton newProjectBtn;
     @FXML
     private JFXButton sourceCancelBtn;
+    @FXML
+    private JFXButton sourceSaveBtn;
+    @FXML
+    private JFXButton sourceNextBtn;
+    @FXML
+    private JFXButton designNextBtn;
+    @FXML
+    private JFXButton designSaveBtn;
+    @FXML
+    private JFXButton analysisSaveBtn;
 
-    // Table to hold source code bugs and details
-    @FXML
-    private TableView<BugCategory> OWASPT10_Table;
-
-    @FXML
-    private TableColumn<BugCategory, String> t10_id;
-    @FXML
-    private TableColumn<BugCategory, String> t10_name;
-    @FXML
-    private TableColumn<BugCategory, String> t10_description;
+    @FXML private Tab sourceTab;
+    @FXML private Tab designTab;
+    @FXML private Tab associationTab;
 
     // create design table
     @FXML
@@ -154,19 +159,30 @@ public class HomeWindowController implements Initializable {
             threatData = MainController.loadedThreatData;
             setThreatProperties(threatData);
             homeTabPane.getSelectionModel().select(1);
+            sourceTab.setDisable(true);
+            associationTab.setDisable(true);
             MainController.hasThreat = false;
+            designNextBtn.setDisable(true);
+            designSaveBtn.setDisable(true);
         }
         else if (MainController.hasBug){
             bugData = MainController.loadedBugData;
             setBugProperties(bugData);
             MainController.hasBug = false;
             homeTabPane.getSelectionModel().select(0);
+            designTab.setDisable(true);
+            associationTab.setDisable(true);
+            sourceNextBtn.setDisable(true);
+            sourceSaveBtn.setDisable(true);
         }
         else if (MainController.hasAssociation){
             AssociationData = MainController.loadedAssociationData;
             setAssociationProperties(AssociationData);
             MainController.hasAssociation = false;
             homeTabPane.getSelectionModel().select(2);
+            sourceTab.setDisable(true);
+            designTab.setDisable(true);
+            analysisSaveBtn.setDisable(true);
         }
         else {
             setThreatProperties(threatData);

@@ -151,14 +151,22 @@ public class HomeWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         if (MainController.hasThreat){
-            this.threatData = MainController.loadedThreatData;
+            threatData = MainController.loadedThreatData;
             setThreatProperties(threatData);
+            homeTabPane.getSelectionModel().select(1);
             MainController.hasThreat = false;
         }
         else if (MainController.hasBug){
             bugData = MainController.loadedBugData;
             setBugProperties(bugData);
-            MainController.hasThreat = false;
+            MainController.hasBug = false;
+            homeTabPane.getSelectionModel().select(0);
+        }
+        else if (MainController.hasAssociation){
+            AssociationData = MainController.loadedAssociationData;
+            setAssociationProperties(AssociationData);
+            MainController.hasAssociation = false;
+            homeTabPane.getSelectionModel().select(2);
         }
         else {
             setThreatProperties(threatData);
@@ -582,7 +590,7 @@ public class HomeWindowController implements Initializable {
         //System.out.println(sourceTable.getItems().get(0).getBug());
     }
 
-    private void setAssociationProperties() {
+    private void setAssociationProperties(ObservableList<AssociationContainer> data) {
 
         //System.out.println(AssociationData.get(0).getBug() + AssociationData.get(0).getBugCategory());
 
@@ -598,7 +606,7 @@ public class HomeWindowController implements Initializable {
         associationbugcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
         associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(3));
 
-        associationTable.setItems(AssociationData);
+        associationTable.setItems(data);
     }
 
     @FXML
@@ -620,7 +628,7 @@ public class HomeWindowController implements Initializable {
         } else {
             homeTabPane.getSelectionModel().select(2);
             associationLoader();
-            setAssociationProperties();
+            setAssociationProperties(AssociationData);
         }
     }
 
@@ -651,7 +659,7 @@ public class HomeWindowController implements Initializable {
         } else {
             homeTabPane.getSelectionModel().select(2);
             associationLoader();
-            setAssociationProperties();
+            setAssociationProperties(AssociationData);
         }
     }
 

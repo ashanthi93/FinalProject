@@ -25,7 +25,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.sse.association.model.AssociationContainer;
 import org.sse.design.model.ThreatMitigation;
-import org.sse.reportparser.CnxThreatReportPaser;
+import org.sse.reportparser.CnxReportPaser;
 import org.sse.source.model.BugCountermeasures;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
@@ -124,52 +124,27 @@ public class MainController implements Initializable {
             // if it is a threat report
             if (root == "threat-category-report"){
 
-                HashMap<Integer, ThreatMitigation> threatObjects = CnxThreatReportPaser.extractThreats(file);
+                HashMap<Integer, ThreatMitigation> threatObjects = CnxReportPaser.extractThreats(file);
                 loadedThreatData = FXCollections.observableArrayList(threatObjects.values());
                 hasThreat = true;
-                Parent homeWindowRoot = null;
-                HomeWindowController.selectedIndex = "DESIGN";
-                try {
-                    homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
-                } catch (IOException e) {
-
-                }
-                Stage homewindowStage = new Stage();
-                Scene scene = new Scene(homeWindowRoot);
-                scene.getStylesheets().add("/styles/Styles.css");
-
-                homewindowStage.setTitle("Home Window");
-                homewindowStage.setScene(scene);
-                homewindowStage.setMaximized(true);
-                homewindowStage.show();
+                getHomeWindow();
 
             }
             // if it is a bug report
             else if (root == "bug-category-report"){
 
-                HashMap<Integer, BugCountermeasures> bugObjects = CnxThreatReportPaser.extractBugs(file);
+                HashMap<Integer, BugCountermeasures> bugObjects = CnxReportPaser.extractBugs(file);
                 loadedBugData = FXCollections.observableArrayList(bugObjects.values());
                 hasBug = true;
-                Parent homeWindowRoot = null;
-                HomeWindowController.selectedIndex = "Source";
-                try {
-                    homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
-                } catch (IOException e) {
-
-                }
-                Stage homewindowStage = new Stage();
-                Scene scene = new Scene(homeWindowRoot);
-                scene.getStylesheets().add("/styles/Styles.css");
-
-                homewindowStage.setTitle("Home Window");
-                homewindowStage.setScene(scene);
-                homewindowStage.setMaximized(true);
-                homewindowStage.show();
+                getHomeWindow();
 
             }
             // if it is a association report
-            else {
-
+            else if (root == "association-report"){
+                HashMap<Integer, AssociationContainer> associationObjects = CnxReportPaser.extractAssociations(file);
+                loadedAssociationData = FXCollections.observableArrayList(associationObjects.values());
+                hasAssociation = true;
+                getHomeWindow();
             }
 
             //System.out.println("XML VALidation : " + xmlValidation(file));
@@ -181,10 +156,23 @@ public class MainController implements Initializable {
         }
     }
 
-    /**
-     * @param xmlFile
-     * @return
-     */
+    private void getHomeWindow(){
+        Parent homeWindowRoot = null;
+        try {
+            homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
+        } catch (IOException e) {
+
+        }
+        Stage homewindowStage = new Stage();
+        Scene scene = new Scene(homeWindowRoot);
+        scene.getStylesheets().add("/styles/Styles.css");
+
+        homewindowStage.setTitle("Home Window");
+        homewindowStage.setScene(scene);
+        homewindowStage.setMaximized(true);
+        homewindowStage.show();
+    }
+
     private boolean xmlValidation(File xmlFile) {
 
         try {

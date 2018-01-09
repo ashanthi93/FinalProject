@@ -1,9 +1,6 @@
 package org.sse.userinterface.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -28,9 +25,7 @@ import org.sse.design.model.ThreatMitigation;
 import org.sse.reportparser.CnxReportPaser;
 import org.sse.source.model.BugCountermeasures;
 import org.w3c.dom.Document;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -118,11 +113,24 @@ public class MainController implements Initializable {
 
             File inputFile = new File("input.txt");
             SAXReader reader = new SAXReader();
+
+            reader.setEntityResolver(new EntityResolver() {
+                @Override
+                public InputSource resolveEntity(String publicId, String systemId)
+                        throws SAXException, IOException {
+                    if (systemId.contains("threatreport.dtd")) {
+                        return new InputSource(new StringReader(""));
+                    } else {
+                        return null;
+                    }
+                }
+            });
             org.dom4j.Document document = reader.read(file);
             String root = document.getRootElement().getName();
 
+
             // if it is a threat report
-            if (root == "threat-category-report"){
+            if (root == "threat-category-report") {
 
                 HashMap<Integer, ThreatMitigation> threatObjects = CnxReportPaser.extractThreats(file);
                 loadedThreatData = FXCollections.observableArrayList(threatObjects.values());
@@ -131,7 +139,7 @@ public class MainController implements Initializable {
 
             }
             // if it is a bug report
-            else if (root == "bug-category-report"){
+            else if (root == "bug-category-report") {
 
                 HashMap<Integer, BugCountermeasures> bugObjects = CnxReportPaser.extractBugs(file);
                 loadedBugData = FXCollections.observableArrayList(bugObjects.values());
@@ -140,7 +148,7 @@ public class MainController implements Initializable {
 
             }
             // if it is a association report
-            else if (root == "association-report"){
+            else if (root == "association-report") {
                 HashMap<Integer, AssociationContainer> associationObjects = CnxReportPaser.extractAssociations(file);
                 loadedAssociationData = FXCollections.observableArrayList(associationObjects.values());
                 hasAssociation = true;
@@ -156,7 +164,7 @@ public class MainController implements Initializable {
         }
     }
 
-    private void getHomeWindow(){
+    private void getHomeWindow() {
         Parent homeWindowRoot = null;
         try {
             homeWindowRoot = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));

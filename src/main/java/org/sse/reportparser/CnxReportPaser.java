@@ -9,8 +9,13 @@ import org.sse.association.model.AssociationContainer;
 import org.sse.design.model.Threat;
 import org.sse.design.model.ThreatMitigation;
 import org.sse.source.model.BugCountermeasures;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,6 +24,17 @@ public class CnxReportPaser {
     public static HashMap<Integer, ThreatMitigation> extractThreats(File file) throws DocumentException {
 
         SAXReader saxReader = new SAXReader();
+        saxReader.setEntityResolver(new EntityResolver() {
+            @Override
+            public InputSource resolveEntity(String publicId, String systemId)
+                    throws SAXException, IOException {
+                if (systemId.contains("threatreport.dtd")) {
+                    return new InputSource(new StringReader(""));
+                } else {
+                    return null;
+                }
+            }
+        });
         Document document = saxReader.read(file);
 
         String xPath = "/*[name()='threat-category-report']/*[name()='threat-categories']";
@@ -72,6 +88,17 @@ public class CnxReportPaser {
     public static HashMap<Integer, BugCountermeasures> extractBugs(File file) throws DocumentException {
 
         SAXReader saxReader = new SAXReader();
+        saxReader.setEntityResolver(new EntityResolver() {
+            @Override
+            public InputSource resolveEntity(String publicId, String systemId)
+                    throws SAXException, IOException {
+                if (systemId.contains("threatreport.dtd")) {
+                    return new InputSource(new StringReader(""));
+                } else {
+                    return null;
+                }
+            }
+        });
         Document document = saxReader.read(file);
 
         String xPath = "/*[name()='bug-category-report']/*[name()='bug-categories']";
@@ -125,6 +152,17 @@ public class CnxReportPaser {
     public static HashMap<Integer, AssociationContainer> extractAssociations(File file) throws DocumentException {
 
         SAXReader saxReader = new SAXReader();
+        saxReader.setEntityResolver(new EntityResolver() {
+            @Override
+            public InputSource resolveEntity(String publicId, String systemId)
+                    throws SAXException, IOException {
+                if (systemId.contains("threatreport.dtd")) {
+                    return new InputSource(new StringReader(""));
+                } else {
+                    return null;
+                }
+            }
+        });
         Document document = saxReader.read(file);
 
         String xPath = "/*[name()='association-report']/*[name()='associations']";

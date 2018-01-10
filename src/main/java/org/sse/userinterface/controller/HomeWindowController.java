@@ -96,8 +96,8 @@ public class HomeWindowController implements Initializable {
     @FXML
     private TabPane homeTabPane;
 
-    private static HashMap<String, ThreatCategory> threatMap;
-    private static ObservableList<ThreatMitigation> threatData;
+    private  HashMap<String, ThreatCategory> threatMap;
+    private  ObservableList<ThreatMitigation> threatData;
 
     // create source table
     @FXML
@@ -237,6 +237,7 @@ public class HomeWindowController implements Initializable {
             ThreatCategory categoryList = threatMap.get(key);
             List<Threat> Tlist = categoryList.getThreatList();
             List<String> Mlist = categoryList.getMitigationList();
+
 
             int TlistLen = Tlist.size();
 
@@ -684,15 +685,19 @@ public class HomeWindowController implements Initializable {
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(okButton, noButton);
-        alert.showAndWait().ifPresent(type -> {
-            if (type == ButtonType.YES) {
+        Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.YES) {
                 Stage homeStage = (Stage) this.sourceCancelBtn.getScene().getWindow();
                 homeStage.close();
-            } else if (type == ButtonType.NO) {
+            } else if (result.get() == ButtonType.NO) {
                 alert.close();
             }
-        });
     }
+
+
+
+
+
 
     @FXML
     private void sourceCancelBtnAction(ActionEvent event) {
@@ -839,23 +844,31 @@ public class HomeWindowController implements Initializable {
     @FXML
     private void newMenuItemAction(ActionEvent event) {
 
-        Stage previousStage = (Stage) this.newProjectBtn.getScene().getWindow();
-        previousStage.close();
+        Alert alert = this.createAlert(Alert.AlertType.CONFIRMATION, "Confirm!", null, "\n Do you want to save the previous analysis-?");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(okButton, noButton);
+        Optional<ButtonType> result = alert.showAndWait();
 
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewProjectWindow.fxml"));
-            Stage stage = new Stage();
-            MainController.newProjectWindow = new Scene(root);
-            MainController.newProjectWindow.getStylesheets().add("/styles/Styles.css");
+            if (result.get() == okButton) {
+                Tab selectedTab = homeTabPane.getSelectionModel().getSelectedItem();
 
-            stage.setTitle("Start New Project");
-            stage.setResizable(false);
-            stage.setScene(MainController.newProjectWindow);
-            stage.show();
+                if (selectedTab.getId().equals("sourceTab")) {
+                    this.saveReport(ReportType.BUG_REPORT, FileFormat.CNX);
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+                } else if (selectedTab.getId().equals("designTab")) {
+                    this.saveReport(ReportType.THREAT_REPORT, FileFormat.CNX);
+                    System.out.println("design");
+
+                } else {
+                    this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.CNX);
+                }
+                this.openMenuMethod();
+            }
+            else if (result.get() == noButton) {
+                this.openMenuMethod();
+            }
+        alert.close();
     }
 
     @FXML
@@ -879,6 +892,7 @@ public class HomeWindowController implements Initializable {
      * @param fileFormat
      * @throws JsonProcessingException
      */
+
     private void saveReport(ReportType reportType, FileFormat fileFormat) {
 
         Object reportObject;
@@ -1121,6 +1135,8 @@ public class HomeWindowController implements Initializable {
             association.setThreatList(threatMap.get(threatCategoryId).getThreatList());
 
             associationList.add(association);
+            List<Threat> empty = new ArrayList<Threat>();
+            threatMap.get(threatCategoryId).setThreatList(empty);
         }
 
         return associationList;
@@ -1157,5 +1173,34 @@ public class HomeWindowController implements Initializable {
         String jsonReport = jsonReportBuilder.convertReport(object);
 
         return jsonReport;
+    }
+
+    private void openMenuMethod (){
+
+
+        for (String s: threatMap.keySet()){
+            List<Threat> empty = new ArrayList<Threat>();
+            System.out.println(s);
+            threatMap.get(s).setThreatList(empty);
+        }
+
+        Stage previousStage = (Stage) this.newProjectBtn.getScene().getWindow();
+        previousStage.close();
+
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/NewProjectWindow.fxml"));
+            Stage stage = new Stage();
+            MainController.newProjectWindow = new Scene(root);
+            MainController.newProjectWindow.getStylesheets().add("/styles/Styles.css");
+
+            stage.setTitle("Start New Project");
+            stage.setResizable(false);
+            stage.setScene(MainController.newProjectWindow);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -30,6 +30,8 @@ import java.util.*;
 
 public class NewProjectWindowController implements Initializable {
 
+    public static Scene homeWindow;
+
     @FXML
     private JFXRadioButton bugCheck;
 
@@ -122,11 +124,11 @@ public class NewProjectWindowController implements Initializable {
         try{
             Parent root = FXMLLoader.load(getClass().getResource(path));
             Stage stage = new Stage();
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("/styles/Styles.css");
+            homeWindow = new Scene(root);
+            homeWindow.getStylesheets().add("/styles/Styles.css");
 
             stage.setTitle(title);
-            stage.setScene(scene);
+            stage.setScene(homeWindow);
             stage.show();
 
             if(title.equals("Home Window")){

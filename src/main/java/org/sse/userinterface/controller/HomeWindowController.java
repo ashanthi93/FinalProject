@@ -156,9 +156,12 @@ public class HomeWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         if (MainController.hasThreat){
+            List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
+            tabs.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
+            homeTabPane.getTabs().setAll(tabs);
             threatData = MainController.loadedThreatData;
             setThreatProperties(threatData);
-            homeTabPane.getSelectionModel().select(1);
+            homeTabPane.getSelectionModel().select(0);
             sourceTab.setDisable(true);
             associationTab.setDisable(true);
             MainController.hasThreat = false;
@@ -196,6 +199,11 @@ public class HomeWindowController implements Initializable {
             homeTabPane.getTabs().clear();
             homeTabPane.getTabs().setAll(tabs);
             homeTabPane.getSelectionModel().select(0);
+        } else if (selectedIndex.equals("SOURCE") && !(threatData.get(0).getCategory() == null)) {
+            List<Tab> tabs = new ArrayList(homeTabPane.getTabs());
+            tabs.sort((o1, o2) -> o1.getText().compareTo(o2.getText()));
+            homeTabPane.getTabs().setAll(tabs);
+            homeTabPane.getSelectionModel().select(1);
         }
     }
 
@@ -203,10 +211,6 @@ public class HomeWindowController implements Initializable {
         threatLoader();
         bugLoader();
         initializeDesignTab();
-    }
-
-    public HomeWindowController(ObservableList<ThreatMitigation> s) {
-
     }
 
     /**
@@ -658,7 +662,7 @@ public class HomeWindowController implements Initializable {
     @FXML
     private void designNextBtnAction(ActionEvent event) {
         int selectedNum = homeTabPane.getSelectionModel().getSelectedIndex();
-        isHomeOpened = true;
+        //isHomeOpened = true;
 
         if (selectedNum == 0) {
 
@@ -668,10 +672,9 @@ public class HomeWindowController implements Initializable {
                 Alert alert = NewProjectWindowController.createAlert(Alert.AlertType.ERROR, "Error!", null, "\n  Error occurred while opening the Bug Input Window.");
                 alert.showAndWait();
             }
+            /*Stage previousStage = (Stage) this.newProjectBtn.getScene().getWindow();
+            previousStage.close();*/
 
-            homeTabPane.getSelectionModel().select(1);
-            bugLoader();
-            setBugProperties(bugData);
 
         } else {
             homeTabPane.getSelectionModel().select(2);
@@ -869,6 +872,7 @@ public class HomeWindowController implements Initializable {
                 this.openMenuMethod();
             }
         alert.close();
+
     }
 
     @FXML
@@ -1177,12 +1181,12 @@ public class HomeWindowController implements Initializable {
 
     private void openMenuMethod (){
 
-
         for (String s: threatMap.keySet()){
             List<Threat> empty = new ArrayList<Threat>();
-            System.out.println(s);
             threatMap.get(s).setThreatList(empty);
         }
+        List<Bug> bugs = new ArrayList<Bug>();
+        BugInputWindowController.updetedList = bugs;
 
         Stage previousStage = (Stage) this.newProjectBtn.getScene().getWindow();
         previousStage.close();

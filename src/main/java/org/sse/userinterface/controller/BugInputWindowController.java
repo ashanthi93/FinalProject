@@ -38,11 +38,13 @@ import org.sse.userinterface.controller.NewProjectWindowController;
 
 import static org.sse.userinterface.controller.HomeWindowController.bugLoader;
 import static org.sse.userinterface.controller.HomeWindowController.isHomeOpened;
+import static org.sse.userinterface.controller.NewProjectWindowController.homeWindow;
 
 public class BugInputWindowController implements Initializable {
 
     static List<Bug> updetedList = new ArrayList<>();
     List<Bug> bugList;
+    public static boolean fromBugWindow = false;
 
 
     @FXML
@@ -75,7 +77,7 @@ public class BugInputWindowController implements Initializable {
 
     @FXML
     private void addBtnAction(ActionEvent event) {
-        FXMLLoader nLoader = null;
+        //FXMLLoader nLoader = null;
         try{
             bugList = bugTable.getItems();
 
@@ -107,6 +109,7 @@ public class BugInputWindowController implements Initializable {
                 collectedBugs.setBugList(updetedList);
 
                 if(!isHomeOpened){
+                    HomeWindowController.selectedIndex = "SOURCE";
                     Parent root = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
                     Stage stage = new Stage();
                     Scene scene = new Scene(root);
@@ -117,21 +120,22 @@ public class BugInputWindowController implements Initializable {
                     stage.setScene(scene);
                     stage.show();
                     stage.setMaximized(true);
-
                     Stage stageMain = (Stage) MainController.newProjectWindow.getWindow();
                     stageMain.close();
                     Stage stageMainWelcome = (Stage) MainApp.welcomeWindow.getWindow();
                     stageMainWelcome.close();
                 }
-
                 Stage stage2 = (Stage) addBtn.getScene().getWindow();
                 stage2.close();
+                Stage stageHome = (Stage) NewProjectWindowController.homeWindow.getWindow();
+                stageHome.close();
 
-                //nLoader = FXMLLoader.load(getClass().getResource("/fxml/HomeWindow.fxml"));
-                nLoader = new FXMLLoader(getClass().getResource("/fxml/HomeWindow.fxml"));
+                /*nLoader = new FXMLLoader(getClass().getResource("/fxml/HomeWindow.fxml"));
                 HomeWindowController controller = nLoader.getController();
                 controller.bugLoader();
-                controller.populateBugs(HomeWindowController.bugData);
+                controller.populateBugs(HomeWindowController.bugData);*/
+
+
             }
 
         }catch (IOException e){

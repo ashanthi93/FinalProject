@@ -151,6 +151,8 @@ public class MainController implements Initializable {
             else if (root == "association-report") {
                 HashMap<Integer, AssociationContainer> associationObjects = CnxReportPaser.extractAssociations(file);
                 loadedAssociationData = FXCollections.observableArrayList(associationObjects.values());
+                loadedThreatData = FXCollections.observableArrayList(CnxReportPaser.threats.values());
+                loadedBugData = FXCollections.observableArrayList(CnxReportPaser.bugs.values());
                 hasAssociation = true;
                 getHomeWindow();
             }

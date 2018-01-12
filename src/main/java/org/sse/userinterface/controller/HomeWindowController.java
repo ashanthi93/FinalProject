@@ -180,12 +180,20 @@ public class HomeWindowController implements Initializable {
         }
         else if (MainController.hasAssociation){
             AssociationData = MainController.loadedAssociationData;
+            threatData = MainController.loadedThreatData;
+            bugData = MainController.loadedBugData;
+
             setAssociationProperties(AssociationData);
+            setThreatProperties(threatData);
+            setBugProperties(bugData);
+
             MainController.hasAssociation = false;
             homeTabPane.getSelectionModel().select(2);
-            sourceTab.setDisable(true);
-            designTab.setDisable(true);
             analysisSaveBtn.setDisable(true);
+            sourceSaveBtn.setDisable(true);
+            sourceNextBtn.setDisable(true);
+            designSaveBtn.setDisable(true);
+            designNextBtn.setDisable(true);
         }
         else {
             setThreatProperties(threatData);
@@ -866,10 +874,10 @@ public class HomeWindowController implements Initializable {
                 } else {
                     this.saveReport(ReportType.ASSOCIATION_REPORT, FileFormat.CNX);
                 }
-                this.openMenuMethod();
+                this.newMenuMethod();
             }
             else if (result.get() == noButton) {
-                this.openMenuMethod();
+                this.newMenuMethod();
             }
         alert.close();
 
@@ -944,10 +952,15 @@ public class HomeWindowController implements Initializable {
 
                 boolean isSaveSucceed = this.fileSaveAction(outputFileAsString, fileDescription, fileExtension);
 
-                if (!isSaveSucceed) {
-                /*
-                * error message
-                */
+                if (isSaveSucceed) {
+
+                    Alert alert = this.createAlert(Alert.AlertType.CONFIRMATION, "Confirm!", null, "\n File saved successfully");
+                    ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.YES);
+                    alert.getButtonTypes().setAll(okButton);
+                    Optional<ButtonType> result = alert.showAndWait();
+                    if (result.get() == okButton){
+                        alert.close();
+                    }
                 }
             } else {
                 throw new NullPointerException("Report can not be null");
@@ -1179,7 +1192,7 @@ public class HomeWindowController implements Initializable {
         return jsonReport;
     }
 
-    private void openMenuMethod (){
+    private void newMenuMethod (){
 
         for (String s: threatMap.keySet()){
             List<Threat> empty = new ArrayList<Threat>();

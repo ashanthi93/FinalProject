@@ -8,6 +8,7 @@ import org.dom4j.io.SAXReader;
 import org.sse.association.model.AssociationContainer;
 import org.sse.design.model.Threat;
 import org.sse.design.model.ThreatMitigation;
+import org.sse.knowedgemodel.prolog.PrologConverter;
 import org.sse.source.model.BugCountermeasures;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
@@ -19,8 +20,13 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 public class CnxReportPaser {
+    static PrologConverter prolog = new PrologConverter();
+    public static HashMap <Integer,ThreatMitigation> threats = new HashMap<>();
+    public static HashMap <Integer,BugCountermeasures> bugs = new HashMap<>();
+
     public static HashMap<Integer, ThreatMitigation> extractThreats(File file) throws DocumentException {
 
         SAXReader saxReader = new SAXReader();
@@ -173,8 +179,15 @@ public class CnxReportPaser {
 
         int id = 1;
         HashMap<Integer, AssociationContainer> associationObjects = new HashMap<>();
+        HashMap<Integer, BugCountermeasures> bugObjects = new HashMap<>();
+        HashMap<Integer, ThreatMitigation> threatObjects = new HashMap<>();
 
+        String previousCategory = "";
         for (Iterator<Element> associationIterator = associationInstanceElement.elementIterator("association"); associationIterator.hasNext(); ) {
+
+            AssociationContainer associationContainer = new AssociationContainer();
+            ThreatMitigation threatMitigation = new ThreatMitigation();
+            BugCountermeasures bugCountermeasures = new BugCountermeasures();
 
             Element associationElement = associationIterator.next();
 
@@ -184,9 +197,30 @@ public class CnxReportPaser {
             Element threatCategory = associationElement.element("threat-category-name");
             Element propertyElementThreat = associationElement.element("threats");
 
-            AssociationContainer associationContainer = new AssociationContainer();
-            associationContainer.setBugCategory(bugCategory.getStringValue());
-            associationContainer.setThreatCategory(threatCategory.getStringValue());
+            String bcategory = bugCategory.getStringValue();
+            String tcategory = threatCategory.getStringValue();
+
+            associationContainer.setBugCategory(bcategory);
+
+            if (!bcategory.equals(previousCategory)) {
+                bugCountermeasures.setCategory(bcategory);
+                List<String> Plist = prolog.getPreventionTechniques(bcategory.toLowerCase().split(":")[0]);
+                String allCountermeasures = "";
+                for (String mitigation : Plist) {
+                    allCountermeasures = allCountermeasures + mitigation + "\n\n";
+                }
+                bugCountermeasures.setCountermeasure(allCountermeasures);
+            }
+
+            associationContainer.setThreatCategory(tcategory);
+            threatMitigation.setCategory(tcategory);
+
+            List<String> Tlist = prolog.getMitigationTechniques(tcategory.toLowerCase().replace(" ", "_"));
+            String allpreventions = "";
+            for (String prevention : Tlist){
+                allpreventions = allpreventions + prevention + "\n\n";
+            }
+            threatMitigation.setMitigation(allpreventions);
 
             String allBugs = "";
             for (Iterator<Element> keyValueIterator = propertyElementBug.elementIterator("bug"); keyValueIterator.hasNext(); ) {
@@ -197,7 +231,12 @@ public class CnxReportPaser {
                 allBugs = allBugs + "\n" + bug.getStringValue() + "\n";
 
             }
-            associationContainer.setBug(allBugs.trim());
+            allBugs = allBugs.trim();
+            associationContainer.setBug(allBugs);
+
+            if (!bcategory.equals(previousCategory)) {
+                bugCountermeasures.setBug(allBugs);
+            }
 
             String allThreats = "";
             for (Iterator<Element> keyValueIterator = propertyElementThreat.elementIterator("threat"); keyValueIterator.hasNext(); ) {
@@ -208,11 +247,20 @@ public class CnxReportPaser {
                 allThreats = allThreats + "\n" + threat.getStringValue() + "\n";
 
             }
-            associationContainer.setThreat(allThreats.trim());
+            allThreats = allThreats.trim();
+            associationContainer.setThreat(allThreats);
+            threatMitigation.setThreat(allThreats);
             associationObjects.put(id,associationContainer);
+
+            if (!bcategory.equals(previousCategory)) {
+                bugObjects.put(id, bugCountermeasures);
+                previousCategory = bcategory;
+            }
+            threatObjects.put(id,threatMitigation);
             id++;
         }
-
+        threats = threatObjects;
+        bugs = bugObjects;
         return associationObjects;
     }
 }

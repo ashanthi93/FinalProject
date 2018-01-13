@@ -52,6 +52,7 @@ import org.sse.source.model.Bug;
 import org.sse.source.model.BugCategory;
 import org.sse.source.model.BugCountermeasures;
 
+import org.sse.userinterface.GUIUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -587,16 +588,18 @@ public class HomeWindowController implements Initializable {
     public void setThreatProperties(ObservableList<ThreatMitigation> data) {
 
         designThreatColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("threat"));
-        designThreatColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
+        designThreatColumn.prefWidthProperty().bind(designTable.widthProperty().divide(3));
 
         designCategoryColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("category"));
         designCategoryColumn.prefWidthProperty().bind(designTable.widthProperty().divide(5));
 
         designMitigationColumn.setCellValueFactory(new PropertyValueFactory<ThreatMitigation, String>("mitigation"));
-        designMitigationColumn.prefWidthProperty().bind(designTable.widthProperty().divide(1.5));
-
+        designMitigationColumn.prefWidthProperty().bind(designTable.widthProperty().divide(2));
 
         designTable.setItems(data);
+        GUIUtils.autoFitTable(designTable);
+        //GUIUtils.customResize(designTable);
+        //designTable.setColumnResizePolicy((param) -> true );
     }
 
     public void setBugProperties(ObservableList<BugCountermeasures> data) {
@@ -610,6 +613,7 @@ public class HomeWindowController implements Initializable {
         sourcePreventionColumn.prefWidthProperty().bind(sourceTable.widthProperty().divide(1.5));
 
         sourceTable.setItems(data);
+        //sourceTable.setColumnResizePolicy((param) -> true );
     }
 
     public void populateBugs(ObservableList<BugCountermeasures> inputList) {
@@ -624,18 +628,19 @@ public class HomeWindowController implements Initializable {
         //System.out.println(AssociationData.get(0).getBug() + AssociationData.get(0).getBugCategory());
 
         associationthreat.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threat"));
-        associationthreat.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
+        associationthreat.prefWidthProperty().bind(associationTable.widthProperty().divide(2.5));
 
         associationthreatcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("threatCategory"));
-        associationthreatcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(3));
+        associationthreatcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         assosiationbug.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bug"));
         assosiationbug.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         associationbugcategory.setCellValueFactory(new PropertyValueFactory<AssociationContainer, String>("bugCategory"));
-        associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(3));
+        associationbugcategory.prefWidthProperty().bind(associationTable.widthProperty().divide(5));
 
         associationTable.setItems(data);
+
     }
 
     @FXML

@@ -1,0 +1,374 @@
+semanticAssociation(
+	c2,
+	s1,
+	0.143).
+
+semanticAssociation(
+	c2,
+	s2,
+	0.215
+	).
+
+semanticAssociation(
+	c2,
+	s3,
+	0.199
+	).
+
+semanticAssociation(
+	c2,
+	s4,
+	0.205
+	).
+
+semanticAssociation(
+	c2,
+	s5,
+	0.230
+	).
+
+semanticAssociation(
+	c2,
+	s6,
+	0.143
+	).
+
+semanticAssociation(
+	c2,
+	s7,
+	0.124
+	).
+
+semanticAssociation(
+	c2,
+	s8,
+	0.198
+	).
+
+semanticAssociation(
+	c3,
+	s1,
+	0.140
+	).
+
+semanticAssociation(
+	c3,
+	s2,
+	0.234
+	).
+
+semanticAssociation(
+	c3,
+	s3,
+	0.173
+	).
+
+semanticAssociation(
+	c3,
+	s4,
+	0.220
+	).
+
+semanticAssociation(
+	c3,
+	s5,
+	0.218
+	).
+
+semanticAssociation(
+	c3,
+	s6,
+	0.168
+	).
+
+semanticAssociation(
+	c3,
+	s7,
+	0.130
+	).
+
+semanticAssociation(
+	c3,
+	s8,
+	0.195
+	).
+semanticAssociation(
+	c4,
+	s1,
+	0.142
+	).
+semanticAssociation(
+	c4,
+	s2,
+	0.250
+	).
+semanticAssociation(
+	c4,
+	s3,
+	0.191
+	).
+semanticAssociation(
+	c4,
+	s4,
+	0.226
+	).
+semanticAssociation(
+	c4,
+	s5,
+	0.317
+	).
+semanticAssociation(
+	c4,
+	s6,
+	0.188
+	).
+semanticAssociation(
+	c4,
+	s7,
+	0.122
+	).
+semanticAssociation(
+	c4,
+	s8,
+	0.201
+	).
+semanticAssociation(
+	c5,
+	s1,
+	0.203
+	).
+semanticAssociation(
+	c5,
+	s2,
+	0.186
+	).
+semanticAssociation(
+	c5,
+	s3,
+	0.146
+	).
+semanticAssociation(
+	c5,
+	s4,
+	0.213
+	).
+semanticAssociation(
+	c5,
+	s5,
+	0.157
+	).
+semanticAssociation(
+	c5,
+	s6,
+	0.125
+	).
+semanticAssociation(
+	c5,
+	s7,
+	0.188
+	).
+semanticAssociation(
+	c5,
+	s8,
+	0.173
+	).
+semanticAssociation(
+	c6,
+	s1,
+	0.155
+	).
+semanticAssociation(
+	c6,
+	s2,
+	0.333
+	).
+semanticAssociation(
+	c6,
+	s3,
+	0.253
+	).
+semanticAssociation(
+	c6,
+	s4,
+	0.182
+	).
+semanticAssociation(
+	c6,
+	s5,
+	0.196
+	).
+semanticAssociation(
+	c6,
+	s6,
+	0.174
+	).
+semanticAssociation(
+	c6,
+	s7,
+	0.118
+	).
+semanticAssociation(
+	c6,
+	s8,
+	0.252
+	).
+semanticAssociation(
+	c7,
+	s1,
+	0.146
+	).
+semanticAssociation(
+	c7,
+	s2,
+	0.150
+	).
+semanticAssociation(
+	c7,
+	s3,
+	0.118
+	).
+semanticAssociation(
+	c7,
+	s4,
+	0.222
+	).
+semanticAssociation(
+	c7,
+	s5,
+	0.146
+	).
+semanticAssociation(
+	c7,
+	s6,
+	0.096
+	).
+semanticAssociation(
+	c7,
+	s7,
+	0.117
+	).
+semanticAssociation(
+	c7,
+	s8,
+	0.137
+	).
+semanticAssociation(
+	c8,
+	s1,
+	0.120
+	).
+semanticAssociation(
+	c8,
+	s2,
+	0.215
+	).
+semanticAssociation(
+	c8,
+	s3,
+	0.212
+	).
+semanticAssociation(
+	c8,
+	s4,
+	0.184
+	).
+semanticAssociation(
+	c8,
+	s5,
+	0.144
+	).
+semanticAssociation(
+	c8,
+	s6,
+	0.180
+	).
+semanticAssociation(
+	c8,
+	s7,
+	0.090
+	).
+semanticAssociation(
+	c8,
+	s8,
+	0.291
+	).
+semanticAssociation(
+	c9,
+	s1,
+	0.125
+	).
+semanticAssociation(
+	c9,
+	s2,
+	0.210
+	).
+semanticAssociation(
+	c9,
+	s3,
+	0.184
+	).
+semanticAssociation(
+	c9,
+	s4,
+	0.194
+	).
+semanticAssociation(
+	c9,
+	s5,
+	0.173
+	).
+semanticAssociation(
+	c9,
+	s6,
+	0.144
+	).
+semanticAssociation(
+	c9,
+	s7,
+	0.101
+	).
+semanticAssociation(
+	c9,
+	s8,
+	0.157
+	).
+semanticAssociation(
+	c10,
+	s1,
+	0.141
+	).
+semanticAssociation(
+	c10,
+	s2,
+	0.236
+	).
+semanticAssociation(
+	c10,
+	s3,
+	0.225
+	).
+semanticAssociation(
+	c10,
+	s4,
+	0.251
+	).
+semanticAssociation(
+	c10,
+	s5,
+	0.210
+	).
+semanticAssociation(
+	c10,
+	s6,
+	0.311
+	).
+semanticAssociation(
+	c10,
+	s7,
+	0.127
+	).
+semanticAssociation(
+	c10,
+	s8,
+	0.255
+	).

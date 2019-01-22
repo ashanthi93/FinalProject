@@ -1,26 +1,34 @@
-owasp(Bug_type):-
+
+
+owasp(X,Bug_type):-
 	owasp_top10(
 		Bug_type,
 		_,
-		Y
-	),
-	length(Y,A),
-	get_proactives(0,A,Y).
+		X
+	).
 
-get_proactives(N, Length, List):- 
-	N<Length, 
-	nth0(N,List,B),
-	get_proactive_description(B), nl, 
-	M is N+1, 
-	get_proactives(M,Length,List).
+get_prevention_techniques(S,Bc) :-
+	owasp_top10(Bc,_,Array),
+	member(X,Array),
+	nl,
+	get_prevention_for_bug(S,X).
 
-get_proactive_description(Name):-
+get_prevention_for_bug(X, Proactive) :-
 	owasp_top10_proactive(
-		Name,
+		Proactive,
 		_,
-		Y
-		),
-	write(Y).
+		X
+	).
+
+get_mitigation_techniques(S,Tc) :-
+	stride(Tc,_,_,Array),
+	member(X,Array),
+	nl,
+	get_mitigation_for_threat(S,X).
+
+get_mitigation_for_threat(S,X) :-
+	stride_defensive(X,_,S).
+	
 
 remove_frame(A):-
 	owasp_top10_proactive(
